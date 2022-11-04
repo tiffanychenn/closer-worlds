@@ -24,3 +24,27 @@
   - [ ] How long they spend discussing before they input (time spent per page)
   - [ ] Anything at all that they type into the text boxes/behavior with sliders, etc.--so the in-bewteen before they submit, all of the different states of the inputs along the way
   - Mouse movement doesn’t matter though.
+
+## List of Likely Necessary Components
+- Atoms (tiny dumb components, probably no state or minimal state)
+  - [ ] Short text box (for set of words)
+  - [ ] Slider with some kind of text label, maybe text labels at each extreme also
+  - [ ] Long text box (for long response)
+  - [ ] Radio button + text
+  - [ ] Question header + descriptive text
+  - [ ] Photo display item
+  - [ ] Button (most likely used for slides)
+  - [ ] Possibly a loading animation?
+- Molecules (collections of atoms, also minimal state)
+  - [ ] Multiple choice question
+  - [ ] Clickable photo display grid (click to select an item)
+- Organisms (sections of a page, possibly some state)
+  - [ ] Full form consisting of many form elements, and must register their IDs somehow for data storage (or maybe that happens at the form element level?)
+  - [ ] Set of buttons at the bottom of a page
+- Template (an uninformed page, i.e., it doesn't retrieve data from the store, but with some state handed down to it, it would be a final page)
+  - [ ] One "slide"
+  - [ ] Loading page and/or modal
+
+## Data Stuff to Build
+- Everything will need hook-ins for data updates... how should we record those? Something in the store? It's timestamps + values, so each form element should have an ID that its data is logged with. At the end of the session (honestly really throughout), we should dump that data to a file. We can constantly do that by running this on an Express server locally, maybe, and have that constantly be transcribing the cached state to a JSON file.
+- A way to store the images we generate, too...
