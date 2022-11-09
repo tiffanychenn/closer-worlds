@@ -3,7 +3,7 @@ import { Logger } from "../../data/logger";
 import { store } from "../../store/store";
 import ShortTextBox from "../atoms/textInput/ShortTextBox";
 
-export default class App extends React.Component<{}> {
+export default class ParticipantApp extends React.Component<{}> {
 	private logger: Logger;
 
 	constructor() {
