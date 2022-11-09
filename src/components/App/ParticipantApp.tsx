@@ -2,6 +2,7 @@ import * as React from "react";
 import { Logger } from "../../data/logger";
 import { store } from "../../store/store";
 import ShortTextBox from "../atoms/textInput/ShortTextBox";
+import { Slider } from "../atoms/textInput/Slider";
 
 export default class ParticipantApp extends React.Component<{}> {
 	private logger: Logger;
@@ -14,6 +15,9 @@ export default class ParticipantApp extends React.Component<{}> {
 	}
 
 	render() {
-		return <ShortTextBox id="test-text-box" logger={this.logger} placeholder="Testing..."/>;
+		return <>
+			<ShortTextBox id="test-text-box" logger={this.logger} placeholder="Testing..."/>
+			<Slider id="test-slider" logger={this.logger} leftLabel="low" rightLabel="high"/>
+		</>;
 	}
 }

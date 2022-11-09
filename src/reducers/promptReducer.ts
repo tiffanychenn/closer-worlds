@@ -7,7 +7,7 @@ export interface PromptState {
 }
 
 export const initialState: PromptState = {
-	blanks: [],
+	blanks: {},
 };
 
 export function reducer(state = initialState, action: PromptActions): PromptState {

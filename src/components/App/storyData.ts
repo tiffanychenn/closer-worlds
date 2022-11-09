@@ -9,25 +9,25 @@ export const STORY_DATA: Array<StorySection> = [
 		],
 	},
 	{
-		genPrompt: "landscape with {0}",
+		genPrompt: "landscape with {1}",
 		steps: [
 			
 		],
 	},
 	{
-		genPrompt: "landscape with {0} with buildings that look like {1}.",
+		genPrompt: "landscape with {1} with buildings that look like {2}.",
 		steps: [
 			
 		],
 	},
 	{
-		genPrompt: "landscape with {0} with buildings that look like {1}. In the background {2}.",
+		genPrompt: "landscape with {1} with buildings that look like {2}. In the background {3}.",
 		steps: [
 			
 		],
 	},
 	{
-		genPrompt: "landscape with {0} with buildings that look like {1}. In the background {2}. In the foreground is {3}",
+		genPrompt: "landscape with {1} with buildings that look like {2}. In the background {3}. In the foreground is {4}",
 		steps: [
 			
 		],

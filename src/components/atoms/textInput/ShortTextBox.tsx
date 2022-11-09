@@ -1,18 +1,12 @@
 import * as React from 'react';
 import { Logger } from '../../../data/logger';
+import { LoggedFormElementComponent, LoggedFormElementProps } from './LoggedFormElement';
 
-export interface Props {
-	id: string;
-	logger: Logger;
+export interface Props extends LoggedFormElementProps {
 	placeholder?: string;
 }
 
-export default class ShortTextBox extends React.Component<Props> {
-	private onInput(event: React.FormEvent<HTMLInputElement>) {
-		let value = event.currentTarget.value;
-		this.props.logger.log(this.props.id, value);
-	}
-
+export default class ShortTextBox extends LoggedFormElementComponent<Props> {
 	render() {
 		const { placeholder } = this.props;
 		return <input type="text" placeholder={placeholder} onInput={e => this.onInput(e)}></input>;

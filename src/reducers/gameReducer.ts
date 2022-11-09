@@ -5,12 +5,12 @@ import { StoryStepType } from "../data/story";
 
 export interface GameState {
 	storySection: number;
-	currAction: StoryStepType;
+	storyStep: number;
 }
 
 export const initialState: GameState = {
 	storySection: 0,
-	currAction: StoryStepType.Info,
+	storyStep: 0,
 };
 
 export function reducer(state = initialState, action: GameActions): GameState {
