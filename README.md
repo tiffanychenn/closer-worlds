@@ -45,7 +45,7 @@
   - [x] Radio button + text
   - [ ] Question header + descriptive text
   - [ ] Photo display item
-  - [ ] Button (most likely used for slides)
+  - [x] Button (most likely used for slides)
   - [ ] Possibly a loading animation?
 - Molecules (collections of atoms, also minimal state)
   - [ ] Multiple choice question
