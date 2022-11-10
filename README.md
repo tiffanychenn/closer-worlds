@@ -46,7 +46,7 @@
   - [ ] Question header
   - [ ] Photo display item
   - [x] Button (most likely used for slides)
-  - [ ] Possibly a loading animation?
+  - [x] Possibly a loading animation?
   - [ ] Player token
 - Molecules (collections of atoms, also minimal state)
   - [ ] Multiple choice question
