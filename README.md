@@ -39,10 +39,10 @@
 
 ## List of Likely Necessary Components
 - Atoms (tiny dumb components, probably no state or minimal state)
-  - [ ] Short text box (for set of words)
-  - [ ] Slider with some kind of text label, maybe text labels at each extreme also
-  - [ ] Long text box (for long response)
-  - [ ] Radio button + text
+  - [x] Short text box (for set of words)
+  - [x] Slider with some kind of text label, maybe text labels at each extreme also
+  - [x] Long text box (for long response)
+  - [x] Radio button + text
   - [ ] Question header + descriptive text
   - [ ] Photo display item
   - [ ] Button (most likely used for slides)
