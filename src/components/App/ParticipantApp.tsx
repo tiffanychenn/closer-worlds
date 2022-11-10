@@ -1,10 +1,11 @@
 import * as React from "react";
 import { Logger } from "../../data/logger";
 import { store } from "../../store/store";
-import LongTextBox from "../atoms/textInput/LongTextBox";
-import RadioButton from "../atoms/textInput/RadioButton";
-import ShortTextBox from "../atoms/textInput/ShortTextBox";
-import { Slider } from "../atoms/textInput/Slider";
+import LongTextBox from "../atoms/input/LongTextBox";
+import RadioButton from "../atoms/input/RadioButton";
+import ShortTextBox from "../atoms/input/ShortTextBox";
+import { Slider } from "../atoms/input/Slider";
+import { Button } from "../atoms/Button";
 
 export default class ParticipantApp extends React.Component<{}> {
 	private logger: Logger;
@@ -22,6 +23,7 @@ export default class ParticipantApp extends React.Component<{}> {
 			<Slider id="test-slider" logger={this.logger} leftLabel="low" rightLabel="high"/>
 			<LongTextBox id="test-long-text" logger={this.logger} placeholder="Testing..."/>
 			<RadioButton id="test-radio-button" logger={this.logger} label="Test"/>
+			<Button text="yes"/>
 		</>;
 	}
 }
