@@ -11,4 +11,9 @@ export abstract class LoggedFormElementComponent<T extends LoggedFormElementProp
 		let value = event.currentTarget.value;
 		this.props.logger.log(this.props.id, value);
 	}
+
+	protected onTextArea(event: React.FormEvent<HTMLTextAreaElement>) {
+		let value = event.currentTarget.value;
+		this.props.logger.log(this.props.id, value);
+	}
 }
