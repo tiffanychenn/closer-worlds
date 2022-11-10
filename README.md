@@ -47,10 +47,11 @@
   - [ ] Photo display item
   - [x] Button (most likely used for slides)
   - [ ] Possibly a loading animation?
-  - [ ] Header??? for showing different players
+  - [ ] Player token
 - Molecules (collections of atoms, also minimal state)
   - [ ] Multiple choice question
   - [ ] Clickable photo display grid (click to select an item)
+  - [ ] Header for the page
 - Organisms (sections of a page, possibly some state)
   - [ ] Full form consisting of many form elements, and must register their IDs somehow for data storage (or maybe that happens at the form element level?)
   - [ ] Set of buttons at the bottom of a page
