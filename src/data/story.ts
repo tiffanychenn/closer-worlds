@@ -12,6 +12,7 @@ export enum StoryStepType {
 
 export interface StoryStep {
 	type: StoryStepType;
+	id: string;
 }
 
 /* Types of steps, and what data they need.
@@ -42,7 +43,7 @@ export interface WritePromptStep extends StoryStep {
 	// If an image is a string, then it should point to a source.
 	// If an image is a number, that points to the index of the step
 	// whose resulting image we want to display.
-	backgroundImage: string | number;
+	backgroundImage?: string | number; // If undefined, no background is used.
 	cardImage?: string | number; // If undefined, no card is shown.
 	timeLimit?: number; // If undefined, no time limit will appear.
 	wordLimit?: number;
