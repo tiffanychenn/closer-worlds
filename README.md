@@ -43,11 +43,12 @@
   - [x] Slider with some kind of text label, maybe text labels at each extreme also
   - [x] Long text box (for long response)
   - [x] Radio button + text
-  - [ ] Question header
-  - [ ] Photo display item
+  - [x] Question header
+  - [x] Photo display item
+  - [x] Background photo display
   - [x] Button (most likely used for slides)
   - [x] Possibly a loading animation?
-  - [ ] Player token
+  - [ ] Player token (depends on finalized UI, should hold off for now)
 - Molecules (collections of atoms, also minimal state)
   - [ ] Multiple choice question
   - [ ] Clickable photo display grid (click to select an item)
