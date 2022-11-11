@@ -25,4 +25,28 @@ export interface StoryStep {
  * Info: This one's tough because of potential visual differences between these slides. Unsure.
  */
 
+// In any info text, {curr} will always be replaced with the current player (e.g., "player 1"),
+// and {other} will always be replaced with the other player (e.g., "player 2"). If the first
+// character should be capitlized (i.e., "Player 1" instead of "player 1"), please capitalize
+// the first letter of the placeholder (i.e., {Curr} instead of {curr}).
+
+// Anything that isn't a title can also handle bolding in the form of *s. If you write *hello*
+// in instructions, for example, it will be rendered as <strong>hello<strong>.
+
+export interface WritePromptStep extends StoryStep {
+	type: typeof StoryStepType.WritePrompt;
+	player: 'landscape' | 'buildings' | 'both';
+	title: string;
+	instructions: string;
+	exampleText: string;
+	// If an image is a string, then it should point to a source.
+	// If an image is a number, that points to the index of the step
+	// whose resulting image we want to display.
+	backgroundImage: string | number;
+	cardImage?: string | number; // If undefined, no card is shown.
+	timeLimit?: number; // If undefined, no time limit will appear.
+	wordLimit?: number;
+	charLimit?: number;
+}
+
 // TODO: We still need to build out all the sub-datatypes that I've suggested above, but I want to wait on that until we have a clearer idea of what we're for sure going with for the game. Currently brainstorming, but wanted to at least commit this.
