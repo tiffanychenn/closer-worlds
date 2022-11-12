@@ -12,8 +12,6 @@ export class BackgroundImage extends React.Component<Props> {
 
 	render() {
 		const { src, blur, overlayColor, overlayOpacity } = this.props;
-		console.log("Overlay color:");
-		console.log(overlayColor);
 		return <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}>
 			<img src={src} style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center center', filter: `blur(${blur})`}}/>
 			{overlayColor && <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: overlayColor, opacity: overlayOpacity}}></div>}

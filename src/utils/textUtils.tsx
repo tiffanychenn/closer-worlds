@@ -14,8 +14,8 @@ export function playerRoleToNumber(currPlayerRole: 'landscape' | 'buildings' | '
 export function replacePlayerText(text: string, currPlayerNumber: 1 | 2 | 'both'): string {
 	const curr = currPlayerNumber == 1 ? 'player 1' : (currPlayerNumber == 2 ? 'player 2' : 'both players');
 	const other = currPlayerNumber == 1 ? 'player 2' : (currPlayerNumber == 2 ? 'player 1' : 'both players');
-	const Curr = curr.substring(0, 1).toUpperCase + curr.substring(1);
-	const Other = other.substring(0, 1).toUpperCase + other.substring(1);
+	const Curr = curr.substring(0, 1).toUpperCase() + curr.substring(1);
+	const Other = other.substring(0, 1).toUpperCase() + other.substring(1);
 	let result = text;
 	result = result.replace('\{curr\}', curr);
 	result = result.replace('\{Curr\}', Curr);
@@ -28,6 +28,7 @@ export function renderBoldText(text: string): React.ReactNode {
 	let nodes = [];
 	let curr = "";
 	let inBoldSection = false;
+
 	for (let i = 0; i < text.length; i++) {
 		if (text[i] == '*') {
 			if (curr !== "") {
@@ -43,5 +44,14 @@ export function renderBoldText(text: string): React.ReactNode {
 			curr += text[i];
 		}
 	}
+
+	if (curr != "") {
+		if (inBoldSection) {
+			nodes.push(<strong style={{whiteSpace: 'pre-wrap'}}>{curr}</strong>);
+		} else {
+			nodes.push(<span style={{whiteSpace: 'pre-wrap'}}>{curr}</span>);
+		}
+	}
+
 	return <>{...nodes}</>;
 }

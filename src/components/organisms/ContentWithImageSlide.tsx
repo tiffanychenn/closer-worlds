@@ -32,7 +32,7 @@ export class ContentWithImageSlide extends React.Component<Props, State> {
 	onTimeout() {
 		this.setState({
 			timerHasFinished: true
-		}, () => this.props.onTimeout());
+		}, () => { if (this.props.onTimeout) this.props.onTimeout() } );
 	}
 
 	render() {
@@ -48,12 +48,12 @@ export class ContentWithImageSlide extends React.Component<Props, State> {
 			}
 		}
 
-		const nextSection = <div>
-			<span><Button text="Next" onClick={onNext} logger={logger} id={step.id + "-next-button"}/></span>
-			<span style={{
+		const nextSection = <div style={{ display: 'flex', gap: '10px' }}>
+			<Button text="Next" onClick={onNext} logger={logger} id={step.id + "-next-button"}/>
+			<div style={{
 				opacity: timerHasFinished ? 1 : 0,
 				transition: 'opacity 0.3s',
-			}}><Hint>Time's up!</Hint></span>
+			}}><Hint>Time's up!</Hint></div>
 			{/* TODO: Make this timer message a LOT nicer. Also, needs an icon still--see Hint for more info on that. */}
 		</div>;
 
