@@ -10,9 +10,10 @@ import { BackgroundImage } from "../atoms/image/BackgroundImage";
 import { ImageCard } from "../atoms/image/ImageCard";
 import { renderBoldText } from "../../utils/textUtils";
 import { DisplayGeneratedImage } from "../templates/DisplayGeneratedImage";
-import { StoryStepType, WritePromptStep } from "../../data/story";
+import { ReflectStep, StoryStepType, WritePromptStep } from "../../data/story";
 import { WritePrompt } from "../templates/WritePrompt";
 import { TEST_STORY_DATA } from "./storyData";
+import { Reflect } from "../templates/Reflect";
 
 export default class ParticipantApp extends React.Component<{}> {
 	private logger: Logger;
@@ -45,11 +46,18 @@ export default class ParticipantApp extends React.Component<{}> {
 								   onNext={() => {}}
 								   onRedo={() => {}}/> */}
 
-			<WritePrompt logger={this.logger}
+			{/* <WritePrompt logger={this.logger}
 						 step={TEST_STORY_DATA[0].steps[0] as WritePromptStep}
 						 landscapePlayer={1}
 						 sectionImageUrls={[]}
-						 onNext={() => {}}/>
+						 onNext={() => {}}/> */}
+
+			<Reflect logger={this.logger}
+					 step={TEST_STORY_DATA[0].steps[1] as ReflectStep}
+					 landscapePlayer={1}
+					 sectionImageUrls={[]}
+					 allowNext={true}
+					 onNext={() => {}}/>
 		</div>;
 	}
 }

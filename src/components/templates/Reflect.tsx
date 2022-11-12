@@ -30,7 +30,7 @@ export class Reflect extends React.Component<Props> {
 				minHeight: '61vh',
 			}}>
 				<div>
-					<Text>The wand starts swirling and whirling, and begins to frantically paint the landscape.\nWhile you wait...</Text>
+					<Text>The wand starts swirling and whirling, and begins to frantically paint the landscape.<br/>While you wait...</Text>
 					<SerifHeader>{renderBoldText(replacePlayerText(step.question, playerNumber))}</SerifHeader>
 				</div>
 				<div>
