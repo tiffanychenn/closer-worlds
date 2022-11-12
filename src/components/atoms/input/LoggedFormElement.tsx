@@ -16,4 +16,8 @@ export abstract class LoggedFormElementComponent<T extends LoggedFormElementProp
 		let value = event.currentTarget.value;
 		this.props.logger.log(this.props.id, value);
 	}
+
+	protected onAnyEvent(logMessage: string) {
+		this.props.logger.log(this.props.id, logMessage);
+	}
 }

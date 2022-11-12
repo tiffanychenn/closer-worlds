@@ -5,7 +5,7 @@ import { StoryStep } from '../../data/story';
 export const STORY_DATA: Array<StorySection> = [
 	{
 		steps: [
-			{ type: StoryStepType.Info, /* TODO: Content */ },
+			// { type: StoryStepType.Info, /* TODO: Content */ },
 		],
 	},
 	{

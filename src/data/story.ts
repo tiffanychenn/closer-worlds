@@ -13,6 +13,14 @@ export enum StoryStepType {
 export interface StoryStep {
 	type: StoryStepType;
 	id: string;
+	
+	// If an image is a string, then it should point to a source.
+	// If an image is a number, that points to the index of the step
+	// whose resulting image we want to display.
+	backgroundImage?: string | number; // If undefined, a linear gradient is used instead.
+	cardImage?: string | number; // If undefined, no card is shown.
+
+	timeLimitMs?: number; // If undefined, no time limit will appear.
 }
 
 /* Types of steps, and what data they need.
@@ -40,14 +48,24 @@ export interface WritePromptStep extends StoryStep {
 	title: string;
 	instructions: string;
 	exampleText: string;
-	// If an image is a string, then it should point to a source.
-	// If an image is a number, that points to the index of the step
-	// whose resulting image we want to display.
-	backgroundImage?: string | number; // If undefined, no background is used.
-	cardImage?: string | number; // If undefined, no card is shown.
-	timeLimit?: number; // If undefined, no time limit will appear.
+
 	wordLimit?: number;
 	charLimit?: number;
+}
+
+export interface ReflectStep extends StoryStep {
+	type: typeof StoryStepType.Reflect;
+	player: 'landscape' | 'buildings' | 'both';
+	question: string;
+}
+
+export interface ImageStep extends StoryStep {
+	type: typeof StoryStepType.Image;
+	cardImage: string | number
+	// If undefined, redo is disallowed. Otherwise, specifies the index of the
+	// StoryStep within this StorySection to which users should be sent back to
+	// perform their redo.
+	redoReturnsToStepIndex?: number;
 }
 
 // TODO: We still need to build out all the sub-datatypes that I've suggested above, but I want to wait on that until we have a clearer idea of what we're for sure going with for the game. Currently brainstorming, but wanted to at least commit this.
