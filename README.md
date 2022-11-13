@@ -1,5 +1,10 @@
 # affective-computing-generative-ai
 
+## Requirements
+- API
+  - `.env` file with OpenAI API key, saved as `OPENAI_API_KEY`
+  - `/data` directory in root
+
 ## To-Do
 - Form elements
   - [ ] Enter a set of words
