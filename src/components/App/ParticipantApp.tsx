@@ -12,8 +12,9 @@ import { renderBoldText } from "../../utils/textUtils";
 import { DisplayGeneratedImage } from "../templates/DisplayGeneratedImage";
 import { ReflectStep, StoryStepType, WritePromptStep } from "../../data/story";
 import { WritePrompt } from "../templates/WritePrompt";
-import { TEST_STORY_DATA } from "./storyData";
+// import { TEST_STORY_DATA } from "./storyData";
 import { Reflect } from "../templates/Reflect";
+import ConnectedStorySlide from "../pages/ConnectedStorySlide";
 
 export default class ParticipantApp extends React.Component<{}> {
 	private logger: Logger;
@@ -52,12 +53,14 @@ export default class ParticipantApp extends React.Component<{}> {
 						 sectionImageUrls={[]}
 						 onNext={() => {}}/> */}
 
-			<Reflect logger={this.logger}
+			{/* <Reflect logger={this.logger}
 					 step={TEST_STORY_DATA[0].steps[1] as ReflectStep}
 					 landscapePlayer={1}
 					 sectionImageUrls={[]}
 					 allowNext={true}
-					 onNext={() => {}}/>
+					 onNext={() => {}}/> */}
+
+			<ConnectedStorySlide logger={this.logger}/>
 		</div>;
 	}
 }

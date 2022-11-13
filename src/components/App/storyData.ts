@@ -2,43 +2,43 @@ import { ImageStep, ReflectStep, StorySection, StoryStepType, WritePromptStep } 
 import { StoryStep } from '../../data/story';
 
 // TODO: Create and export an array of StorySteps below. More info to come once the types + Redux infra are done.
-export const STORY_DATA: Array<StorySection> = [
-	{
-		steps: [
-			// { type: StoryStepType.Info, /* TODO: Content */ },
-		],
-	},
-	{
-		genPrompt: "landscape with {1}",
-		steps: [
+// export const STORY_DATA: Array<StorySection> = [
+// 	{
+// 		steps: [
+// 			// { type: StoryStepType.Info, /* TODO: Content */ },
+// 		],
+// 	},
+// 	{
+// 		genPrompt: "landscape with {1}",
+// 		steps: [
 			
-		],
-	},
-	{
-		genPrompt: "landscape with {1} with buildings that look like {2}.",
-		steps: [
+// 		],
+// 	},
+// 	{
+// 		genPrompt: "landscape with {1} with buildings that look like {2}.",
+// 		steps: [
 			
-		],
-	},
-	{
-		genPrompt: "landscape with {1} with buildings that look like {2}. In the background {3}.",
-		steps: [
+// 		],
+// 	},
+// 	{
+// 		genPrompt: "landscape with {1} with buildings that look like {2}. In the background {3}.",
+// 		steps: [
 			
-		],
-	},
-	{
-		genPrompt: "landscape with {1} with buildings that look like {2}. In the background {3}. In the foreground is {4}",
-		steps: [
+// 		],
+// 	},
+// 	{
+// 		genPrompt: "landscape with {1} with buildings that look like {2}. In the background {3}. In the foreground is {4}",
+// 		steps: [
 			
-		],
-	},
-];
+// 		],
+// 	},
+// ];
 
 const PLACEHOLDER_IMG_URL = 'https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg';
 
-export const TEST_STORY_DATA: Array<StorySection> = [
+export const STORY_DATA: Array<StorySection> = [
 	{
-		genPrompt: "a test that looks like {0}",
+		genPrompt: "a test that looks like {test-write-prompt-blank}",
 		steps: [
 			{
 				type: StoryStepType.WritePrompt,
@@ -63,6 +63,7 @@ export const TEST_STORY_DATA: Array<StorySection> = [
 				id: 'test-image',
 				cardImage: PLACEHOLDER_IMG_URL,
 				backgroundImage: PLACEHOLDER_IMG_URL,
+				redoReturnsToStepIndex: 0,
 			} as ImageStep,
 		],
 	},

@@ -33,7 +33,7 @@ export interface SetStepIndexAction {
 
 function setStepIndex(stepIndex: number): SetStepIndexAction {
 	return {
-		type: GAME_ACTION_NAMES.SET_SECTION_INDEX,
+		type: GAME_ACTION_NAMES.SET_STEP_INDEX,
 		value: stepIndex,
 	};
 }
@@ -92,6 +92,7 @@ export function advanceStep(logger: Logger): RootThunkAction {
 			}
 			const promptTransformers = currSection.promptTransformers || {};
 			const filledPrompt = fillPrompt(prompt, promptTransformers, logger);
+			console.log(`In advanceStep, generating prompt: ${filledPrompt}`);
 			dispatch(generateImage(sectionIndex, filledPrompt)); // Want this to happen in parallel
 		}
 

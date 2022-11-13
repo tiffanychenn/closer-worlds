@@ -1,3 +1,4 @@
+import { APIActions } from './../actions/apiActions';
 import { Action, combineReducers, Reducer } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { GameActions } from '../actions/gameActions';
@@ -13,7 +14,7 @@ export interface State {
 }
 
 export type RootThunkAction = ThunkAction<Promise<void>, State, unknown, Action<string>>;
-export type Actions = GameActions | PromptActions;
+export type Actions = GameActions | PromptActions | APIActions;
 export type RootDispatch = ThunkDispatch<State, unknown, Actions>;
 
 export const rootReducer: Reducer<State, Actions> = combineReducers({

@@ -1,7 +1,9 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import ParticipantApp from './components/App/ParticipantApp';
 import WOZApp from './components/App/WOZApp';
+import { store } from './store/store';
 
 // Source: https://stackoverflow.com/a/901144
 const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -11,6 +13,8 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 let value = (params as any)["woz"]; // "some_value"
 
 ReactDOM.render(
-	value == true ? <WOZApp/> : <ParticipantApp/>,
+	<Provider store={store}>
+		{value == true ? <WOZApp/> : <ParticipantApp/>}
+	</Provider>,
 	document.getElementById("root")
 );
