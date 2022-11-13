@@ -2,4 +2,6 @@ dist/
 node_modules/
 yarn.lock
 yarn-error.log
+src/api/.env
+data/
 .DS_Store
