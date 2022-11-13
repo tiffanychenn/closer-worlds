@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Logger } from '../data/logger';
 
 export function playerRoleToNumber(currPlayerRole: 'landscape' | 'buildings' | 'both', landscapePlayerNumber: 1 | 2): 1 | 2 | 'both' {
 	if (currPlayerRole == 'both') {
@@ -54,4 +55,30 @@ export function renderBoldText(text: string): React.ReactNode {
 	}
 
 	return <>{...nodes}</>;
+}
+
+export function fillPrompt(prompt: string, blankTranformers: { [formElemId: string]: (value: any) => string }, logger: Logger): string {
+	// Find all of the form element ID names
+	const formElemIds = [];
+	const matches = prompt.matchAll(/\{([A-z0-9_\-]+)\}/g);
+	let match = matches.next();
+	while (!match.done) {
+		formElemIds.push(match.value[1]);
+		match = matches.next();
+	}
+	
+	// Fetch all of their latest values
+	let vals = logger.getLatestValues(formElemIds);
+
+	// Perform all replacements
+	let result = prompt;
+	for (let id in vals) {
+		let re = new RegExp(`{${id}}`, "g"); // replace all
+		if (!vals[id]) {
+			throw Error(`Failed to fill prompt: logger had no stored value for placeholder/id ${id}.`);
+		}
+		let val = blankTranformers[id] ? blankTranformers[id](vals[id]) : vals[id].toString();
+		result = result.replace(re, val);
+	}
+	return result;
 }

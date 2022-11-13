@@ -1,6 +1,7 @@
 export interface StorySection {
 	steps: Array<StoryStep>;
 	genPrompt?: string; // Formatted like "this is some text with {0} and refers to the result from prompt {1} and so on"
+	promptTransformers?: { [formElemId: string]: (value: any) => string }; // Used to convert blank values into strings, e.g., choosing a word for a slider.
 }
 
 export enum StoryStepType {
@@ -42,6 +43,13 @@ export interface StoryStep {
 // Anything that isn't a title can also handle bolding in the form of *s. If you write *hello*
 // in instructions, for example, it will be rendered as <strong>hello<strong>.
 
+export interface IAllowsRedo {
+	// If undefined, redo is disallowed. Otherwise, specifies the index of the
+	// StoryStep within this StorySection to which users should be sent back to
+	// perform their redo.
+	redoReturnsToStepIndex?: number;
+}
+
 export interface WritePromptStep extends StoryStep {
 	type: typeof StoryStepType.WritePrompt;
 	player: 'landscape' | 'buildings' | 'both';
@@ -59,13 +67,9 @@ export interface ReflectStep extends StoryStep {
 	question: string;
 }
 
-export interface ImageStep extends StoryStep {
+export interface ImageStep extends StoryStep, IAllowsRedo {
 	type: typeof StoryStepType.Image;
 	cardImage: string | number
-	// If undefined, redo is disallowed. Otherwise, specifies the index of the
-	// StoryStep within this StorySection to which users should be sent back to
-	// perform their redo.
-	redoReturnsToStepIndex?: number;
 }
 
 // TODO: We still need to build out all the sub-datatypes that I've suggested above, but I want to wait on that until we have a clearer idea of what we're for sure going with for the game. Currently brainstorming, but wanted to at least commit this.
