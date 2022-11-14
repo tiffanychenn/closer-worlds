@@ -15,6 +15,7 @@ import { WritePrompt } from "../templates/WritePrompt";
 // import { TEST_STORY_DATA } from "./storyData";
 import { Reflect } from "../templates/Reflect";
 import ConnectedStorySlide from "../pages/ConnectedStorySlide";
+import { LimitedTextBox } from "../organisms/LimitedTextBox";
 
 export default class ParticipantApp extends React.Component<{}> {
 	private logger: Logger;
@@ -27,7 +28,7 @@ export default class ParticipantApp extends React.Component<{}> {
 	}
 
 	render() {
-		return <div style={{background: '#050610', position: 'relative', width: '100vw', height: '100vh'}}>
+		return <div style={{background: 'white'/*'#050610'*/, position: 'relative', width: '100vw', height: '100vh'}}>
 			{/* <BackgroundImage src="https://images.nightcafe.studio/jobs/24JEyUeOhCuirWEDRNil/24JEyUeOhCuirWEDRNil_4x.jpg?tr=w-1600,c-at_max"
 							 blur="15px" overlayColor="linear-gradient(#1C262E, #050610)" overlayOpacity={0.8}/>
 			<div style={{position: 'absolute', top: 0, left: 0, margin: '40px'}}>
@@ -60,7 +61,14 @@ export default class ParticipantApp extends React.Component<{}> {
 					 allowNext={true}
 					 onNext={() => {}}/> */}
 
-			<ConnectedStorySlide logger={this.logger}/>
+			{/* <ConnectedStorySlide logger={this.logger}/> */}
+
+			<LimitedTextBox id="test-limited-textbox"
+							logger={this.logger}
+							placeholder="Type something!"
+							length="long"
+							charLimit={20}
+							onLimitEdge={overLimit => console.log(`overLimit: ${overLimit}`)}/>
 		</div>;
 	}
 }

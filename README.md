@@ -17,6 +17,7 @@
   - [ ] Allow next on Reflect only when image has been generated and retrieved successfully
   - [ ] Allow redo on Image only when redo has not yet been used (we already have state for this)
 - [ ] Make everything pretty
+  - [ ] Add icons to tooltips
 
 ----
 

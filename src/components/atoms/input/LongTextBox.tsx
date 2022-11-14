@@ -3,11 +3,15 @@ import { LoggedFormElementComponent, LoggedFormElementProps } from './LoggedForm
 
 export interface Props extends LoggedFormElementProps {
 	placeholder?: string;
+	onInput?: (e: React.FormEvent<HTMLTextAreaElement>) => void;
 }
 
 export default class LongTextBox extends LoggedFormElementComponent<Props> {
 	render() {
-		const { placeholder } = this.props;
-		return <textarea placeholder={placeholder} onInput={e => this.onTextArea(e)}></textarea>;
+		const { placeholder, onInput } = this.props;
+		return <textarea placeholder={placeholder} onInput={e => {
+			this.onTextArea(e);
+			if (onInput) onInput(e);
+		}}></textarea>;
 	}
 }
