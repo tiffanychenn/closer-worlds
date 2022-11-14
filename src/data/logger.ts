@@ -43,4 +43,11 @@ export class Logger {
 		}
 		return result;
 	}
+
+	dumpData(): { entries: typeof this.entries, timesPerId: typeof this.timesPerId } {
+		return {
+			entries: JSON.parse(JSON.stringify(this.entries)),
+			timesPerId: JSON.parse(JSON.stringify(this.timesPerId)),
+		};
+	}
 }

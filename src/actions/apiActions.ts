@@ -1,3 +1,4 @@
+import { Logger } from "../data/logger";
 import { FetchStatus } from "../reducers/apiReducer";
 import { RootThunkAction } from "../reducers/rootReducer";
 import { saveImage } from "./promptActions";
@@ -5,6 +6,8 @@ import { saveImage } from "./promptActions";
 export const API_ACTION_NAMES = {
 	SET_IS_FETCHING_IMAGE: 'SET_IS_FETCHING_IMAGE',
 };
+
+export const API_BASE_URL = "localhost:5000"; // TODO
 
 export interface SetIsFetchingImageAction {
 	type: typeof API_ACTION_NAMES.SET_IS_FETCHING_IMAGE;
@@ -18,15 +21,61 @@ function setIsFetchingImage(value: FetchStatus): SetIsFetchingImageAction {
 	};
 }
 
-export function generateImage(sectionIndex: number, prompt: string): RootThunkAction {
-	return async dispatch => {
+export function generateImage(sectionIndex: number, prompt: string, logger: Logger): RootThunkAction {
+	return async (dispatch, getState) => {
 		dispatch(setIsFetchingImage('fetching'));
-		// TODO: Send request for DALL-E image, await response (should be a URL where
-		// the image is being stored), and then replace TEMP_IMAGE below with that URL.
-		// TODO: Also handle failure case!
-		const TEMP_IMAGE = 'https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg';
-		dispatch(saveImage(sectionIndex, TEMP_IMAGE));
-		dispatch(setIsFetchingImage('success'));
+
+		const state = getState();
+		const body = {
+			sectionIndex,
+			prompt,
+
+			id: state.prompt.experimentId,
+			firstPlayerId: state.prompt.firstPlayerId,
+			secondPlayerId: state.prompt.secondPlayerId,
+			loggingData: logger.dumpData(),
+			images: state.prompt.sectionImageUrls,
+		};
+
+		fetch(`${API_BASE_URL}/image-gen`, {
+			method: 'POST',
+			body: JSON.stringify(body),
+		}).then((response) => response.json())
+		.then((data) => {
+			const returnedImgPath = data.imageURL;
+			dispatch(saveImage(sectionIndex, prompt, returnedImgPath));
+			dispatch(setIsFetchingImage('success'));
+		}).catch(reason => {
+			const msg = "API failed to generate image for prompt: " + prompt + "\nReason: " + reason;
+			console.error(msg);
+			throw new Error(msg);
+		});
+	};
+}
+
+export function pushExperimentData(logger: Logger): RootThunkAction {
+	return async (dispatch, getState) => {
+		const state = getState();
+		const body = {
+			id: state.prompt.experimentId,
+			firstPlayerId: state.prompt.firstPlayerId,
+			secondPlayerId: state.prompt.secondPlayerId,
+			loggingData: logger.dumpData(),
+			images: state.prompt.sectionImageUrls,
+		};
+
+		fetch(`${API_BASE_URL}/experiment`, {
+			method: 'POST',
+			body: JSON.stringify(body),
+		}).then(res => {
+			if (res.status !== 200) {
+				const msg = `API failed (status ${res.status}) to store experiment data for experiment ID ${state.prompt.experimentId}.`;
+				console.error(msg);
+				throw new Error(msg);
+			}
+		}).catch(reason => {
+			const msg = `API failed to store experiment data for experiment ID ${state.prompt.experimentId}. Reason: ${reason}`;
+		});
 	};
 }
 

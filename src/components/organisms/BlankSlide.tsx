@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { StoryStep } from '../../data/story';
+import { SectionImageUrls } from '../../reducers/promptReducer';
 import { SlideBackground } from '../molecules/SlideBackground';
 
 interface Props {
 	children: React.ReactNode;
 	step: StoryStep;
-	sectionImageUrls: { [sectionIndex: number]: string };
+	sectionImageUrls: SectionImageUrls;
 	onTimeout?: () => void;
 }
 

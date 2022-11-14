@@ -4,7 +4,7 @@ import { STORY_DATA } from "../components/App/storyData";
 import { IAllowsRedo, StoryStepType } from "../data/story";
 import { Logger } from "../data/logger";
 import { fillPrompt } from "../utils/textUtils";
-import { generateImage } from "./apiActions";
+import { generateImage, pushExperimentData } from "./apiActions";
 // REFACTOR: The story data should probably be part of state for modularity, but I'm not sure.
 
 export const GAME_ACTION_NAMES = {
@@ -88,12 +88,14 @@ export function advanceStep(logger: Logger): RootThunkAction {
 			if (!prompt) {
 				const msg = `ERROR in advanceStep: Section ${sectionIndex} has a WritePrompt step ${stepIndex}, but does not have a genPrompt, so no prompt can be generated.`;
 				console.log(msg);
-				throw Error(msg);
+				throw new Error(msg);
 			}
 			const promptTransformers = currSection.promptTransformers || {};
 			const filledPrompt = fillPrompt(prompt, promptTransformers, logger);
 			console.log(`In advanceStep, generating prompt: ${filledPrompt}`);
-			dispatch(generateImage(sectionIndex, filledPrompt)); // Want this to happen in parallel
+			dispatch(generateImage(sectionIndex, filledPrompt, logger)); // Want this to happen in parallel
+		} else {
+			dispatch(pushExperimentData(logger));
 		}
 
 		// Increment story and step index

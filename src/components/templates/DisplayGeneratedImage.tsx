@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Logger } from '../../data/logger';
 import { ImageStep } from '../../data/story';
+import { SectionImageUrls } from '../../reducers/promptReducer';
+import { imagePathToUrl } from '../../utils/utils';
 import { ImageCard } from '../atoms/image/ImageCard';
 import { Button } from '../atoms/input/Button';
 import { Text } from '../atoms/text/Text';
@@ -9,7 +11,7 @@ import { BlankSlide } from '../organisms/BlankSlide';
 interface Props {
 	logger: Logger;
 	step: ImageStep;
-	sectionImageUrls: { [sectionIndex: number]: string };
+	sectionImageUrls: SectionImageUrls;
 	onNext: () => void;
 	onRedo: () => void;
 }
@@ -31,7 +33,7 @@ export class DisplayGeneratedImage extends React.Component<Props> {
 		let cardUrl: string;
 		if (step.cardImage) {
 			if (typeof step.cardImage == 'number') {
-				cardUrl = sectionImageUrls[step.cardImage];
+				cardUrl = imagePathToUrl(sectionImageUrls[step.cardImage].path);
 			} else {
 				cardUrl = step.cardImage;
 			}

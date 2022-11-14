@@ -6,11 +6,13 @@ import { ImageCard } from '../atoms/image/ImageCard';
 import { Hint } from '../atoms/text/Text';
 import { BlankSlide } from './BlankSlide';
 import { BlankTwoColumnSlide } from './BlankTwoColumnSlide';
+import { SectionImageUrls } from '../../reducers/promptReducer';
+import { imagePathToUrl } from '../../utils/utils';
 
 interface Props {
 	children: React.ReactNode;
 	step: StoryStep;
-	sectionImageUrls: { [sectionIndex: number]: string };
+	sectionImageUrls: SectionImageUrls;
 	onTimeout?: () => void;
 	onNext?: () => void;
 	allowNext: boolean;
@@ -42,7 +44,7 @@ export class ContentWithImageSlide extends React.Component<Props, State> {
 		let cardUrl: string | false = false;
 		if (step.cardImage) {
 			if (typeof step.cardImage == 'number') {
-				cardUrl = sectionImageUrls[step.cardImage];
+				cardUrl = imagePathToUrl(sectionImageUrls[step.cardImage].path);
 			} else {
 				cardUrl = step.cardImage;
 			}

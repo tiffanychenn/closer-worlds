@@ -1,9 +1,11 @@
 import * as React from 'react';
+import { SectionImageUrls } from '../../reducers/promptReducer';
+import { imagePathToUrl } from '../../utils/utils';
 import { BackgroundImage } from '../atoms/image/BackgroundImage';
 
 interface Props {
 	bgInfo: { backgroundImage?: string | number };
-	sectionImageUrls: { [sectionIndex: number]: string };
+	sectionImageUrls: SectionImageUrls;
 }
 
 export class SlideBackground extends React.Component<Props> {
@@ -13,7 +15,7 @@ export class SlideBackground extends React.Component<Props> {
 		let backgroundUrl: string | false = false;
 		if (backgroundImage) {
 			if (typeof backgroundImage == 'number') {
-				backgroundUrl = sectionImageUrls[backgroundImage];
+				backgroundUrl = imagePathToUrl(sectionImageUrls[backgroundImage].path);
 			} else {
 				backgroundUrl = backgroundImage;
 			}

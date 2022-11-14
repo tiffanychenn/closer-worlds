@@ -1,6 +1,7 @@
 export const PROMPT_ACTION_NAMES = {
 	// FILL_BLANK: 'FILL_BLANK',
 	SAVE_IMAGE: 'SAVE_IMAGE',
+	INIT_EXPERIMENT: 'INIT_EXPERIMENT',
 };
 
 // export interface FillBlankAction {
@@ -32,15 +33,33 @@ export const PROMPT_ACTION_NAMES = {
 export interface SaveImageAction {
 	type: typeof PROMPT_ACTION_NAMES.SAVE_IMAGE,
 	sectionIndex: number,
-	url: string,
+	filledPrompt: string,
+	path: string,
 }
 
-export function saveImage(sectionIndex: number, url: string): SaveImageAction {
+export function saveImage(sectionIndex: number, filledPrompt: string, path: string): SaveImageAction {
 	return {
 		type: PROMPT_ACTION_NAMES.SAVE_IMAGE,
 		sectionIndex,
-		url,
+		filledPrompt,
+		path,
 	};
 }
 
-export type PromptActions = SaveImageAction;
+export interface InitExperimentAction {
+	type: typeof PROMPT_ACTION_NAMES.INIT_EXPERIMENT;
+	experimentId: string;
+	firstPlayerId: string;
+	secondPlayerId: string;
+}
+
+export function initExperiment(experimentId: string, firstPlayerId: string, secondPlayerId: string) {
+	return {
+		type: PROMPT_ACTION_NAMES.INIT_EXPERIMENT,
+		experimentId,
+		firstPlayerId,
+		secondPlayerId,
+	};
+}
+
+export type PromptActions = SaveImageAction | InitExperimentAction;

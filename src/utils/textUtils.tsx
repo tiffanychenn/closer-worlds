@@ -75,7 +75,7 @@ export function fillPrompt(prompt: string, blankTranformers: { [formElemId: stri
 	for (let id in vals) {
 		let re = new RegExp(`\{${id}\}`, "g"); // replace all
 		if (!vals[id]) {
-			throw Error(`Failed to fill prompt: logger had no stored value for placeholder/id ${id}.`);
+			throw new Error(`Failed to fill prompt: logger had no stored value for placeholder/id ${id}.`);
 		}
 		let val = blankTranformers[id] ? blankTranformers[id](vals[id]) : vals[id].toString();
 		result = result.replace(re, val);

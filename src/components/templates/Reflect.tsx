@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Logger } from '../../data/logger';
 import { ReflectStep } from '../../data/story';
+import { SectionImageUrls } from '../../reducers/promptReducer';
 import { playerRoleToNumber, renderBoldText, replacePlayerText } from '../../utils/textUtils';
 import { Hint, SerifHeader, Text } from '../atoms/text/Text';
 import { ContentWithImageSlide } from '../organisms/ContentWithImageSlide';
@@ -9,7 +10,7 @@ interface Props {
 	logger: Logger;
 	step: ReflectStep;
 	landscapePlayer: 1 | 2;
-	sectionImageUrls: { [sectionIndex: number]: string };
+	sectionImageUrls: SectionImageUrls;
 	onNext: () => void;
 	allowNext: boolean; // Delegated up to parent because of DALL-E and possible socket callback.
 }

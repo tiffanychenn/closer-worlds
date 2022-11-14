@@ -10,12 +10,13 @@ import { ActionItem, Hint, Text } from '../atoms/text/Text';
 import { PlayerTokenHeader } from '../molecules/PlayerTokenHeader';
 import { SlideBackground } from '../molecules/SlideBackground';
 import { ContentWithImageSlide } from '../organisms/ContentWithImageSlide';
+import { SectionImageUrls } from '../../reducers/promptReducer';
 
 interface Props {
 	logger: Logger;
 	step: WritePromptStep;
 	landscapePlayer: 1 | 2;
-	sectionImageUrls: { [sectionIndex: number]: string };
+	sectionImageUrls: SectionImageUrls;
 	onNext: () => void;
 }
 

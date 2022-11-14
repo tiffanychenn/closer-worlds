@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { advanceStep, redoSection } from '../../actions/gameActions';
 import { Logger } from '../../data/logger';
 import { ImageStep, ReflectStep, StoryStep, StoryStepType, WritePromptStep } from '../../data/story';
+import { SectionImageUrls } from '../../reducers/promptReducer';
 import { State } from '../../reducers/rootReducer';
 import { getStoryStep } from '../../utils/utils';
 import { Text } from '../atoms/text/Text';
@@ -19,7 +20,7 @@ interface ReduxStateProps {
 	sectionIndex: number;
 	stepIndex: number;
 	landscapePlayer: 1 | 2;
-	sectionImageUrls: { [storySection: number]: string };
+	sectionImageUrls: SectionImageUrls;
 }
 
 interface ReduxDispatchProps {
