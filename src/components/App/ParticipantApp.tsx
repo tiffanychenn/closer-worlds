@@ -71,9 +71,12 @@ export default class ParticipantApp extends React.Component<{}> {
 							charLimit={20}
 							onLimitEdge={overLimit => console.log(`overLimit: ${overLimit}`)}/> */}
 
+			<BackgroundImage src="./assets/stars_bg_16.png"/>
 			<div style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: '20px'}}>
-				<img style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}} src="https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg"/>
-				<Panel>Hello, world!</Panel>
+				<Panel>
+					Hello, world!
+					<Button id="test-button" logger={this.logger} text="Next"/>
+				</Panel>
 			</div>
 		</div>;
 	}
