@@ -8,6 +8,8 @@
 - [ ] Components for info slides and for any other interfaces
   - Do we need anything for multiple input fields?
   - That one end slide if we still have it with a slider, etc.?
+  - [x] Word and character limit textboxes
+    - [ ] Move these into all of the previous templates!
 - [ ] Stress test everything
    - [ ] Generating images
    - [ ] Saving data

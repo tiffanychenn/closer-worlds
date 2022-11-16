@@ -16,6 +16,7 @@ import { WritePrompt } from "../templates/WritePrompt";
 import { Reflect } from "../templates/Reflect";
 import ConnectedStorySlide from "../pages/ConnectedStorySlide";
 import { LimitedTextBox } from "../organisms/LimitedTextBox";
+import { Panel } from "../atoms/containers/Panel";
 
 export default class ParticipantApp extends React.Component<{}> {
 	private logger: Logger;
@@ -63,12 +64,17 @@ export default class ParticipantApp extends React.Component<{}> {
 
 			{/* <ConnectedStorySlide logger={this.logger}/> */}
 
-			<LimitedTextBox id="test-limited-textbox"
+			{/* <LimitedTextBox id="test-limited-textbox"
 							logger={this.logger}
 							placeholder="Type something!"
 							length="long"
 							charLimit={20}
-							onLimitEdge={overLimit => console.log(`overLimit: ${overLimit}`)}/>
+							onLimitEdge={overLimit => console.log(`overLimit: ${overLimit}`)}/> */}
+
+			<div style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: '20px'}}>
+				<img style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}} src="https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg"/>
+				<Panel>Hello, world!</Panel>
+			</div>
 		</div>;
 	}
 }
