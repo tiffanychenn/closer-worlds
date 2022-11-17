@@ -3,22 +3,24 @@ import * as React from 'react';
 interface Props {
 	children: React.ReactNode;
 	bgOpacity: number;
+	flex: string;
 }
 
 export class Panel extends React.Component<Props> {
 	static defaultProps = {
 		bgOpacity: 0.4,
+		flex: 1,
 	};
 
 	render() {
-		const { children, bgOpacity } = this.props;
+		const { children, bgOpacity, flex } = this.props;
 
 		const rootStyle: React.CSSProperties = {
 			position: 'relative',
 			width: '100%',
 			height: '100%',
-
-			backdropFilter: 'blur(14px)', // TODO: Test
+			flex: flex,
+			backdropFilter: 'blur(14px)',
 		};
 
 		const containerStyle: React.CSSProperties = {

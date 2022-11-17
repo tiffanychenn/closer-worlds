@@ -6,7 +6,7 @@ import { Button } from '../atoms/input/Button';
 import { BackgroundImage } from '../atoms/image/BackgroundImage';
 import { ImageCard } from '../atoms/image/ImageCard';
 import LongTextBox from '../atoms/input/LongTextBox';
-import { ActionItem, Hint, Text } from '../atoms/text/Text';
+import { DiscussionPrompt, Hint, Text } from '../atoms/text/Text';
 import { PlayerTokenHeader } from '../molecules/PlayerTokenHeader';
 import { SlideBackground } from '../molecules/SlideBackground';
 import { ContentWithImageSlide } from '../organisms/ContentWithImageSlide';
@@ -30,7 +30,7 @@ export class WritePrompt extends React.Component<Props> {
 		// TODO: Change allowNext to actually reflect whether next should be allowed. Add state.
 		return <ContentWithImageSlide step={step} sectionImageUrls={sectionImageUrls} onNext={onNext} allowNext={true} logger={logger}>
 			<PlayerTokenHeader player={playerNumber}>{replacePlayerText(step.title, playerNumber)}</PlayerTokenHeader>
-			<ActionItem>Read the following out loud.</ActionItem>
+			<DiscussionPrompt>Read the following out loud.</DiscussionPrompt>
 			<Text>{renderBoldText(replacePlayerText(step.instructions, playerNumber))}</Text>
 			<Hint>Always feel free to discuss your ideas with your partners.</Hint> {/* TODO: Add ! icon before hint. */}
 			<LongTextBox logger={logger} id={step.id + '-blank'} placeholder={step.exampleText}/>

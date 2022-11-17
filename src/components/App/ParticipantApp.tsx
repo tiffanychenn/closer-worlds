@@ -17,6 +17,8 @@ import { Reflect } from "../templates/Reflect";
 import ConnectedStorySlide from "../pages/ConnectedStorySlide";
 import { LimitedTextBox } from "../organisms/LimitedTextBox";
 import { Panel } from "../atoms/containers/Panel";
+import { DiscussionPrompt, Hint, PageHeader, Text, TextSpacer, Warning } from "../atoms/text/Text";
+import { PlayerTokenHeader } from "../molecules/PlayerTokenHeader";
 
 export default class ParticipantApp extends React.Component<{}> {
 	private logger: Logger;
@@ -72,9 +74,19 @@ export default class ParticipantApp extends React.Component<{}> {
 							onLimitEdge={overLimit => console.log(`overLimit: ${overLimit}`)}/> */}
 
 			<BackgroundImage src="./assets/stars_bg_16.png"/>
-			<div style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: '20px'}}>
+			<div style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
+				<PlayerTokenHeader player={1}>Read out loud</PlayerTokenHeader>
 				<Panel>
-					Hello, world!
+					<PageHeader>This is a page header:</PageHeader>
+					<TextSpacer/>
+					<Text>This is some text.</Text>
+					<TextSpacer/>
+					<Hint>This is a hint.</Hint>
+					<TextSpacer/>
+					<Warning>This is a warning.</Warning>
+					<TextSpacer/>
+					<DiscussionPrompt>Player 1, please complete this action item.</DiscussionPrompt>
+					<TextSpacer/>
 					<Button id="test-button" logger={this.logger} text="Next"/>
 				</Panel>
 			</div>
