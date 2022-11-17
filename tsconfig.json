@@ -5,7 +5,8 @@
 		"noImplicitAny": true,
 		"module": "es6",
 		"target": "es5",
-		"jsx": "react",
+		"jsx": "react-jsx",
+		"jsxImportSource": "@emotion/react",
 		"allowJs": true,
 		"moduleResolution": "node"
 	}

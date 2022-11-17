@@ -35,10 +35,10 @@ export class Button extends LoggedFormElementComponent<Props, State> {
 			height: '50px',
 			stroke: 'none',
 			display: 'block',
-			transition: 'all 0.3s',
+			transition: 'all 0.2s',
 		};
 
-		const bgColor = disabled ? '#2C3978' : (hovered ? '#006FD6' : '#0084FD');
+		const bgColor = disabled ? '#2C3978' : (hovered ? '#0057BD' : '#0084FD');
 
 		if (useOutlineStyle) {
 			style.border = '2px solid ' + bgColor;

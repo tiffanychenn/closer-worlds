@@ -76,7 +76,7 @@ export default class ParticipantApp extends React.Component<{}> {
 
 			<BackgroundImage src="./assets/stars_bg_16.png"/>
 			<div style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
-				{/* <PlayerTokenHeader player={1}>Read out loud</PlayerTokenHeader>
+				<PlayerTokenHeader player={1}>Read out loud</PlayerTokenHeader>
 				<Panel>
 					<PageHeader>This is a page header:</PageHeader>
 					<TextSpacer/>
@@ -88,9 +88,13 @@ export default class ParticipantApp extends React.Component<{}> {
 					<TextSpacer/>
 					<DiscussionPrompt>Player 1, please complete this action item.</DiscussionPrompt>
 					<TextSpacer/>
+					<ShortTextBox id="test-short" logger={this.logger} placeholder="e.g., pink fluffy clouds and lots of trees"/>
+					<TextSpacer/>
+					<LongTextBox id="test-short" logger={this.logger} placeholder="e.g., pink fluffy clouds and lots of trees"/>
+					<TextSpacer/>
 					<Button id="test-button" logger={this.logger} text="Next"/>
-				</Panel> */}
-				<LoadingImageCard src="https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg" size="50%" allowNext={false} onNext={() => {}} buttonId="test-image-button" logger={this.logger}/>
+				</Panel>
+				{/* <LoadingImageCard src="https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg" size="50%" allowNext={false} onNext={() => {}} buttonId="test-image-button" logger={this.logger}/> */}
 			</div>
 		</div>;
 	}

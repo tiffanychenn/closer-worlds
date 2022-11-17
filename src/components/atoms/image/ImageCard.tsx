@@ -8,6 +8,9 @@ interface Props {
 	blur: string;
 }
 
+export const BLUE_BG_LIGHT_SHADOW = "0 0 50px 30px rgba(170, 189, 255, 0.5)";
+export const IMG_BG_DARK_SHADOW = ""; // TODO
+
 export class ImageCard extends React.Component<Props> {
 	static defaultProps = { size: '300px', sizeSide: 'width', blur: "0px" };
 

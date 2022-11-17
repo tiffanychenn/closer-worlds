@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Logger } from '../../data/logger';
-import { ImageCard } from '../atoms/image/ImageCard';
+import { BLUE_BG_LIGHT_SHADOW, ImageCard } from '../atoms/image/ImageCard';
 import { Button } from '../atoms/input/Button';
 
 interface Props {
@@ -48,7 +48,7 @@ export class LoadingImageCard extends React.Component<Props> {
 
 		return <div style={containerStyle}>
 			<ImageCard src={src} blur='25px' size="100%" sizeSide={sizeSide}
-					   boxShadow="0 0 50px 30px rgba(170, 189, 255, 0.5)"/>
+					   boxShadow={BLUE_BG_LIGHT_SHADOW}/>
 			<div style={centeredStyle}>{centeredEl}</div>
 		</div>;
 	}
