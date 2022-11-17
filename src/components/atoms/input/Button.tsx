@@ -6,6 +6,7 @@ export interface Props extends LoggedFormElementProps {
 	text?: string;
 	onClick?: () => void;
     disabled?: boolean;
+	useOutlineStyle: boolean;
 }
 
 interface State {
@@ -13,28 +14,41 @@ interface State {
 }
 
 export class Button extends LoggedFormElementComponent<Props, State> {
+	static defaultProps = { useOutlineStyle: false };
+
 	constructor(props: Props) {
 		super(props);
 		this.state = { hovered: false };
 	}
 	
 	render() {
-		const { disabled } = this.props;
+		const { disabled, useOutlineStyle } = this.props;
 		const { hovered } = this.state;
 
 		const style: React.CSSProperties = {
-			background: disabled ? '#2C3978' : (hovered ? '#006FD6' : '#0084FD'),
-			color: disabled ? '#848DB5' : 'white',
 			fontFamily: 'Sono',
 			fontWeight: 700, // bold
 			fontSize: '18px',
 			borderRadius: '12px',
-			width: '100px',
+			minWidth: '60px',
+			padding: '0 20px',
 			height: '50px',
-			border: 'none',
 			stroke: 'none',
 			display: 'block',
+			transition: 'all 0.3s',
 		};
+
+		const bgColor = disabled ? '#2C3978' : (hovered ? '#006FD6' : '#0084FD');
+
+		if (useOutlineStyle) {
+			style.border = '2px solid ' + bgColor;
+			style.background = 'transparent';
+			style.color = bgColor;
+		} else {
+			style.border = 'none',
+			style.background = bgColor;
+			style.color = disabled ? '#848DB5' : 'white';
+		}
 
 		return <button style={style} type="button" disabled={this.props.disabled} onClick={() => {
 			this.onAnyEvent('click');
