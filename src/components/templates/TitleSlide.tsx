@@ -25,10 +25,11 @@ export class TitleSlide extends React.Component<Props> {
 	render() {
 		const { logger, step, onNext } = this.props;
 
-		const headingStyle = {
-			"display": "flex",
-			"color": "white",
-			"margin": "auto"
+		const headingStyle:  React.CSSProperties = {
+			fontFamily: 'Sono',
+			color: "white",
+			margin: "auto",
+			fontWeight: 400,
 		}
 
 		const onClick = async () => {
@@ -36,6 +37,7 @@ export class TitleSlide extends React.Component<Props> {
 			const firstPlayerId = uuidv4();
 			const secondPlayerId = uuidv4();
 			initExperiment(experimentId, firstPlayerId, secondPlayerId);
+			onNext();
 		}
 		
 		// TODO: Properly style the mess below, haha.
