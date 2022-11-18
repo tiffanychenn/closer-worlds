@@ -98,6 +98,8 @@ export default class ParticipantApp extends React.Component<{}> {
 								labels={['Player 1', 'Player 2']}
 								orientation="horizontal"/>
 					<TextSpacer/>
+					<Slider id="test-slider" logger={this.logger} leftLabel="Not at all" rightLabel="Super accurate"/>
+					<TextSpacer/>
 					<Button id="test-button" logger={this.logger} text="Next"/>
 				</Panel>
 				{/* <LoadingImageCard src="https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg" size="50%" allowNext={false} onNext={() => {}} buttonId="test-image-button" logger={this.logger}/> */}

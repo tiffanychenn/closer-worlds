@@ -38,6 +38,6 @@ export default class LongTextBox extends LoggedFormElementComponent<Props> {
 		return <textarea css={style} placeholder={placeholder} onInput={e => {
 			this.onTextArea(e);
 			if (onInput) onInput(e);
-		}}></textarea>;
+		}} onClick={e => this.onAnyEvent('!click')}></textarea>;
 	}
 }

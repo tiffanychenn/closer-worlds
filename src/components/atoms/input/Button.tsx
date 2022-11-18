@@ -51,7 +51,7 @@ export class Button extends LoggedFormElementComponent<Props, State> {
 		}
 
 		return <button style={style} type="button" disabled={this.props.disabled} onClick={() => {
-			this.onAnyEvent('click');
+			this.onAnyEvent('!click');
 			if (this.props.onClick) {
 				this.props.onClick();
 			}

@@ -30,6 +30,7 @@ export class Panel extends React.Component<Props> {
 			top: 0, left: 0,
 			background: `rgba(3, 6, 28, ${bgOpacity})`,
 			borderRadius: '28px',
+			overflow: 'scroll',
 		};
 
 		// Brilliant solution by https://stackoverflow.com/a/66936639
@@ -47,12 +48,9 @@ export class Panel extends React.Component<Props> {
 		};
 
 		const innerStyle: React.CSSProperties = {
-			margin: '60px',
-			position: 'absolute',
-			top: 0,
-			left: 0,
-			right: 0,
-			bottom: 0,
+			boxSizing: 'border-box',
+			padding: '60px',
+			width: '100%',
 		};
 
 		return <div style={rootStyle}>
