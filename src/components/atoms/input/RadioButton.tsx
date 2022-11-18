@@ -18,7 +18,7 @@ export default class RadioButton extends LoggedFormElementComponent<Props> {
 			height: '24px',
 			border: '1px solid white',
 			borderRadius: '50%',
-			display: 'grid',
+			display: 'inline-grid',
 			placeContent: 'center',
 			':before': {
 				content: '""',
@@ -42,22 +42,18 @@ export default class RadioButton extends LoggedFormElementComponent<Props> {
 			fontFamily: 'PT Sans',
 			fontWeight: '700', // bold
 			margin: 0,
-		});
-
-		const containerStyle = css({
 			display: 'flex',
-			gap: '10px',
-			flexDirection: 'row',
 			alignItems: 'center',
+			gap: '10px',
 		});
 
-		return <div css={containerStyle}>
-            <input type="radio" id={id} name={name} css={style} onInput={e => {
+		return <label css={labelStyle}>
+			<input type="radio" id={id} name={name} css={style} onInput={e => {
 				this.onInput(e);
 				if (onInput) onInput(e);
 			}}></input>
-            <label css={labelStyle}>{label}</label>
-        </div>;
+			<span>{label}</span>
+		</label>;
 	}
 }
 
