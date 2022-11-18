@@ -20,6 +20,7 @@ import { Panel } from "../atoms/containers/Panel";
 import { DiscussionPrompt, Hint, PageHeader, Text, TextSpacer, Warning } from "../atoms/text/Text";
 import { PlayerTokenHeader } from "../molecules/PlayerTokenHeader";
 import { LoadingImageCard } from "../organisms/LoadingImageCard";
+import { RadioGroup } from "../atoms/input/RadioGroup";
 
 export default class ParticipantApp extends React.Component<{}> {
 	private logger: Logger;
@@ -91,6 +92,11 @@ export default class ParticipantApp extends React.Component<{}> {
 					<ShortTextBox id="test-short" logger={this.logger} placeholder="e.g., pink fluffy clouds and lots of trees"/>
 					<TextSpacer/>
 					<LongTextBox id="test-short" logger={this.logger} placeholder="e.g., pink fluffy clouds and lots of trees"/>
+					<TextSpacer/>
+					<RadioGroup id="test-radio-group" logger={this.logger}
+								ids={['test-radio-1', 'test-radio-2']}
+								labels={['Player 1', 'Player 2']}
+								orientation="horizontal"/>
 					<TextSpacer/>
 					<Button id="test-button" logger={this.logger} text="Next"/>
 				</Panel>

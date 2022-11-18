@@ -14,3 +14,13 @@ export function imagePathToUrl(path: string) {
 	// FIXME: This might not work depending on how images are served.
 	return `${API_BASE_URL}/${path}`;
 }
+
+export function spread<T>(iter: IterableIterator<T>): T[] {
+	let arr: T[] = [];
+	let curr = iter.next();
+	while (!curr.done) {
+		arr.push(curr.value);
+		curr = iter.next();
+	}
+	return arr;
+}
