@@ -1,5 +1,4 @@
-import { ImageStep, ReflectStep, StorySection, StoryStepType, WritePromptStep } from './../../data/story';
-import { StoryStep } from '../../data/story';
+import { ImageStep, ReflectStep, StorySection, StoryStepType, TitleStep, WritePromptStep } from './../../data/story';
 
 // TODO: Create and export an array of StorySteps below. More info to come once the types + Redux infra are done.
 // export const STORY_DATA: Array<StorySection> = [
@@ -34,9 +33,18 @@ import { StoryStep } from '../../data/story';
 // 	},
 // ];
 
-const PLACEHOLDER_IMG_URL = 'https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg';
+const PLACEHOLDER_IMG_URL = "./assets/stars_bg_16.png";
 
 export const STORY_DATA: Array<StorySection> = [
+	{
+		steps: [
+			{
+				type: StoryStepType.Title,
+				id: 'title',
+			} as TitleStep,
+		],
+	},
+
 	{
 		genPrompt: "a test that looks like {test-write-prompt-blank}",
 		steps: [

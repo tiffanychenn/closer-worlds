@@ -9,6 +9,7 @@ export enum StoryStepType {
 	WritePrompt = 'writeprompt',
 	Reflect = 'reflect',
 	Image = 'image', // possibly image selection
+	Title = 'title', // title slide, should also probably put experiment generation code here
 }
 
 export interface StoryStep {
@@ -71,5 +72,16 @@ export interface ImageStep extends StoryStep, IAllowsRedo {
 	type: typeof StoryStepType.Image;
 	cardImage: string | number
 }
+
+export interface TitleStep extends StoryStep {
+	type: typeof StoryStepType.Title;
+}
+
+export interface InfoStep extends StoryStep {
+	type: typeof StoryStepType.Info;
+	title: string;
+	instructions: string;
+}
+
 
 // TODO: We still need to build out all the sub-datatypes that I've suggested above, but I want to wait on that until we have a clearer idea of what we're for sure going with for the game. Currently brainstorming, but wanted to at least commit this.

@@ -66,8 +66,8 @@ export default class ParticipantApp extends React.Component<{}> {
 					 sectionImageUrls={[]}
 					 allowNext={true}
 					 onNext={() => {}}/> */}
-
-			{/* <ConnectedStorySlide logger={this.logger}/> */}
+			<BackgroundImage src="./assets/stars_bg_16.png"/>
+			<ConnectedStorySlide logger={this.logger}/>
 
 			{/* <LimitedTextBox id="test-limited-textbox"
 							logger={this.logger}
@@ -76,7 +76,7 @@ export default class ParticipantApp extends React.Component<{}> {
 							charLimit={20}
 							onLimitEdge={overLimit => console.log(`overLimit: ${overLimit}`)}/> */}
 
-			<BackgroundImage src="./assets/stars_bg_16.png"/>
+			{/* <BackgroundImage src="./assets/stars_bg_16.png"/>
 			<div style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
 				<PlayerTokenHeader player={1}>Read out loud</PlayerTokenHeader>
 				<Panel>
@@ -104,8 +104,7 @@ export default class ParticipantApp extends React.Component<{}> {
 					<Button id="test-button" logger={this.logger} text="Next"/>
 					<Tag id="test-tag" logger={this.logger} text="realistic" />
 				</Panel>
-				{/* <LoadingImageCard src="https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg" size="50%" allowNext={false} onNext={() => {}} buttonId="test-image-button" logger={this.logger}/> */}
-			</div>
+			</div> */}
 		</div>;
 	}
 }
