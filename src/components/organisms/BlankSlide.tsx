@@ -8,8 +8,6 @@ interface Props {
 	step: StoryStep;
 	sectionImageUrls: SectionImageUrls;
 	onTimeout?: () => void;
-	blurBG: boolean;
-	overlayBG: boolean;
 }
 
 // NOTE: This class does not include a "next" button or a timer tooltip! This is because
@@ -17,8 +15,6 @@ interface Props {
 // make all children component factories that take the timer and next button as
 // options, but I don't think that makes much sense.
 export class BlankSlide extends React.Component<Props> {
-	static defaultProps = { blurBG: true, overlayBG: true };
-
 	componentDidMount() {
 		if (this.props.step.timeLimitMs && this.props.step.timeLimitMs > 0) {
 			setTimeout(() => {
@@ -30,7 +26,7 @@ export class BlankSlide extends React.Component<Props> {
 	}
 
 	render() {
-		const { children, step, sectionImageUrls, blurBG, overlayBG } = this.props;
+		const { children, step, sectionImageUrls } = this.props;
 
 		const pageStyle: React.CSSProperties = {
 			position: 'absolute',
@@ -43,10 +39,12 @@ export class BlankSlide extends React.Component<Props> {
 			position: 'absolute',
 			top: 0, left: 0, bottom: 0, right: 0,
 			margin: '40px',
+			display: 'flex',
+			alignItems: 'center',
 		};
 
 		return <div style={pageStyle}>
-			<SlideBackground bgInfo={step} sectionImageUrls={sectionImageUrls} blur={blurBG} overlay={overlayBG}/>
+			<SlideBackground bgInfo={step} sectionImageUrls={sectionImageUrls}/>
 			<div style={contentStyle}>
 				{children}
 			</div>

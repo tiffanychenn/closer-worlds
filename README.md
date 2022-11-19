@@ -15,7 +15,7 @@
    - [ ] Saving data
 - [ ] Button permissions
   - [ ] Allow next on WritePrompt only when character limits are met
-    - [ ] Develop character limited textbox component
+    - [x] Develop character limited textbox component
   - [ ] Allow next on Reflect only when image has been generated and retrieved successfully
   - [ ] Allow redo on Image only when redo has not yet been used (we already have state for this)
 - [x] Make everything pretty

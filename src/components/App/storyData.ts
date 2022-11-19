@@ -20,11 +20,15 @@ export const STORY_DATA: Array<StorySection> = [
 				type: StoryStepType.WritePrompt,
 				id: 'test-write-prompt',
 				player: 'landscape',
-				title: "{Curr}, it's your turn to type.",
-				instructions: "You agree that {curr} will start with the landscape. {Curr} grabs the magic wand first.\nPicture a dream place that you would both want to live. It can be as fictional as you want, after all, you have a magic wand.\nThink about plant life, animal life. Are there rocks, lakes or rivers? What colors are very prominent?\nBriefly, describe the terrain and texture of the landscape.",
+				playerAction: 'Take the lead.',
+				title: "Describe the landscape:",
+				instructions: "You agree that {curr} will start with the landscape. {Curr} grabs the magic wand first.\n\nPicture a dream place that you would both want to live. It can be as fictional as you want, after all, you have a magic wand.\n\nThink about plant life, animal life. Are there rocks, lakes or rivers? What colors are very prominent?\n\nBriefly, describe the terrain and texture of the landscape.",
+				hint: "If you're not sure, feel free to ask {other}!",
 				exampleText: "e.g., big pink puffy trees near lots of rivers",
 				backgroundImage: STAR_BG,
+				// cardImage: PLACEHOLDER_IMG_URL,
 				timeLimitMs: 10000,
+				wordLimit: 5,
 				// TODO: Test with and without card image.
 			} as WritePromptStep,
 			{

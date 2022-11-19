@@ -3,17 +3,19 @@ import { Logger } from '../../data/logger';
 import { Panel } from '../atoms/containers/Panel';
 import { Button } from '../atoms/input/Button';
 
+export interface ButtonData {
+	id: string;
+	text: string;
+	onClick?: () => void;
+	disabled?: boolean;
+	useOutlineStyle?: boolean;
+};
+
 interface Props {
 	children: React.ReactNode;
 	bgOpacity?: number;
 	flex?: string;
-	buttons: Array<{
-		id: string,
-		text: string,
-		onClick?: () => void,
-		disabled?: boolean,
-		useOutlineStyle?: boolean,
-	}>;
+	buttons: Array<ButtonData>;
 	logger: Logger;
 }
 
