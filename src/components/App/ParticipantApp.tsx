@@ -21,6 +21,7 @@ import { DiscussionPrompt, Hint, PageHeader, Text, TextSpacer, Warning } from ".
 import { PlayerTokenHeader } from "../molecules/PlayerTokenHeader";
 import { LoadingImageCard } from "../organisms/LoadingImageCard";
 import { RadioGroup } from "../atoms/input/RadioGroup";
+import { Tag } from "../atoms/input/Tag";
 
 export default class ParticipantApp extends React.Component<{}> {
 	private logger: Logger;
@@ -65,7 +66,7 @@ export default class ParticipantApp extends React.Component<{}> {
 					 sectionImageUrls={[]}
 					 allowNext={true}
 					 onNext={() => {}}/> */}
-
+			<BackgroundImage src="./assets/stars_bg_16.png"/>
 			<ConnectedStorySlide logger={this.logger}/>
 
 			{/* <LimitedTextBox id="test-limited-textbox"
@@ -101,6 +102,7 @@ export default class ParticipantApp extends React.Component<{}> {
 					<Slider id="test-slider" logger={this.logger} leftLabel="Not at all" rightLabel="Super accurate"/>
 					<TextSpacer/>
 					<Button id="test-button" logger={this.logger} text="Next"/>
+					<Tag id="test-tag" logger={this.logger} text="realistic" />
 				</Panel>
 				<LoadingImageCard src="https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg" size="50%" allowNext={false} onNext={() => {}} buttonId="test-image-button" logger={this.logger}/>
 			</div> */}
