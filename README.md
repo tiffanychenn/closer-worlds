@@ -3,7 +3,7 @@
 ## Updated To-Do
 - [ ] Experiment generation
   - [ ] Require app to start with this first (add this to game state, route on ParticipantApp)
-- [x] Add API_BASE_URL 
+- [x] Add API_BASE_URL
   - [ ] Ensure that imagePathToUrl function (in utils.tsx) works (basically does image hosting work correctly)
 - [ ] Components for info slides and for any other interfaces
   - Do we need anything for multiple input fields?
@@ -18,8 +18,8 @@
     - [ ] Develop character limited textbox component
   - [ ] Allow next on Reflect only when image has been generated and retrieved successfully
   - [ ] Allow redo on Image only when redo has not yet been used (we already have state for this)
-- [ ] Make everything pretty
-  - [ ] Add icons to tooltips
+- [x] Make everything pretty
+  - [x] ~Add icons to tooltips~ (Actually no longer necessary, cancelled)
 
 ----
 
