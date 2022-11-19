@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Logger } from '../../data/logger';
 import { Panel } from '../atoms/containers/Panel';
 import { Button } from '../atoms/input/Button';
+import { TIMEOUT_WARNING_TEXT, Warning } from '../atoms/text/Text';
 
 export interface ButtonData {
 	id: string;
@@ -17,11 +18,14 @@ interface Props {
 	flex?: string;
 	buttons: Array<ButtonData>;
 	logger: Logger;
+	showTimeout: boolean;
 }
 
 export class ButtonPanel extends React.Component<Props> {
+	static defaultProps = { showTimeout: false };
+
 	render() {
-		const { children, bgOpacity, flex, buttons, logger } = this.props;
+		const { children, bgOpacity, flex, buttons, logger, showTimeout } = this.props;
 
 		const containerStyle: React.CSSProperties = {
 			display: 'flex',
@@ -43,17 +47,28 @@ export class ButtonPanel extends React.Component<Props> {
 			flex: 'none',
 			display: 'flex',
 			gap: '20px',
+			alignItems: 'center',
+		};
+
+		const warningStyle: React.CSSProperties = {
+			opacity: showTimeout ? 1 : 0,
+			transition: 'opacity 0.5s',
+			maxWidth: '400px',
 		};
 
 		return <Panel bgOpacity={bgOpacity} flex={flex} scroll={false}>
 			<div style={containerStyle}>
 				<div style={childStyle}>{children}</div>
-				<div style={buttonsStyle}>{...buttons.map(b => 
-					<Button logger={logger} id={b.id}
-							text={b.text} onClick={b.onClick}
-							disabled={b.disabled}
-							useOutlineStyle={b.useOutlineStyle}/>
-				)}</div>
+				<div style={buttonsStyle}>{
+					[
+						...buttons.map(b => 
+							<Button logger={logger} id={b.id}
+								text={b.text} onClick={b.onClick}
+								disabled={b.disabled}
+								useOutlineStyle={b.useOutlineStyle}/>
+						),
+						<div style={warningStyle}><Warning>{TIMEOUT_WARNING_TEXT}</Warning></div>
+					]}</div>
 			</div>
 		</Panel>;
 	}

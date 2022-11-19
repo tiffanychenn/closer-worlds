@@ -82,14 +82,9 @@ export class WritePrompt extends React.Component<Props, State> {
 			maxWidth: cardImage ? undefined : 'max(50vw, 600px)',
 		};
 
-		const warningStyle: React.CSSProperties = {
-			opacity: hasTimedOut ? 1 : 0,
-			transition: 'opacity 0.5s',
-		};
-
 		const content = <div style={containerStyle}>
 			<PlayerTokenHeader player={playerNumber}>{replacePlayerText(step.playerAction, playerNumber)}</PlayerTokenHeader>
-			<ButtonPanel logger={logger} bgOpacity={bgOpacity} buttons={[nextButton]}>
+			<ButtonPanel logger={logger} bgOpacity={bgOpacity} buttons={[nextButton]} showTimeout={hasTimedOut}>
 				<div style={contentStyle}>
 					<PageHeader>{replacePlayerText(step.title, playerNumber)}</PageHeader>
 					<Text>{renderBoldText(replacePlayerText(step.instructions, playerNumber))}</Text>
@@ -102,7 +97,6 @@ export class WritePrompt extends React.Component<Props, State> {
 									placeholder={step.exampleText}
 									onLimitEdge={x => this.onLimitEdge(x)}
 									onInput={x => this.onInput(x)}/>
-					<div style={warningStyle}><Warning>{TIMEOUT_WARNING_TEXT}</Warning></div>
 				</div>
 			</ButtonPanel>
 		</div>;
