@@ -7,7 +7,7 @@ export const API_ACTION_NAMES = {
 	SET_IS_FETCHING_IMAGE: 'SET_IS_FETCHING_IMAGE',
 };
 
-export const API_BASE_URL = "localhost:5000"; // TODO
+export const API_BASE_URL = "http://localhost:5000";
 
 export interface SetIsFetchingImageAction {
 	type: typeof API_ACTION_NAMES.SET_IS_FETCHING_IMAGE;
