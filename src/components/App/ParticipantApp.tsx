@@ -22,6 +22,7 @@ import { PlayerTokenHeader } from "../molecules/PlayerTokenHeader";
 import { LoadingImageCard } from "../organisms/LoadingImageCard";
 import { RadioGroup } from "../atoms/input/RadioGroup";
 import { Tag } from "../atoms/input/Tag";
+import { ButtonPanel } from "../molecules/ButtonPanel";
 
 export default class ParticipantApp extends React.Component<{}> {
 	private logger: Logger;
@@ -66,8 +67,8 @@ export default class ParticipantApp extends React.Component<{}> {
 					 sectionImageUrls={[]}
 					 allowNext={true}
 					 onNext={() => {}}/> */}
-			<BackgroundImage src="./assets/stars_bg_16.png"/>
-			<ConnectedStorySlide logger={this.logger}/>
+			{/* <BackgroundImage src="./assets/stars_bg_16.png"/>
+			<ConnectedStorySlide logger={this.logger}/> */}
 
 			{/* <LimitedTextBox id="test-limited-textbox"
 							logger={this.logger}
@@ -106,6 +107,35 @@ export default class ParticipantApp extends React.Component<{}> {
 				</Panel>
 				<LoadingImageCard src="https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg" size="50%" allowNext={false} onNext={() => {}} buttonId="test-image-button" logger={this.logger}/>
 			</div> */}
+
+			<BackgroundImage src="./assets/stars_bg_16.png"/>
+			<ButtonPanel logger={this.logger} buttons={[{
+				id: 'test-next-button',
+				text: 'Next',
+			}, {
+				id: 'test-redo-button',
+				text: 'Redo',
+				useOutlineStyle: true,
+			}]}>
+				<PageHeader>This is a page header:</PageHeader>
+				<TextSpacer/>
+				<Text>This is some text.</Text>
+				<TextSpacer/>
+				<Hint>This is a hint.</Hint>
+				<TextSpacer/>
+				<Warning>This is a warning.</Warning>
+				<TextSpacer/>
+				<DiscussionPrompt>Player 1, please complete this action item.</DiscussionPrompt>
+				<TextSpacer/>
+				<LongTextBox id="test-long" logger={this.logger} placeholder="e.g., pink fluffy clouds and lots of trees"/>
+				<TextSpacer/>
+				<RadioGroup id="test-radio-group" logger={this.logger}
+							ids={['test-radio-1', 'test-radio-2']}
+							labels={['Player 1', 'Player 2']}
+							orientation="horizontal"/>
+				<TextSpacer/>
+				<Slider id="test-slider" logger={this.logger} leftLabel="Not at all" rightLabel="Super accurate"/>
+			</ButtonPanel>
 		</div>;
 	}
 }

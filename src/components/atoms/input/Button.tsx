@@ -39,15 +39,16 @@ export class Button extends LoggedFormElementComponent<Props, State> {
 		};
 
 		const bgColor = disabled ? '#2C3978' : (hovered ? '#0057BD' : '#0084FD');
+		const textColor = disabled ? '#848DB5' : 'white';
 
 		if (useOutlineStyle) {
 			style.border = '2px solid ' + bgColor;
 			style.background = 'transparent';
-			style.color = bgColor;
+			style.color = textColor;
 		} else {
 			style.border = 'none',
 			style.background = bgColor;
-			style.color = disabled ? '#848DB5' : 'white';
+			style.color = textColor;
 		}
 
 		return <button style={style} type="button" disabled={this.props.disabled} onClick={() => {
