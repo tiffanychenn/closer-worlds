@@ -19,7 +19,7 @@ export class BlankTwoColumnSlide extends React.Component<Props> {
 			flexDirection: 'row',
 			justifyContent: 'space-between',
 			alignItems: 'center',
-			gap: '40px',
+			gap: '60px',
 		};
 		const childStyle: React.CSSProperties = {
 			flex: 1,

@@ -137,7 +137,9 @@ export default class ParticipantApp extends React.Component<{}> {
 				<TextSpacer/>
 				<Slider id="test-slider" logger={this.logger} leftLabel="Not at all" rightLabel="Super accurate"/>
 			</ButtonPanel> */}
-			<WritePrompt logger={this.logger} step={STORY_DATA[1].steps[0] as WritePromptStep} landscapePlayer={1} sectionImageUrls={[]}/>
+
+			{/* <WritePrompt logger={this.logger} step={STORY_DATA[1].steps[0] as WritePromptStep} landscapePlayer={1} sectionImageUrls={[]}/> */}
+			<Reflect logger={this.logger} step={STORY_DATA[1].steps[1] as ReflectStep} landscapePlayer={1} sectionImageUrls={[]} allowNext={true}/>
 		</div>;
 	}
 }

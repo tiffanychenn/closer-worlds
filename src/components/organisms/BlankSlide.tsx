@@ -38,9 +38,10 @@ export class BlankSlide extends React.Component<Props> {
 		const contentStyle: React.CSSProperties = {
 			position: 'absolute',
 			top: 0, left: 0, bottom: 0, right: 0,
-			margin: '40px',
+			margin: '40px auto',
 			display: 'flex',
 			alignItems: 'center',
+			maxWidth: '1800px', // FIXME: Do we want this? I think it helps with ridiculously large images, but there might be another, better fix for that.
 		};
 
 		return <div style={pageStyle}>

@@ -61,7 +61,7 @@ export class WritePrompt extends React.Component<Props, State> {
 
 		const allowNext = hasText && !isOverLimit;
 		const nextButton: ButtonData = {
-			id: step.id + '-button',
+			id: step.id + '-next-button',
 			text: 'Next',
 			onClick: onNext,
 			disabled: !allowNext,

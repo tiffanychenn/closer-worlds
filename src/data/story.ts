@@ -70,11 +70,12 @@ export interface ReflectStep extends StoryStep {
 	type: typeof StoryStepType.Reflect;
 	player: 'landscape' | 'buildings' | 'both';
 	question: string;
+	cardImage: string | number;
 }
 
 export interface ImageStep extends StoryStep, IAllowsRedo {
 	type: typeof StoryStepType.Image;
-	cardImage: string | number
+	cardImage: string | number;
 }
 
 export interface TitleStep extends StoryStep {

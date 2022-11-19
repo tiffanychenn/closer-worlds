@@ -29,7 +29,6 @@ export const STORY_DATA: Array<StorySection> = [
 				// cardImage: PLACEHOLDER_IMG_URL,
 				timeLimitMs: 10000,
 				wordLimit: 5,
-				// TODO: Test with and without card image.
 			} as WritePromptStep,
 			{
 				type: StoryStepType.Reflect,
@@ -37,6 +36,7 @@ export const STORY_DATA: Array<StorySection> = [
 				player: 'landscape',
 				question: "{Curr}, what about this landscape makes you most excited and why?",
 				backgroundImage: STAR_BG,
+				cardImage: PLACEHOLDER_IMG_URL,
 			} as ReflectStep,
 			{
 				type: StoryStepType.Image,
