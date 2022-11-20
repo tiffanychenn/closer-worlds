@@ -1,20 +1,24 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import * as React from "react";
 import { Logger } from "../../../data/logger";
 import { LoggedFormElementComponent, LoggedFormElementProps } from "./LoggedFormElement";
 import ShortTextBox from "./ShortTextBox";
+import { css } from '@emotion/react';
 
 export interface Props extends LoggedFormElementProps {
-	text?: string;
-	onClick?: () => void;
+	text: string;
+	onClick?: (isSelected: boolean) => void;
     disabled?: boolean;
     isInput?: boolean;
 	useOutlineStyle: boolean;
+	onAddTag?: (value: string) => void;
+	startAsSelected?: boolean;
 }
 
 interface State {
 	selected: boolean;
+	inputValue: string;
 }
 
 export class Tag extends LoggedFormElementComponent<Props, State> {
@@ -22,7 +26,8 @@ export class Tag extends LoggedFormElementComponent<Props, State> {
 
 	constructor(props: Props) {
 		super(props);
-		this.state = { selected: false };
+		const selected = props.startAsSelected || false;
+		this.state = { selected: selected, inputValue: "" };
 	}
 	
 	render() {
@@ -69,11 +74,98 @@ export class Tag extends LoggedFormElementComponent<Props, State> {
 		return <button style={style} type="button" disabled={this.props.disabled} onClick={() => {
 			this.onAnyEvent('!click');
 			if (this.props.onClick) {
-				this.props.onClick();
+				this.props.onClick(!this.state.selected);
 			}
-            this.setState({selected: !this.state.selected})
-		}}>{isInput ? <input style={inputStyle} type="text" onInput={e => {
-			this.onInput(e);
-		}}></input> : this.props.text} <FontAwesomeIcon icon={faPlus}  /></button>
+			if (!isInput) this.setState({selected: !this.state.selected})
+		}}>
+			{isInput ? <input style={inputStyle} type="text" placeholder={this.props.text ? this.props.text.toLowerCase(): undefined} onInput={e => {
+				this.onInput(e);
+				this.setState({inputValue: e.currentTarget.value});
+			}}></input> : this.props.text.toLowerCase()}
+			<div style={{width: '10px', display: 'inline-block'}}></div>
+			<FontAwesomeIcon icon={selected ? faMinus : faPlus} onClick={() => {
+				if (isInput && this.state.inputValue.length > 0 && this.props.onAddTag) {
+					this.props.onAddTag(this.state.inputValue);
+				}
+			}}/>
+		</button>
+	}
+}
+
+interface InputProps extends LoggedFormElementProps {
+	placeholder?: string;
+	onAddTag?: (value: string) => void;
+}
+
+interface InputState {
+	value: string;
+}
+
+export class TagInput extends LoggedFormElementComponent<InputProps, InputState> {
+	constructor(props: InputProps) {
+		super(props);
+		this.state = { value: "" };
+	}
+
+	render() {
+		const { placeholder, onAddTag } = this.props;
+		const { value } = this.state;
+
+		const style = css({
+			fontSize: '18px',
+			borderRadius: '44px',
+			minWidth: '60px',
+			padding: '0 20px',
+			height: '50px',
+			stroke: 'none',
+			display: 'block',
+			transition: 'all 0.2s',
+			border: '2px solid white',
+			background: 'transparent',
+			color: 'white',
+			opacity: 0.5,
+			':hover': {
+				opacity: 1,
+			},
+		});
+
+		const inputStyle = css({
+			background: 'transparent',
+			border: 'none',
+			stroke: 'none',
+			outline: 'none',
+			fontFamily: 'PT Sans',
+			fontSize: '18px',
+			color: 'white',
+			transition: 'all 0.2s',
+			width: '150px',
+			'::placeholder': {
+				color: 'rgba(255, 255, 255, 0.5)',
+			},
+		});
+
+		const plusStyle = css({
+			display: 'inline-block',
+			transform: 'scale(1)',
+			transition: 'all 0.2s',
+			':hover': {
+				transform: 'scale(1.25)',
+			},
+		});
+
+		return <button css={style} type="button">
+			<input css={inputStyle} placeholder={placeholder ? placeholder.toLowerCase() : undefined} onInput={e => {
+				this.setState({value: e.currentTarget.value});
+				this.onInput(e);
+			}}/>
+			<div style={{width: '10px', display: 'inline-block'}}></div>
+			<div css={plusStyle}>
+				<FontAwesomeIcon icon={faPlus} onClick={() => {
+					if (value.length > 0 && onAddTag) {
+						onAddTag(value);
+					}
+				}}/>
+			</div>
+		</button>;
 	}
 }

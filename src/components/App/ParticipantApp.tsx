@@ -21,10 +21,11 @@ import { DiscussionPrompt, Hint, PageHeader, Text, TextSpacer, Warning } from ".
 import { PlayerTokenHeader } from "../molecules/PlayerTokenHeader";
 import { LoadingImageCard } from "../organisms/LoadingImageCard";
 import { RadioGroup } from "../atoms/input/RadioGroup";
-import { Tag } from "../atoms/input/Tag";
+import { Tag, TagInput } from "../atoms/input/Tag";
 import { ButtonPanel } from "../molecules/ButtonPanel";
 import { STORY_DATA } from "./storyData";
 import { InfoSlide } from "../templates/InfoSlide";
+import { TagGroup } from "../atoms/input/TagGroup";
 
 export default class ParticipantApp extends React.Component<{}> {
 	private logger: Logger;
@@ -110,7 +111,7 @@ export default class ParticipantApp extends React.Component<{}> {
 				<LoadingImageCard src="https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg" size="50%" allowNext={false} onNext={() => {}} buttonId="test-image-button" logger={this.logger}/>
 			</div> */}
 
-			{/* <BackgroundImage src="./assets/stars_bg_16.png"/>
+			<BackgroundImage src="./assets/stars_bg_16.png"/>
 			<ButtonPanel logger={this.logger} buttons={[{
 				id: 'test-next-button',
 				text: 'Next',
@@ -137,12 +138,16 @@ export default class ParticipantApp extends React.Component<{}> {
 							orientation="horizontal"/>
 				<TextSpacer/>
 				<Slider id="test-slider" logger={this.logger} leftLabel="Not at all" rightLabel="Super accurate"/>
-			</ButtonPanel> */}
+				{/* <Tag id="test-tag" logger={this.logger} text="test"/>
+				<TagInput id="test-tag-input" logger={this.logger} placeholder="other..."/> */}
+				<TextSpacer/>
+				<TagGroup id="test-tags" logger={this.logger} tags={['hello', 'world']} includeInput={true}/>
+			</ButtonPanel>
 
 			{/* <WritePrompt logger={this.logger} step={STORY_DATA[1].steps[0] as WritePromptStep} landscapePlayer={1} sectionImageUrls={[]}/> */}
 			{/* <Reflect logger={this.logger} step={STORY_DATA[1].steps[1] as ReflectStep} landscapePlayer={1} sectionImageUrls={[]} allowNext={true}/> */}
 			{/* <DisplayGeneratedImage logger={this.logger} step={STORY_DATA[1].steps[2] as ImageStep} sectionImageUrls={[]}/> */}
-			<InfoSlide logger={this.logger} step={STORY_DATA[0].steps[1] as InfoStep} sectionImageUrls={[]} landscapePlayer={1}/>
+			{/* <InfoSlide logger={this.logger} step={STORY_DATA[0].steps[1] as InfoStep} sectionImageUrls={[]} landscapePlayer={1}/> */}
 		</div>;
 	}
 }

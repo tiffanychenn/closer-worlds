@@ -23,7 +23,7 @@ interface Props {
 	onNext: () => void;
 }
 
-class TitleSlide extends React.Component<Props> {
+export class TitleSlide extends React.Component<Props> {
 	render() {
 		const { logger, step, onNext } = this.props;
 
