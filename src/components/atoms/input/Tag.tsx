@@ -111,6 +111,12 @@ export class TagInput extends LoggedFormElementComponent<InputProps, InputState>
 		this.state = { value: "" };
 	}
 
+	private addTag(value: string) {
+		if (value.length > 0 && this.props.onAddTag) {
+			this.props.onAddTag(value);
+		}
+	}
+
 	render() {
 		const { placeholder, onAddTag } = this.props;
 		const { value } = this.state;
@@ -158,17 +164,21 @@ export class TagInput extends LoggedFormElementComponent<InputProps, InputState>
 		});
 
 		return <button css={style} type="button">
-			<input css={inputStyle} placeholder={placeholder ? placeholder.toLowerCase() : undefined} onInput={e => {
-				this.setState({value: e.currentTarget.value});
-				this.onInput(e);
-			}}/>
+			<input css={inputStyle}
+				   placeholder={placeholder ? placeholder.toLowerCase() : undefined}
+				   onKeyUp={e => {
+						if (e.key == "Enter") {
+							this.addTag(value);
+						}
+				   }}
+				   onInput={e => {
+						this.setState({value: e.currentTarget.value});
+						this.onInput(e);
+				   }}
+			/>
 			<div style={{width: '10px', display: 'inline-block'}}></div>
 			<div css={plusStyle}>
-				<FontAwesomeIcon icon={faPlus} onClick={() => {
-					if (value.length > 0 && onAddTag) {
-						onAddTag(value);
-					}
-				}}/>
+				<FontAwesomeIcon icon={faPlus} onClick={() => this.addTag(value)}/>
 			</div>
 		</button>;
 	}
