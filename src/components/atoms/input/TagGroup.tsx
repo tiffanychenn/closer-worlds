@@ -58,7 +58,7 @@ export class TagGroup extends LoggedFormElementComponent<Props, State> {
 								  id={`${id}-!input`}
 								  placeholder={placeholder}
 								  onAddTag={value => {
-				if (selected.indexOf(value.toLowerCase()) < 0 && addedValues.indexOf(value.toLowerCase()) < 0) {
+				if (tags.indexOf(value.toLowerCase()) < 0 && addedValues.indexOf(value.toLowerCase()) < 0) {
 					const sel = [...selected, value];
 					this.onAnyEvent(JSON.stringify(sel));
 					this.setState({
