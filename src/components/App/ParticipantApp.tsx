@@ -22,6 +22,8 @@ import { PlayerTokenHeader } from "../molecules/PlayerTokenHeader";
 import { LoadingImageCard } from "../organisms/LoadingImageCard";
 import { RadioGroup } from "../atoms/input/RadioGroup";
 import { Tag } from "../atoms/input/Tag";
+import { ButtonPanel } from "../molecules/ButtonPanel";
+import { STORY_DATA } from "./storyData";
 
 export default class ParticipantApp extends React.Component<{}> {
 	private logger: Logger;
@@ -34,7 +36,7 @@ export default class ParticipantApp extends React.Component<{}> {
 	}
 
 	render() {
-		return <div style={{background: 'white'/*'#050610'*/, position: 'relative', width: '100vw', height: '100vh'}}>
+		return <div style={{position: 'relative', width: '100vw', height: '100vh'}}>
 			{/* <BackgroundImage src="https://images.nightcafe.studio/jobs/24JEyUeOhCuirWEDRNil/24JEyUeOhCuirWEDRNil_4x.jpg?tr=w-1600,c-at_max"
 							 blur="15px" overlayColor="linear-gradient(#1C262E, #050610)" overlayOpacity={0.8}/>
 			<div style={{position: 'absolute', top: 0, left: 0, margin: '40px'}}>
@@ -66,8 +68,8 @@ export default class ParticipantApp extends React.Component<{}> {
 					 sectionImageUrls={[]}
 					 allowNext={true}
 					 onNext={() => {}}/> */}
-			<BackgroundImage src="./assets/stars_bg_16.png"/>
-			<ConnectedStorySlide logger={this.logger}/>
+			{/* <BackgroundImage src="./assets/stars_bg_16.png"/>
+			<ConnectedStorySlide logger={this.logger}/> */}
 
 			{/* <LimitedTextBox id="test-limited-textbox"
 							logger={this.logger}
@@ -104,7 +106,40 @@ export default class ParticipantApp extends React.Component<{}> {
 					<Button id="test-button" logger={this.logger} text="Next"/>
 					<Tag id="test-tag" logger={this.logger} text="realistic" />
 				</Panel>
+				<LoadingImageCard src="https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg" size="50%" allowNext={false} onNext={() => {}} buttonId="test-image-button" logger={this.logger}/>
 			</div> */}
+
+			{/* <BackgroundImage src="./assets/stars_bg_16.png"/>
+			<ButtonPanel logger={this.logger} buttons={[{
+				id: 'test-next-button',
+				text: 'Next',
+			}, {
+				id: 'test-redo-button',
+				text: 'Redo',
+				useOutlineStyle: true,
+			}]}>
+				<PageHeader>This is a page header:</PageHeader>
+				<TextSpacer/>
+				<Text>This is some text.</Text>
+				<TextSpacer/>
+				<Hint>This is a hint.</Hint>
+				<TextSpacer/>
+				<Warning>This is a warning.</Warning>
+				<TextSpacer/>
+				<DiscussionPrompt>Player 1, please complete this action item.</DiscussionPrompt>
+				<TextSpacer/>
+				<LongTextBox id="test-long" logger={this.logger} placeholder="e.g., pink fluffy clouds and lots of trees"/>
+				<TextSpacer/>
+				<RadioGroup id="test-radio-group" logger={this.logger}
+							ids={['test-radio-1', 'test-radio-2']}
+							labels={['Player 1', 'Player 2']}
+							orientation="horizontal"/>
+				<TextSpacer/>
+				<Slider id="test-slider" logger={this.logger} leftLabel="Not at all" rightLabel="Super accurate"/>
+			</ButtonPanel> */}
+
+			{/* <WritePrompt logger={this.logger} step={STORY_DATA[1].steps[0] as WritePromptStep} landscapePlayer={1} sectionImageUrls={[]}/> */}
+			<Reflect logger={this.logger} step={STORY_DATA[1].steps[1] as ReflectStep} landscapePlayer={1} sectionImageUrls={[]} allowNext={true}/>
 		</div>;
 	}
 }

@@ -8,18 +8,19 @@ interface Props {
 	allowNext: boolean; // Once done loading, allow next.
 	onNext?: () => void;
 	
-	size?: string; // Includes CSS units.
+	size: string; // Includes CSS units.
 	sizeSide: 'width' | 'height';
+	boxShadow: string;
 
 	buttonId: string;
 	logger: Logger;
 }
 
 export class LoadingImageCard extends React.Component<Props> {
-	static defaultProps = { sizeSide: 'width' };
+	static defaultProps = { sizeSide: 'width', size: '100%', boxShadow: BLUE_BG_LIGHT_SHADOW };
 	
 	render() {
-		const { allowNext, onNext, src, size, sizeSide, buttonId, logger } = this.props;
+		const { allowNext, onNext, src, size, sizeSide, buttonId, logger, boxShadow } = this.props;
 		
 		const centeredStyle: React.CSSProperties = {
 			position: 'absolute',
@@ -48,7 +49,7 @@ export class LoadingImageCard extends React.Component<Props> {
 
 		return <div style={containerStyle}>
 			<ImageCard src={src} blur='25px' size="100%" sizeSide={sizeSide}
-					   boxShadow={BLUE_BG_LIGHT_SHADOW}/>
+					   boxShadow={boxShadow}/>
 			<div style={centeredStyle}>{centeredEl}</div>
 		</div>;
 	}

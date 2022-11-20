@@ -3,23 +3,34 @@
 ## Updated To-Do
 - [ ] Experiment generation
   - [ ] Require app to start with this first (add this to game state, route on ParticipantApp)
-- [x] Add API_BASE_URL 
+- [x] Add API_BASE_URL
   - [ ] Ensure that imagePathToUrl function (in utils.tsx) works (basically does image hosting work correctly)
 - [ ] Components for info slides and for any other interfaces
   - Do we need anything for multiple input fields?
   - That one end slide if we still have it with a slider, etc.?
   - [x] Word and character limit textboxes
-    - [ ] Move these into all of the previous templates!
+    - [x] Move these into all of the previous templates!
 - [ ] Stress test everything
    - [ ] Generating images
+   - [ ] Make sure images successfully show up in the next section, not just the current generate section, after generation
    - [ ] Saving data
 - [ ] Button permissions
-  - [ ] Allow next on WritePrompt only when character limits are met
-    - [ ] Develop character limited textbox component
+  - [x] Allow next on WritePrompt only when character limits are met
+    - [x] Develop character limited textbox component
   - [ ] Allow next on Reflect only when image has been generated and retrieved successfully
   - [ ] Allow redo on Image only when redo has not yet been used (we already have state for this)
-- [ ] Make everything pretty
-  - [ ] Add icons to tooltips
+- [x] Make everything pretty
+  - [x] ~Add icons to tooltips~ (Actually no longer necessary, cancelled)
+- [ ] Finish all steps in UI (not necessarily hooked up to state)
+  - [ ] Title slide
+  - [ ] Info slides with no form components, sometimes with images
+  - [x] Write prompt
+  - [x] Reflect
+  - [ ] View generated image
+  - [ ] Slides with different form components
+- [ ] Stretch goal: make surveys completely using our platform
+  - [ ] Smooth way to get participants to take the survey on two laptops while still having data to our API
+  - [ ] Possibly more form components, like checkboxes, Likert scales, etc.
 
 ----
 

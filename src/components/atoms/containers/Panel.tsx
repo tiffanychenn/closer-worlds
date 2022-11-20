@@ -4,16 +4,18 @@ interface Props {
 	children: React.ReactNode;
 	bgOpacity: number;
 	flex: string;
+	scroll: boolean; // If false, acts like a fixed absolute container
 }
 
 export class Panel extends React.Component<Props> {
 	static defaultProps = {
 		bgOpacity: 0.4,
 		flex: 1,
+		scroll: true,
 	};
 
 	render() {
-		const { children, bgOpacity, flex } = this.props;
+		const { children, bgOpacity, flex, scroll } = this.props;
 
 		const rootStyle: React.CSSProperties = {
 			position: 'relative',
@@ -30,7 +32,7 @@ export class Panel extends React.Component<Props> {
 			top: 0, left: 0,
 			background: `rgba(3, 6, 28, ${bgOpacity})`,
 			borderRadius: '28px',
-			overflow: 'scroll',
+			// overflow: 'scroll',
 		};
 
 		// Brilliant solution by https://stackoverflow.com/a/66936639
@@ -51,12 +53,25 @@ export class Panel extends React.Component<Props> {
 			boxSizing: 'border-box',
 			padding: '60px',
 			width: '100%',
+			height: '100%',
+			overflow: scroll ? 'scroll' : 'visible',
 		};
+
+		const absoluteContentStyle: React.CSSProperties = {
+			position: 'relative',
+			width: '100%',
+			height: '100%',
+		}
 
 		return <div style={rootStyle}>
 			<div style={containerStyle}>
 				<div style={innerStyle}>
-					{children}
+					{scroll ?
+						children :
+						<div style={absoluteContentStyle}>
+							{children}
+						</div>
+					}
 				</div>
 			</div>
 			<div style={pseudoStyle}></div>

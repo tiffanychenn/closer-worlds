@@ -3,7 +3,7 @@ import { Logger } from '../../data/logger';
 import { renderBoldText } from '../../utils/textUtils';
 import LongTextBox from '../atoms/input/LongTextBox';
 import ShortTextBox from '../atoms/input/ShortTextBox';
-import { Hint } from '../atoms/text/Text';
+import { Warning } from '../atoms/text/Text';
 
 interface Props {
 	length: 'short' | 'long';
@@ -16,6 +16,7 @@ interface Props {
 	placeholder?: string;
 
 	onLimitEdge?: (overLimit: boolean) => void;
+	onInput?: (value: string) => void;
 }
 
 interface State {
@@ -37,11 +38,13 @@ export class LimitedTextBox extends React.Component<Props, State> {
 	}
 
 	private onInput(e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) {
+		const { charLimit, wordLimit, onLimitEdge, onInput } = this.props;
+		const { chars: prevChars, words: prevWords } = this.state;
+
 		const val = e.currentTarget.value;
 		const chars = val.length;
 		const words = val.split(" ").filter(val => val !== "").length;
-		const { charLimit, wordLimit, onLimitEdge } = this.props;
-		const { chars: prevChars, words: prevWords } = this.state;
+
 		this.setState({ chars, words }, () => {
 			const overCharLimit = charLimit && chars > charLimit;
 			const overWordLimit = wordLimit && words > wordLimit;
@@ -52,6 +55,7 @@ export class LimitedTextBox extends React.Component<Props, State> {
 			if (onLimitEdge && overLimit !== wasOverLimit) {
 				onLimitEdge(overLimit || false);
 			}
+			if (onInput) onInput(val);
 		});
 	}
 
@@ -72,7 +76,7 @@ export class LimitedTextBox extends React.Component<Props, State> {
 		}
 		text += hintText;
 
-		const hint = showHint && <Hint>{renderBoldText(text)}</Hint>;
+		const hint = showHint && <Warning>{renderBoldText(text)}</Warning>;
 
 		const containerStyle: React.CSSProperties = {};
 

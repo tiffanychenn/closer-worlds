@@ -40,8 +40,10 @@ export class Hint extends React.Component<Props> {
 	}
 }
 
+export const TIMEOUT_WARNING_TEXT = "Placeholder timeout warning text."; // TODO: Rewrite placeholder timeout warning text.
+
 export class Warning extends React.Component<Props> {
-	render () {
+	render() {
 		const style: React.CSSProperties = {
 			color: '#CA3E12',
 			fontStyle: 'italic',

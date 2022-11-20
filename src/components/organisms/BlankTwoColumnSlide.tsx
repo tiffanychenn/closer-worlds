@@ -19,7 +19,7 @@ export class BlankTwoColumnSlide extends React.Component<Props> {
 			flexDirection: 'row',
 			justifyContent: 'space-between',
 			alignItems: 'center',
-			gap: '40px',
+			gap: '60px',
 		};
 		const childStyle: React.CSSProperties = {
 			flex: 1,
@@ -27,7 +27,7 @@ export class BlankTwoColumnSlide extends React.Component<Props> {
 
 		return <BlankSlide step={step} sectionImageUrls={sectionImageUrls} onTimeout={onTimeout}>
 			<div style={containerStyle}>
-				<div style={childStyle}>{col1}</div>
+				<div style={Object.assign({zIndex: 1}, childStyle)}>{col1}</div>
 				<div style={childStyle}>{col2}</div>
 			</div>
 		</BlankSlide>
