@@ -14,6 +14,8 @@ import { SectionImageUrls } from '../../reducers/promptReducer';
 import { BlankSlide } from '../organisms/BlankSlide';
 import { initExperiment } from '../../actions/promptActions';
 import { v4 as uuidv4 } from 'uuid';
+import { pushExperimentData } from '../../actions/apiActions';
+import { connect } from 'react-redux';
 
 interface Props {
 	logger: Logger;
@@ -21,7 +23,7 @@ interface Props {
 	onNext: () => void;
 }
 
-export class TitleSlide extends React.Component<Props> {
+class TitleSlide extends React.Component<Props> {
 	render() {
 		const { logger, step, onNext } = this.props;
 
@@ -37,6 +39,7 @@ export class TitleSlide extends React.Component<Props> {
 			const firstPlayerId = uuidv4();
 			const secondPlayerId = uuidv4();
 			initExperiment(experimentId, firstPlayerId, secondPlayerId);
+			pushExperimentData(logger);
 			onNext();
 		}
 		
@@ -49,3 +52,5 @@ export class TitleSlide extends React.Component<Props> {
 		</BlankSlide>
 	}
 }
+
+export default connect(null, {initExperiment})(TitleSlide);
