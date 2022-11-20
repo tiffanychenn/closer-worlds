@@ -23,11 +23,12 @@
   - [x] ~Add icons to tooltips~ (Actually no longer necessary, cancelled)
 - [ ] Finish all steps in UI (not necessarily hooked up to state)
   - [ ] Title slide
-  - [ ] Info slides with no form components, sometimes with images
+  - [x] Info slides with no form components, sometimes with images
   - [x] Write prompt
   - [x] Reflect
-  - [ ] View generated image
+  - [x] View generated image
   - [ ] Slides with different form components
+  - [ ] If time permits, possibly come back and fix some of the image sizing flexbox issues
 - [ ] Stretch goal: make surveys completely using our platform
   - [ ] Smooth way to get participants to take the survey on two laptops while still having data to our API
   - [ ] Possibly more form components, like checkboxes, Likert scales, etc.

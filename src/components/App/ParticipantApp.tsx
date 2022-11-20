@@ -10,7 +10,7 @@ import { BackgroundImage } from "../atoms/image/BackgroundImage";
 import { ImageCard } from "../atoms/image/ImageCard";
 import { renderBoldText } from "../../utils/textUtils";
 import { DisplayGeneratedImage } from "../templates/DisplayGeneratedImage";
-import { ImageStep, ReflectStep, StoryStepType, WritePromptStep } from "../../data/story";
+import { ImageStep, InfoStep, ReflectStep, StoryStepType, WritePromptStep } from "../../data/story";
 import { WritePrompt } from "../templates/WritePrompt";
 // import { TEST_STORY_DATA } from "./storyData";
 import { Reflect } from "../templates/Reflect";
@@ -24,6 +24,7 @@ import { RadioGroup } from "../atoms/input/RadioGroup";
 import { Tag } from "../atoms/input/Tag";
 import { ButtonPanel } from "../molecules/ButtonPanel";
 import { STORY_DATA } from "./storyData";
+import { InfoSlide } from "../templates/InfoSlide";
 
 export default class ParticipantApp extends React.Component<{}> {
 	private logger: Logger;
@@ -140,7 +141,8 @@ export default class ParticipantApp extends React.Component<{}> {
 
 			{/* <WritePrompt logger={this.logger} step={STORY_DATA[1].steps[0] as WritePromptStep} landscapePlayer={1} sectionImageUrls={[]}/> */}
 			{/* <Reflect logger={this.logger} step={STORY_DATA[1].steps[1] as ReflectStep} landscapePlayer={1} sectionImageUrls={[]} allowNext={true}/> */}
-			<DisplayGeneratedImage logger={this.logger} step={STORY_DATA[1].steps[2] as ImageStep} sectionImageUrls={[]}/>
+			{/* <DisplayGeneratedImage logger={this.logger} step={STORY_DATA[1].steps[2] as ImageStep} sectionImageUrls={[]}/> */}
+			<InfoSlide logger={this.logger} step={STORY_DATA[0].steps[1] as InfoStep} sectionImageUrls={[]} landscapePlayer={1}/>
 		</div>;
 	}
 }

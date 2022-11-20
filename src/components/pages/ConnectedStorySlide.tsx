@@ -70,10 +70,11 @@ class ConnectedStorySlide extends React.Component<Props> {
 											  />
 			case StoryStepType.Info:
 				return <InfoSlide 
-												step={step as InfoStep}
-												sectionImageUrls={sectionImageUrls}
+											  step={step as InfoStep}
+											  sectionImageUrls={sectionImageUrls}
 											  onNext={() => advanceStep(logger)}
 											  logger={logger}
+											  landscapePlayer={landscapePlayer}
 											  />
 			default:
 				return <BlankSlide step={DUMMY_STEP} sectionImageUrls={[]}><Text>ERROR: Tried to display a story section that isn't yet implemented.</Text></BlankSlide>;

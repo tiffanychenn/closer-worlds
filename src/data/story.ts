@@ -84,9 +84,9 @@ export interface TitleStep extends StoryStep {
 
 export interface InfoStep extends StoryStep {
 	type: typeof StoryStepType.Info;
-	title: string;
+	title?: string;
 	instructions: string;
+	player?: 1 | 2 | 'landscape' | 'buildings' | 'both',
+	playerAction?: string;
+	hint?: string;
 }
-
-
-// TODO: We still need to build out all the sub-datatypes that I've suggested above, but I want to wait on that until we have a clearer idea of what we're for sure going with for the game. Currently brainstorming, but wanted to at least commit this.

@@ -1,7 +1,10 @@
-import { ImageStep, ReflectStep, StorySection, StoryStepType, TitleStep, WritePromptStep } from './../../data/story';
+import { ImageStep, ReflectStep, StorySection, StoryStepType, TitleStep, WritePromptStep, InfoStep } from './../../data/story';
 
 export const PLACEHOLDER_IMG_URL = 'https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg';
 export const STAR_BG = './assets/stars_bg_16.png';
+export const PLANET_ARRIVAL_IMG = PLACEHOLDER_IMG_URL;
+export const WAND_IMG = PLACEHOLDER_IMG_URL;
+export const PLANET_DEPARTURE_IMAGE = PLACEHOLDER_IMG_URL;
 
 export const STORY_DATA: Array<StorySection> = [
 	{
@@ -10,6 +13,16 @@ export const STORY_DATA: Array<StorySection> = [
 				type: StoryStepType.Title,
 				id: 'title',
 			} as TitleStep,
+			{
+				type: StoryStepType.Info,
+				id: 'scenario-1',
+				backgroundImage: STAR_BG,
+				cardImage: PLANET_ARRIVAL_IMG,
+				title: 'Imagine:',
+				instructions: 'Researchers at the MIT Media Lab have invented teleportation! The two of you sign up for a study right away. During the study, something goes wrong, and the two of you get stranded on a distant, but seemingly habitable planet.',
+				player: 1,
+				playerAction: "Read out loud",
+			} as InfoStep,
 		],
 	},
 

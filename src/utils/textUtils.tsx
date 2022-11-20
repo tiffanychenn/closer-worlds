@@ -1,7 +1,10 @@
 import * as React from 'react';
 import { Logger } from '../data/logger';
 
-export function playerRoleToNumber(currPlayerRole: 'landscape' | 'buildings' | 'both', landscapePlayerNumber: 1 | 2): 1 | 2 | 'both' {
+export function playerRoleToNumber(currPlayerRole: 'landscape' | 'buildings' | 'both' | 1 | 2, landscapePlayerNumber: 1 | 2): 1 | 2 | 'both' {
+	if (typeof currPlayerRole == 'number') {
+		return currPlayerRole;
+	}
 	if (currPlayerRole == 'both') {
 		return 'both';
 	}
