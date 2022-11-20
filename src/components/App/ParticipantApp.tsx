@@ -141,7 +141,7 @@ export default class ParticipantApp extends React.Component<{}> {
 				{/* <Tag id="test-tag" logger={this.logger} text="test"/>
 				<TagInput id="test-tag-input" logger={this.logger} placeholder="other..."/> */}
 				<TextSpacer/>
-				<TagGroup id="test-tags" logger={this.logger} tags={['hello', 'world']} includeInput={true}/>
+				<TagGroup id="test-tags" logger={this.logger} tags={['hello', 'world']} includeInput={true} placeholder="other..."/>
 			</ButtonPanel>
 
 			{/* <WritePrompt logger={this.logger} step={STORY_DATA[1].steps[0] as WritePromptStep} landscapePlayer={1} sectionImageUrls={[]}/> */}

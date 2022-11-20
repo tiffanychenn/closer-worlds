@@ -18,6 +18,7 @@ export interface Props extends LoggedFormElementProps {
 
 interface State {
 	selected: boolean;
+	hovered: boolean;
 	inputValue: string;
 }
 
@@ -27,12 +28,12 @@ export class Tag extends LoggedFormElementComponent<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		const selected = props.startAsSelected || false;
-		this.state = { selected: selected, inputValue: "" };
+		this.state = { selected: selected, hovered: false, inputValue: "" };
 	}
 	
 	render() {
 		const { disabled, useOutlineStyle, isInput } = this.props;
-		const { selected } = this.state;
+		const { selected, hovered } = this.state;
 
 		const style: React.CSSProperties = {
 			fontSize: '18px',
@@ -57,7 +58,7 @@ export class Tag extends LoggedFormElementComponent<Props, State> {
 			transition: 'all 0.2s',
 		};
 
-		const bgColor = disabled ? '#2C3978' : (selected ? '#ffffff' : '#0A1547');
+		const bgColor = disabled ? '#2C3978' : (selected ? '#ffffff' : (hovered ? '#10206C' : '#0A1547'));
 
 		if (useOutlineStyle) {
 			style.border = '2px solid ' + bgColor;
@@ -71,7 +72,10 @@ export class Tag extends LoggedFormElementComponent<Props, State> {
             inputStyle.background = bgColor;
 		}
 
-		return <button style={style} type="button" disabled={this.props.disabled} onClick={() => {
+		return <button style={style} type="button" disabled={this.props.disabled}
+					   onMouseEnter={() => this.setState({hovered: true})}
+					   onMouseLeave={() => this.setState({hovered: false})}
+		 			   onClick={() => {
 			this.onAnyEvent('!click');
 			if (this.props.onClick) {
 				this.props.onClick(!this.state.selected);
