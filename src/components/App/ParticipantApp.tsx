@@ -10,7 +10,7 @@ import { BackgroundImage } from "../atoms/image/BackgroundImage";
 import { ImageCard } from "../atoms/image/ImageCard";
 import { renderBoldText } from "../../utils/textUtils";
 import { DisplayGeneratedImage } from "../templates/DisplayGeneratedImage";
-import { ReflectStep, StoryStepType, WritePromptStep } from "../../data/story";
+import { ImageStep, ReflectStep, StoryStepType, WritePromptStep } from "../../data/story";
 import { WritePrompt } from "../templates/WritePrompt";
 // import { TEST_STORY_DATA } from "./storyData";
 import { Reflect } from "../templates/Reflect";
@@ -139,7 +139,8 @@ export default class ParticipantApp extends React.Component<{}> {
 			</ButtonPanel> */}
 
 			{/* <WritePrompt logger={this.logger} step={STORY_DATA[1].steps[0] as WritePromptStep} landscapePlayer={1} sectionImageUrls={[]}/> */}
-			<Reflect logger={this.logger} step={STORY_DATA[1].steps[1] as ReflectStep} landscapePlayer={1} sectionImageUrls={[]} allowNext={true}/>
+			{/* <Reflect logger={this.logger} step={STORY_DATA[1].steps[1] as ReflectStep} landscapePlayer={1} sectionImageUrls={[]} allowNext={true}/> */}
+			<DisplayGeneratedImage logger={this.logger} step={STORY_DATA[1].steps[2] as ImageStep} sectionImageUrls={[]}/>
 		</div>;
 	}
 }

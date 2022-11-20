@@ -39,8 +39,10 @@ export class BlankSlide extends React.Component<Props> {
 			position: 'absolute',
 			top: 0, left: 0, bottom: 0, right: 0,
 			margin: '40px auto',
+			padding: '0 40px',
 			display: 'flex',
 			alignItems: 'center',
+			justifyContent: 'center',
 			maxWidth: '1800px', // FIXME: Do we want this? I think it helps with ridiculously large images, but there might be another, better fix for that.
 		};
 

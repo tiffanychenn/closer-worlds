@@ -4,6 +4,7 @@ import { ReflectStep } from '../../data/story';
 import { SectionImageUrls } from '../../reducers/promptReducer';
 import { playerRoleToNumber, renderBoldText, replacePlayerText } from '../../utils/textUtils';
 import { getSectionImageOrString } from '../../utils/utils';
+import { STAR_BG } from '../App/storyData';
 import { Panel } from '../atoms/containers/Panel';
 import { BLUE_BG_LIGHT_SHADOW, IMG_BG_DARK_SHADOW } from '../atoms/image/ImageCard';
 import { DiscussionPrompt, Hint, SerifHeader, Text } from '../atoms/text/Text';
@@ -25,31 +26,12 @@ export class Reflect extends React.Component<Props> {
 	render() {
 		const { logger, step, landscapePlayer, sectionImageUrls, onNext, allowNext } = this.props;
 		const playerNumber = playerRoleToNumber(step.player, landscapePlayer);
-
-		// TODO: Again, styles! What I have below is temporary, and probably also will change
-		// if we include an image card in reflect slides.
-		// return <ContentWithImageSlide step={step} sectionImageUrls={sectionImageUrls} onNext={onNext} allowNext={allowNext} logger={logger}>
-		// 	<div style={{
-		// 		display: 'flex',
-		// 		flexDirection: 'column',
-		// 		justifyContent: 'space-between',
-		// 		gap: '60px',
-		// 		minHeight: '61vh',
-		// 	}}>
-		// 		<div>
-		// 			<Text>The wand starts swirling and whirling, and begins to frantically paint the landscape.<br/>While you wait...</Text>
-		// 			<SerifHeader>{renderBoldText(replacePlayerText(step.question, playerNumber))}</SerifHeader>
-		// 		</div>
-		// 		<div>
-		// 			{/* TODO: Add spinner */}
-		// 			<Hint>Generating...</Hint>
-		// 		</div>
-		// 	</div>
-		// </ContentWithImageSlide>;
 		
 		const cardImage = getSectionImageOrString(step.cardImage, sectionImageUrls);
-		const boxShadow = typeof step.backgroundImage == 'number' ? IMG_BG_DARK_SHADOW : BLUE_BG_LIGHT_SHADOW;
-		const bgOpacity = typeof step.backgroundImage == 'number' ? 0.8 : 0.4;
+		// const boxShadow = typeof step.backgroundImage == 'number' ? IMG_BG_DARK_SHADOW : BLUE_BG_LIGHT_SHADOW;
+		// const bgOpacity = typeof step.backgroundImage == 'number' ? 0.8 : 0.4;
+		const bgOpacity = step.backgroundImage == STAR_BG ? 0.4 : 0.8;
+		const boxShadow = step.backgroundImage == STAR_BG ? BLUE_BG_LIGHT_SHADOW : IMG_BG_DARK_SHADOW;
 
 		const containerStyle: React.CSSProperties = {
 			height: '70vh',

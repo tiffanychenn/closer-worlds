@@ -13,6 +13,7 @@ import { BlankTwoColumnSlide } from '../organisms/BlankTwoColumnSlide';
 import { BlankSlide } from '../organisms/BlankSlide';
 import { ButtonData, ButtonPanel } from '../molecules/ButtonPanel';
 import { LimitedTextBox } from '../organisms/LimitedTextBox';
+import { STAR_BG } from '../App/storyData';
 
 interface Props {
 	logger: Logger;
@@ -56,8 +57,10 @@ export class WritePrompt extends React.Component<Props, State> {
 		const playerNumber = playerRoleToNumber(step.player, landscapePlayer);
 
 		const cardImage = getSectionImageOrString(step.cardImage, sectionImageUrls);
-		const boxShadow = typeof step.backgroundImage == 'number' ? IMG_BG_DARK_SHADOW : BLUE_BG_LIGHT_SHADOW;
-		const bgOpacity = typeof step.backgroundImage == 'number' ? 0.8 : 0.4;
+		// const boxShadow = typeof step.backgroundImage == 'number' ? IMG_BG_DARK_SHADOW : BLUE_BG_LIGHT_SHADOW;
+		// const bgOpacity = typeof step.backgroundImage == 'number' ? 0.8 : 0.4;
+		const bgOpacity = step.backgroundImage == STAR_BG ? 0.4 : 0.8;
+		const boxShadow = step.backgroundImage == STAR_BG ? BLUE_BG_LIGHT_SHADOW : IMG_BG_DARK_SHADOW;
 
 		const allowNext = hasText && !isOverLimit;
 		const nextButton: ButtonData = {

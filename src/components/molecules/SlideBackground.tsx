@@ -17,7 +17,7 @@ export class SlideBackground extends React.Component<Props> {
 
 		return backgroundUrl ?
 			<BackgroundImage src={backgroundUrl}
-							 blur={blurBG ? "15px" : "0px"}
+							 blur={blurBG ? "20px" : "0px"}
 							 overlayColor={overlayBG ? "linear-gradient(#1C262E, #050610)" : undefined}
 							 overlayOpacity={overlayBG ? 0.3 : 0}/>
 		  : <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(#1C262E, #050610)'}}></div>

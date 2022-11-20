@@ -1,7 +1,7 @@
 import { ImageStep, ReflectStep, StorySection, StoryStepType, TitleStep, WritePromptStep } from './../../data/story';
 
-const PLACEHOLDER_IMG_URL = 'https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg';
-const STAR_BG = './assets/stars_bg_16.png';
+export const PLACEHOLDER_IMG_URL = 'https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg';
+export const STAR_BG = './assets/stars_bg_16.png';
 
 export const STORY_DATA: Array<StorySection> = [
 	{
@@ -44,6 +44,8 @@ export const STORY_DATA: Array<StorySection> = [
 				cardImage: PLACEHOLDER_IMG_URL,
 				backgroundImage: PLACEHOLDER_IMG_URL,
 				redoReturnsToStepIndex: 0,
+				blurBG: true,
+				overlayBG: false,
 			} as ImageStep,
 		],
 	},
