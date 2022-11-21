@@ -1,13 +1,14 @@
 import { Logger } from "../data/logger";
 import { FetchStatus } from "../reducers/apiReducer";
 import { RootThunkAction } from "../reducers/rootReducer";
-import { saveImage } from "./promptActions";
+import { initExperiment, saveImage } from "./promptActions";
 
 export const API_ACTION_NAMES = {
 	SET_IS_FETCHING_IMAGE: 'SET_IS_FETCHING_IMAGE',
 };
 
-export const API_BASE_URL = "http://localhost:5000";
+const PORT = 4000;
+export const API_BASE_URL = `http://localhost:${PORT}`;
 
 export interface SetIsFetchingImageAction {
 	type: typeof API_ACTION_NAMES.SET_IS_FETCHING_IMAGE;
@@ -49,6 +50,30 @@ export function generateImage(sectionIndex: number, prompt: string, logger: Logg
 			const msg = "API failed to generate image for prompt: " + prompt + "\nReason: " + reason;
 			console.error(msg);
 			throw new Error(msg);
+		});
+	};
+}
+
+export function initExperimentData(experimentId: string, firstPlayerId: string, secondPlayerId: string, logger: Logger): RootThunkAction {
+	return async (dispatch, getState) => {
+		const state = getState();
+		const body = {
+			id: experimentId,
+			firstPlayerId: firstPlayerId,
+			secondPlayerId: secondPlayerId,
+			loggingData: logger.dumpData(),
+			images: state.prompt.sectionImageUrls,
+		};
+
+		fetch(`${API_BASE_URL}/experiment`, {
+			method: 'POST',
+			body: JSON.stringify(body),
+		}).then(res => {
+			// TODO: Handle success case where there's no existing experiment
+			dispatch(initExperiment(experimentId, firstPlayerId, secondPlayerId));
+		}).catch(reason => {
+			const msg = `API failed to initialize experiment data for experiment ID ${state.prompt.experimentId}. Reason: ${reason}`;
+			// TODO: Handle failure cases: 1) there's an existing experiment and the player IDs match so just restore state, or 2) exists but player IDs are wrong so something's weird
 		});
 	};
 }

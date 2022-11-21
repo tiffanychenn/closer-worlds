@@ -10,7 +10,8 @@ interface Props {
 
 // const OVERLAY_GRADIENT = "linear-gradient(#1C262E, #050610)";
 // const OVERLAY_GRADIENT = "linear-gradient(#2E6698, #2E1B80)";
-const OVERLAY_GRADIENT = "linear-gradient(#0A2772, #14074E)";
+// const OVERLAY_GRADIENT = "linear-gradient(#0A2772, #14074E)";
+const OVERLAY_GRADIENT = "#051240";
 
 export class SlideBackground extends React.Component<Props> {
 	render() {

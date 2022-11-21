@@ -35,9 +35,9 @@
   - [ ] Smooth way to get participants to take the survey on two laptops while still having data to our API
   - [ ] Possibly more form components, like checkboxes, Likert scales, etc.
 - [ ] Make it bulletproof
-  - [ ] Error messages
-  - [ ] Restore state
-  - [ ] Avoid overwriting state on backend on every save
+  - [ ] Error messages (new modal)
+  - [ ] Restore state (/initializeExperiment endpoint)
+  - [ ] Avoid overwriting state on backend on every save (this is fine, we don't need to worry about this probably)
 
 ----
 
