@@ -100,7 +100,7 @@ export function pushExperimentData(logger: Logger): RootThunkAction {
 			body: JSON.stringify(body),
 			headers: {
 				'Content-Type': 'application/json',
-				},
+			},
 		}).then(res => {
 			if (res.status !== 200) {
 				const msg = `API failed (status ${res.status}) to store experiment data for experiment ID ${state.prompt.experimentId}.`;

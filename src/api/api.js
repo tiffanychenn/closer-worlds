@@ -87,7 +87,6 @@ app.post('/startExperiment', (req, res, next) => {
 
 // Update experiment data
 app.post('/experiment', (req, res, next) => {
-    console.log(req.body);
     const experimentData = {
         id: req.body.id,
         firstPlayerId: req.body.firstPlayerId,
@@ -106,7 +105,7 @@ app.post('/experiment', (req, res, next) => {
             return;
         }
     })
-    res.status(200); // .send({success: true});
+    res.status(200).send("success");
 });
 
 app.listen(PORT, () => {
