@@ -28,6 +28,8 @@ import { InfoSlide } from "../templates/InfoSlide";
 import { TagGroup } from "../atoms/input/TagGroup";
 import { RoleSelectSlide } from "../templates/RoleSelectSlide";
 
+export const DEBUG_MODE = true;
+
 export default class ParticipantApp extends React.Component<{}> {
 	private logger: Logger;
 
@@ -40,114 +42,7 @@ export default class ParticipantApp extends React.Component<{}> {
 
 	render() {
 		return <div style={{position: 'relative', width: '100vw', height: '100vh'}}>
-			{/* <BackgroundImage src="https://images.nightcafe.studio/jobs/24JEyUeOhCuirWEDRNil/24JEyUeOhCuirWEDRNil_4x.jpg?tr=w-1600,c-at_max"
-							 blur="15px" overlayColor="linear-gradient(#1C262E, #050610)" overlayOpacity={0.8}/>
-			<div style={{position: 'absolute', top: 0, left: 0, margin: '40px'}}>
-				<ShortTextBox id="test-text-box" logger={this.logger} placeholder="Testing..."/>
-				<Slider id="test-slider" logger={this.logger} leftLabel="low" rightLabel="high"/>
-				<LongTextBox id="test-long-text" logger={this.logger} placeholder="Testing..."/>
-				<RadioButton id="test-radio-button" logger={this.logger} label="Test"/>
-				<Button text="yes" id="test-button" logger={this.logger}/>
-				<p style={{width: '200px'}}>{renderBoldText("This is a *test* of how rendering *bold text* works! Let's see *if it can handle all this goodness, folks!* Right? *Right back at'cha.*")}</p>
-				<br/><br/>
-				<ImageCard src="https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg"/>
-			</div> */}
-
-			{/* <DisplayGeneratedImage logger={this.logger}
-								   step={{id: 'test-image', type: StoryStepType.Image, cardImage: 'https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg', backgroundImage: 'https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg'}}
-								   sectionImageUrls={[]}
-								   onNext={() => {}}
-								   onRedo={() => {}}/> */}
-
-			{/* <WritePrompt logger={this.logger}
-						 step={TEST_STORY_DATA[0].steps[0] as WritePromptStep}
-						 landscapePlayer={1}
-						 sectionImageUrls={[]}
-						 onNext={() => {}}/> */}
-
-			{/* <Reflect logger={this.logger}
-					 step={TEST_STORY_DATA[0].steps[1] as ReflectStep}
-					 landscapePlayer={1}
-					 sectionImageUrls={[]}
-					 allowNext={true}
-					 onNext={() => {}}/> */}
-			{/* <BackgroundImage src="./assets/stars_bg_16.png"/>
-			<ConnectedStorySlide logger={this.logger}/> */}
-
-			{/* <LimitedTextBox id="test-limited-textbox"
-							logger={this.logger}
-							placeholder="Type something!"
-							length="long"
-							charLimit={20}
-							onLimitEdge={overLimit => console.log(`overLimit: ${overLimit}`)}/> */}
-
-			{/* <BackgroundImage src="./assets/stars_bg_16.png"/>
-			<div style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
-				<PlayerTokenHeader player={1}>Read out loud</PlayerTokenHeader>
-				<Panel>
-					<PageHeader>This is a page header:</PageHeader>
-					<TextSpacer/>
-					<Text>This is some text.</Text>
-					<TextSpacer/>
-					<Hint>This is a hint.</Hint>
-					<TextSpacer/>
-					<Warning>This is a warning.</Warning>
-					<TextSpacer/>
-					<DiscussionPrompt>Player 1, please complete this action item.</DiscussionPrompt>
-					<TextSpacer/>
-					<ShortTextBox id="test-short" logger={this.logger} placeholder="e.g., pink fluffy clouds and lots of trees"/>
-					<TextSpacer/>
-					<LongTextBox id="test-short" logger={this.logger} placeholder="e.g., pink fluffy clouds and lots of trees"/>
-					<TextSpacer/>
-					<RadioGroup id="test-radio-group" logger={this.logger}
-								ids={['test-radio-1', 'test-radio-2']}
-								labels={['Player 1', 'Player 2']}
-								orientation="horizontal"/>
-					<TextSpacer/>
-					<Slider id="test-slider" logger={this.logger} leftLabel="Not at all" rightLabel="Super accurate"/>
-					<TextSpacer/>
-					<Button id="test-button" logger={this.logger} text="Next"/>
-					<Tag id="test-tag" logger={this.logger} text="realistic" />
-				</Panel>
-				<LoadingImageCard src="https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg" size="50%" allowNext={false} onNext={() => {}} buttonId="test-image-button" logger={this.logger}/>
-			</div> */}
-
-			{/* <BackgroundImage src="./assets/stars_bg_16.png"/>
-			<ButtonPanel logger={this.logger} buttons={[{
-				id: 'test-next-button',
-				text: 'Next',
-			}, {
-				id: 'test-redo-button',
-				text: 'Redo',
-				useOutlineStyle: true,
-			}]}>
-				<PageHeader>This is a page header:</PageHeader>
-				<TextSpacer/>
-				<Text>This is some text.</Text>
-				<TextSpacer/>
-				<Hint>This is a hint.</Hint>
-				<TextSpacer/>
-				<Warning>This is a warning.</Warning>
-				<TextSpacer/>
-				<DiscussionPrompt>Player 1, please complete this action item.</DiscussionPrompt>
-				<TextSpacer/>
-				<LongTextBox id="test-long" logger={this.logger} placeholder="e.g., pink fluffy clouds and lots of trees"/>
-				<TextSpacer/>
-				<RadioGroup id="test-radio-group" logger={this.logger}
-							ids={['test-radio-1', 'test-radio-2']}
-							labels={['Player 1', 'Player 2']}
-							orientation="horizontal"/>
-				<TextSpacer/>
-				<Slider id="test-slider" logger={this.logger} leftLabel="Not at all" rightLabel="Super accurate"/>
-				<TextSpacer/>
-				<TagGroup id="test-tags" logger={this.logger} tags={['hello', 'world']} includeInput={true} placeholder="other..."/>
-			</ButtonPanel> */}
-
-			{/* <WritePrompt logger={this.logger} step={STORY_DATA[1].steps[0] as WritePromptStep} landscapePlayer={1} sectionImageUrls={[]}/> */}
-			{/* <Reflect logger={this.logger} step={STORY_DATA[1].steps[1] as ReflectStep} landscapePlayer={1} sectionImageUrls={[]} allowNext={true}/> */}
-			{/* <DisplayGeneratedImage logger={this.logger} step={STORY_DATA[1].steps[2] as ImageStep} sectionImageUrls={[]}/> */}
-			{/* <InfoSlide logger={this.logger} step={STORY_DATA[0].steps[1] as InfoStep} sectionImageUrls={[]} landscapePlayer={1}/> */}
-			<RoleSelectSlide logger={this.logger} step={STORY_DATA[0].steps[2] as RoleSelectStep}/>
+			<ConnectedStorySlide logger={this.logger}/>
 		</div>;
 	}
 }

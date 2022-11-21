@@ -17,11 +17,14 @@ interface Props {
 	sectionImageUrls: SectionImageUrls;
 	onNext?: () => void;
 	onRedo?: () => void;
+	allowRedo: boolean;
 }
 
 export class DisplayGeneratedImage extends React.Component<Props> {
+	static defaultProps = { allowRedo: true };
+
 	render() {
-		const { logger, step, sectionImageUrls, onNext, onRedo } = this.props;
+		const { logger, step, sectionImageUrls, onNext, onRedo, allowRedo } = this.props;
 
 		let cardImage = getSectionImageOrString(step.cardImage, sectionImageUrls);
 		if (!cardImage) {
@@ -59,6 +62,7 @@ export class DisplayGeneratedImage extends React.Component<Props> {
 			gap: '20px',
 		};
 
+		// FIXME: The allow redo UX sucks. I went for simple--just hide or show the button--but we can probably do better. It's just not a priority. Thoughts?
 		return <BlankTwoColumnSlide step={step}
 									sectionImageUrls={sectionImageUrls}
 									flexCol1="0" flexCol2="0">{{
@@ -69,7 +73,7 @@ export class DisplayGeneratedImage extends React.Component<Props> {
 						<PageHeader>All around you, the world has changed.</PageHeader>
 						<div style={buttonsStyle}>
 							<Button id={step.id + '-next-button'} logger={logger} text="Next" onClick={onNext}/>
-							<Button id={step.id + '-redo-button'} logger={logger} text="Try again" onClick={onRedo} useOutlineStyle={true}/>
+							{allowRedo && <Button id={step.id + '-redo-button'} logger={logger} text="Try again" onClick={onRedo} useOutlineStyle={true}/>}
 						</div>
 					</div>
 				</Panel>

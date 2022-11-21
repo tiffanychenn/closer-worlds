@@ -3,6 +3,7 @@
 ## Updated To-Do
 - [ ] Experiment generation
   - [ ] Require app to start with this first (add this to game state, route on ParticipantApp)
+  - [x] Possibly done in the form of a drawer at the bottom of the start page?
 - [x] Add API_BASE_URL
   - [ ] Ensure that imagePathToUrl function (in utils.tsx) works (basically does image hosting work correctly)
 - [ ] Components for info slides and for any other interfaces
@@ -11,27 +12,32 @@
   - [x] Word and character limit textboxes
     - [x] Move these into all of the previous templates!
 - [ ] Stress test everything
-   - [ ] Generating images
-   - [ ] Make sure images successfully show up in the next section, not just the current generate section, after generation
-   - [ ] Saving data
-- [ ] Button permissions
+  - [ ] Generating images
+  - [ ] Make sure images successfully show up in the next section, not just the current generate section, after generation
+  - [ ] Saving data
+- [x] Button permissions
   - [x] Allow next on WritePrompt only when character limits are met
     - [x] Develop character limited textbox component
-  - [ ] Allow next on Reflect only when image has been generated and retrieved successfully
-  - [ ] Allow redo on Image only when redo has not yet been used (we already have state for this)
+  - [x] Allow next on Reflect only when image has been generated and retrieved successfully
+  - [x] Allow redo on Image only when redo has not yet been used (we already have state for this)
 - [x] Make everything pretty
   - [x] ~Add icons to tooltips~ (Actually no longer necessary, cancelled)
 - [ ] Finish all steps in UI (not necessarily hooked up to state)
-  - [ ] Title slide
+  - [x] Title slide
   - [x] Info slides with no form components, sometimes with images
   - [x] Write prompt
   - [x] Reflect
   - [x] View generated image
-  - [ ] Slides with different form components
-  - [ ] If time permits, possibly come back and fix some of the image sizing flexbox issues
+  - [x] Slides with different form components
+  - [ ] If time permits, possibly come back and fix some of the image sizing flexbox issues (they're worse than I anticipated, and it'd be nice to clean them up)
+- [ ] Replace timer warning placeholder text
 - [ ] Stretch goal: make surveys completely using our platform
   - [ ] Smooth way to get participants to take the survey on two laptops while still having data to our API
   - [ ] Possibly more form components, like checkboxes, Likert scales, etc.
+- [ ] Make it bulletproof
+  - [ ] Error messages
+  - [ ] Restore state
+  - [ ] Avoid overwriting state on backend on every save
 
 ----
 

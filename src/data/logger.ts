@@ -6,10 +6,12 @@
 export class Logger {
 	private entries: { [timeSinceEpoch: number]: { [formElemId: string]: any } };
 	private timesPerId: { [formElemId: string]: Array<number> };
+	private listeners: { [id: string]: (changedFormElemId: string) => void };
 
 	constructor(readonly storeData?: (entries: { [timeSinceEpoch: number]: { [formElemId: string]: any } }, timesPerId: { [formElemId: string]: Array<number> }) => void) {
 		this.entries = {};
 		this.timesPerId = {};
+		this.listeners = {};
 	}
 
 	log(formElemId: string, value: any) {
@@ -27,6 +29,10 @@ export class Logger {
 
 		if (this.storeData) {
 			this.storeData(this.entries, this.timesPerId);
+		}
+
+		for (let listenerId in this.listeners) {
+			this.listeners[listenerId](formElemId);
 		}
 	}
 
@@ -54,5 +60,13 @@ export class Logger {
 			entries: JSON.parse(JSON.stringify(this.entries)),
 			timesPerId: JSON.parse(JSON.stringify(this.timesPerId)),
 		};
+	}
+
+	addListener(id: string, listener: (changedFormElemId: string) => void) {
+		this.listeners[id] = listener;
+	}
+
+	removeListener(id: string) {
+		delete this.listeners[id];
 	}
 }

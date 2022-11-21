@@ -74,10 +74,14 @@ export class InfoSlide extends React.Component<Props, State> {
 			text: 'Next',
 			onClick: onNext,
 		};
+		const buttons: ButtonData[] = [];
+		if (!step.hideNext) {
+			buttons.push(nextButton);
+		}
 
 		const content = <div style={containerStyle}>
 			{playerNumber && <PlayerTokenHeader player={playerNumber}>{replacePlayerText(step.playerAction, playerNumber)}</PlayerTokenHeader>}
-			<ButtonPanel logger={logger} bgOpacity={bgOpacity} buttons={[nextButton]} showTimeout={hasTimedOut}>
+			<ButtonPanel logger={logger} bgOpacity={bgOpacity} buttons={buttons} showTimeout={hasTimedOut}>
 				<div style={contentStyle}>
 					{step.title && <PageHeader>{replacePlayerText(step.title, playerNumber)}</PageHeader>}
 					<Text>{renderBoldText(replacePlayerText(step.instructions, playerNumber))}</Text>

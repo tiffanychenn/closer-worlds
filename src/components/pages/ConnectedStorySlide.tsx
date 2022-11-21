@@ -3,9 +3,12 @@ import { connect } from 'react-redux';
 import { advanceStep, redoSection, setLandscapePlayer } from '../../actions/gameActions';
 import { Logger } from '../../data/logger';
 import { CustomFormStep, ImageStep, InfoStep, ReflectStep, RoleSelectStep, StoryStep, StoryStepType, TitleStep, WritePromptStep } from '../../data/story';
+import { FetchStatus } from '../../reducers/apiReducer';
 import { SectionImageUrls } from '../../reducers/promptReducer';
 import { State } from '../../reducers/rootReducer';
 import { getStoryStep } from '../../utils/utils';
+import { DEBUG_MODE } from '../App/ParticipantApp';
+import { PLACEHOLDER_IMG_URL } from '../App/storyData';
 import { Text } from '../atoms/text/Text';
 import { BlankSlide } from '../organisms/BlankSlide';
 import { CustomFormSlide } from '../templates/CustomFormSlide';
@@ -25,6 +28,8 @@ interface ReduxStateProps {
 	stepIndex: number;
 	landscapePlayer: 1 | 2;
 	sectionImageUrls: SectionImageUrls;
+	isFetchingImage: FetchStatus;
+	hasUsedRedo: boolean;
 }
 
 interface ReduxDispatchProps {
@@ -42,8 +47,10 @@ const DUMMY_STEP: StoryStep = {
 
 class ConnectedStorySlide extends React.Component<Props> {
 	render() {
-		const { sectionIndex, stepIndex, landscapePlayer, sectionImageUrls, logger, advanceStep, redoSection, setLandscapePlayer } = this.props;
+		const { sectionIndex, stepIndex, landscapePlayer, sectionImageUrls, logger, isFetchingImage, hasUsedRedo, advanceStep, redoSection, setLandscapePlayer } = this.props;
 		const step = getStoryStep(sectionIndex, stepIndex);
+		console.log('section image urls');
+		console.log(sectionImageUrls);
 		// TODO: Ensure that index is still within bounds, maybe?
 		switch (step.type) {
 			case StoryStepType.WritePrompt:
@@ -59,7 +66,7 @@ class ConnectedStorySlide extends React.Component<Props> {
 					step={step as ReflectStep}
 					landscapePlayer={landscapePlayer}
 					sectionImageUrls={sectionImageUrls}
-					allowNext={true} /*TODO*/
+					allowNext={DEBUG_MODE ? true : isFetchingImage == 'success'} /*TODO: Test*/
 					onNext={() => advanceStep(logger)}/>;
 			case StoryStepType.Image:
 				return <DisplayGeneratedImage
@@ -67,7 +74,8 @@ class ConnectedStorySlide extends React.Component<Props> {
 					step={step as ImageStep}
 					sectionImageUrls={sectionImageUrls}
 					onNext={() => advanceStep(logger)}
-					onRedo={redoSection}/>
+					onRedo={redoSection}
+					allowRedo={!hasUsedRedo}/>
 			case StoryStepType.Title:
 				return <TitleSlide 
 					logger={logger}
@@ -101,11 +109,25 @@ class ConnectedStorySlide extends React.Component<Props> {
 	}
 }
 
+const DEBUG_SECTION_IMAGE_URLS: SectionImageUrls = {
+	0: { filledPrompt: 'placeholder', path: PLACEHOLDER_IMG_URL },
+	1: { filledPrompt: 'placeholder', path: PLACEHOLDER_IMG_URL },
+	2: { filledPrompt: 'placeholder', path: PLACEHOLDER_IMG_URL },
+	3: { filledPrompt: 'placeholder', path: PLACEHOLDER_IMG_URL },
+	4: { filledPrompt: 'placeholder', path: PLACEHOLDER_IMG_URL },
+	5: { filledPrompt: 'placeholder', path: PLACEHOLDER_IMG_URL },
+	6: { filledPrompt: 'placeholder', path: PLACEHOLDER_IMG_URL },
+	7: { filledPrompt: 'placeholder', path: PLACEHOLDER_IMG_URL },
+	8: { filledPrompt: 'placeholder', path: PLACEHOLDER_IMG_URL },
+};
+
 const mapStateToProps = (state: State): ReduxStateProps => ({
 	sectionIndex: state.game.storySection,
 	stepIndex: state.game.storyStep,
 	landscapePlayer: state.game.landscapePlayer,
-	sectionImageUrls: state.prompt.sectionImageUrls,
+	sectionImageUrls: DEBUG_MODE ? DEBUG_SECTION_IMAGE_URLS : state.prompt.sectionImageUrls, // TODO: Test
+	isFetchingImage: state.api.isFetchingImage,
+	hasUsedRedo: state.game.hasUsedRedo,
 });
 
 export default connect(mapStateToProps, {advanceStep, redoSection, setLandscapePlayer})(ConnectedStorySlide);

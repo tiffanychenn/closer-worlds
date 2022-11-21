@@ -39,7 +39,7 @@ export class PlayerTokenHeader extends React.Component<Props> {
 			width: '400px',
 			padding: '20px 40px',
 			boxSizing: 'border-box',
-			background: `url(${bg})`,
+			backgroundImage: `url(${bg})`,
 			backgroundSize: 'cover',
 			backdropFilter: 'blur(14px)',
 			borderRadius: '16px',

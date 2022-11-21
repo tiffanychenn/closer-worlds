@@ -25,13 +25,29 @@ interface State {
 }
 
 export class CustomFormSlide extends React.Component<Props, State> {
+	private listenerId: string;
+	
 	constructor(props: Props) {
 		super(props);
 		this.state = { hasTimedOut: false };
+		this.listenerId = `CUSTOM_FORM_${Date.now()}`;
 	}
 
 	private onTimeout() {
 		this.setState({ hasTimedOut: true });
+	}
+
+	componentDidMount() {
+		// Ensure that allowNext gets updated whenever a required logger value does.
+		this.props.logger.addListener(this.listenerId, id => {
+			if (this.props.step.requiredFormElemIds.indexOf(id) >= 0) {
+				this.forceUpdate();
+			}
+		});
+	}
+
+	componentWillUnmount() {
+		this.props.logger.removeListener(this.listenerId);
 	}
 	
 	render() {

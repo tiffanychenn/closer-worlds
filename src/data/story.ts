@@ -83,6 +83,7 @@ export interface InfoStep extends StoryStep {
 	player?: 1 | 2 | 'landscape' | 'buildings' | 'both',
 	playerAction?: string;
 	hint?: string;
+	hideNext?: boolean;
 }
 
 export interface CustomFormStep extends StoryStep {

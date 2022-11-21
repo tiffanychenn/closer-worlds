@@ -31,7 +31,8 @@ export class Reflect extends React.Component<Props> {
 		// const boxShadow = typeof step.backgroundImage == 'number' ? IMG_BG_DARK_SHADOW : BLUE_BG_LIGHT_SHADOW;
 		// const bgOpacity = typeof step.backgroundImage == 'number' ? 0.8 : 0.4;
 		const bgOpacity = step.backgroundImage == STAR_BG ? 0.4 : 0.8;
-		const boxShadow = step.backgroundImage == STAR_BG ? BLUE_BG_LIGHT_SHADOW : IMG_BG_DARK_SHADOW;
+		// const boxShadow = step.backgroundImage == STAR_BG ? BLUE_BG_LIGHT_SHADOW : IMG_BG_DARK_SHADOW;
+		const boxShadow = BLUE_BG_LIGHT_SHADOW;
 
 		const containerStyle: React.CSSProperties = {
 			height: '70vh',

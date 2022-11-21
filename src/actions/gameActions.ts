@@ -82,6 +82,8 @@ export function advanceStep(logger: Logger): RootThunkAction {
 		const currStep = currSection.steps[stepIndex];
 
 		// FIXME: If async things get weird, this might need to go last.
+		// TODO: If we want to regenerate an image at the very end, then we likely need to modify this.
+		// I have some ideas on this (using something like flags), but I want to only change it if we for sure need to.
 		if (currStep.type == StoryStepType.WritePrompt) {
 			// Then first submit a request to generate the filled in prompt.
 			const prompt = currSection.genPrompt;

@@ -8,6 +8,10 @@ interface Props {
 	sectionImageUrls: SectionImageUrls;
 }
 
+// const OVERLAY_GRADIENT = "linear-gradient(#1C262E, #050610)";
+// const OVERLAY_GRADIENT = "linear-gradient(#2E6698, #2E1B80)";
+const OVERLAY_GRADIENT = "linear-gradient(#0A2772, #14074E)";
+
 export class SlideBackground extends React.Component<Props> {
 	render() {
 		const { backgroundImage, blurBG, overlayBG } = this.props.bgInfo;
@@ -18,8 +22,8 @@ export class SlideBackground extends React.Component<Props> {
 		return backgroundUrl ?
 			<BackgroundImage src={backgroundUrl}
 							 blur={blurBG ? "20px" : "0px"}
-							 overlayColor={overlayBG ? "linear-gradient(#1C262E, #050610)" : undefined}
-							 overlayOpacity={overlayBG ? 0.3 : 0}/>
+							 overlayColor={overlayBG ? OVERLAY_GRADIENT : undefined}
+							 overlayOpacity={overlayBG ? 0.4 : 0}/>
 		  : <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(#1C262E, #050610)'}}></div>
 	}
 }
