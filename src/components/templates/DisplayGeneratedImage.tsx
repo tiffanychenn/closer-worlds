@@ -2,54 +2,82 @@ import * as React from 'react';
 import { Logger } from '../../data/logger';
 import { ImageStep } from '../../data/story';
 import { SectionImageUrls } from '../../reducers/promptReducer';
-import { imagePathToUrl } from '../../utils/utils';
-import { ImageCard } from '../atoms/image/ImageCard';
+import { getSectionImageOrString, imagePathToUrl } from '../../utils/utils';
+import { STAR_BG } from '../App/storyData';
+import { Panel } from '../atoms/containers/Panel';
+import { BLUE_BG_LIGHT_SHADOW, ImageCard, IMG_BG_DARK_SHADOW } from '../atoms/image/ImageCard';
 import { Button } from '../atoms/input/Button';
-import { Text } from '../atoms/text/Text';
+import { PageHeader, Text } from '../atoms/text/Text';
 import { BlankSlide } from '../organisms/BlankSlide';
+import { BlankTwoColumnSlide } from '../organisms/BlankTwoColumnSlide';
 
 interface Props {
 	logger: Logger;
 	step: ImageStep;
 	sectionImageUrls: SectionImageUrls;
-	onNext: () => void;
-	onRedo: () => void;
+	onNext?: () => void;
+	onRedo?: () => void;
+	allowRedo: boolean;
 }
 
 export class DisplayGeneratedImage extends React.Component<Props> {
+	static defaultProps = { allowRedo: true };
+
 	render() {
-		const { logger, step, sectionImageUrls, onNext, onRedo } = this.props;
+		const { logger, step, sectionImageUrls, onNext, onRedo, allowRedo } = this.props;
+
+		let cardImage = getSectionImageOrString(step.cardImage, sectionImageUrls);
+		if (!cardImage) {
+			// TODO: What would be a good error handling case for this?
+			// Should we tell them that we're going to come into the room
+			// to fix it? Idk...
+			throw new Error(`DisplayGeneratedImage received no image to display for card image: ${step.cardImage}`);
+		}
+
+		const bgOpacity = step.backgroundImage == STAR_BG ? 0.4 : 0.8;
+		const boxShadow = step.backgroundImage == STAR_BG ? BLUE_BG_LIGHT_SHADOW : IMG_BG_DARK_SHADOW;
 
 		const containerStyle: React.CSSProperties = {
-			width: '100%',
-			height: '100%',
+			height: '85vh',
+			width: '450px',
+		};
+
+		const contentStyle: React.CSSProperties = {
 			display: 'flex',
-			flexDirection: 'row',
-			justifyContent: 'space-between',
-			alignItems: 'stretch',
+			flexDirection: 'column',
+			alignItems: 'center',
+			gap: '120px',
+			justifyContent: 'center',
+			position: 'absolute',
+			top: 0, left: 0, right: 0, bottom: 0,
+			padding: '40px',
+			boxSizing: 'border-box',
+			textAlign: 'center',
+		};
+
+		const buttonsStyle: React.CSSProperties = {
+			display: 'flex',
+			flexDirection: 'column',
+			alignItems: 'center',
 			gap: '20px',
 		};
 
-		let cardUrl: string;
-		if (step.cardImage) {
-			if (typeof step.cardImage == 'number') {
-				cardUrl = imagePathToUrl(sectionImageUrls[step.cardImage].path);
-			} else {
-				cardUrl = step.cardImage;
-			}
-		}
-
-		return <BlankSlide step={step} sectionImageUrls={sectionImageUrls}>
-			<div style={containerStyle}>
-				<div style={{flex: 1, height: '100%', display: 'flex', justifyContent: 'flex-start'}}>
-					<Text>All around you, the world has changed.</Text>
-				</div>
-				<ImageCard src={cardUrl} size='100%' sizeSide='height'/>
-				<div style={{flex: 1, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', gap: '10px'}}>
-					<Button id={step.id + '-redo-button'} logger={logger} text="Redo image" onClick={onRedo}/>
-					<Button id={step.id + '-next-button'} logger={logger} text="Next" onClick={onNext}/>
-				</div>
-			</div>
-		</BlankSlide>;
+		// FIXME: The allow redo UX sucks. I went for simple--just hide or show the button--but we can probably do better. It's just not a priority. Thoughts?
+		return <BlankTwoColumnSlide step={step}
+									sectionImageUrls={sectionImageUrls}
+									flexCol1="0" flexCol2="0">{{
+			col1: <ImageCard src={cardImage} size='85vh' maxOtherSize='85vh' sizeSide='width' boxShadow={boxShadow}/>,
+			col2: <div style={containerStyle}>
+				<Panel bgOpacity={bgOpacity} scroll={false}>
+					<div style={contentStyle}>
+						<PageHeader>All around you, the world has changed.</PageHeader>
+						<div style={buttonsStyle}>
+							<Button id={step.id + '-next-button'} logger={logger} text="Next" onClick={onNext}/>
+							{allowRedo && <Button id={step.id + '-redo-button'} logger={logger} text="Try again" onClick={onRedo} useOutlineStyle={true}/>}
+						</div>
+					</div>
+				</Panel>
+			</div>,
+		}}</BlankTwoColumnSlide>;
 	}
 }

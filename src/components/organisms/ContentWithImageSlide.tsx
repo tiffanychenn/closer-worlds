@@ -9,6 +9,8 @@ import { BlankTwoColumnSlide } from './BlankTwoColumnSlide';
 import { SectionImageUrls } from '../../reducers/promptReducer';
 import { imagePathToUrl } from '../../utils/utils';
 
+// DEPRECATED
+
 interface Props {
 	children: React.ReactNode;
 	step: StoryStep;

@@ -6,7 +6,7 @@ export interface LoggedFormElementProps {
 	logger: Logger;
 }
 
-export abstract class LoggedFormElementComponent<T extends LoggedFormElementProps> extends React.Component<T> {
+export abstract class LoggedFormElementComponent<T extends LoggedFormElementProps, S = {}> extends React.Component<T, S> {
 	protected onInput(event: React.FormEvent<HTMLInputElement>) {
 		let value = event.currentTarget.value;
 		this.props.logger.log(this.props.id, value);
