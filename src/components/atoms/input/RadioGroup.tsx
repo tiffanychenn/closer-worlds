@@ -7,13 +7,14 @@ interface Props extends LoggedFormElementProps {
 	ids: string[];
 	labels: string[];
 	orientation: 'vertical' | 'horizontal';
+	onSelect?: (value: string) => void;
 }
 
 export class RadioGroup extends LoggedFormElementComponent<Props> {
 	static defaultProps = { orientation: 'vertical' };
 
 	render() {
-		const { ids, labels, orientation, logger, id} = this.props;
+		const { ids, labels, orientation, logger, id, onSelect } = this.props;
 
 		const isVertical = orientation == 'vertical';
 		const style: React.CSSProperties = {
@@ -28,7 +29,12 @@ export class RadioGroup extends LoggedFormElementComponent<Props> {
 						 label={labels[i]}
 						 id={ids[i]}
 						 name={id}
-						 onInput={() => this.onAnyEvent(labels[i])}/>
+						 onInput={() => {
+							this.onAnyEvent(labels[i])
+							if (onSelect) {
+								onSelect(labels[i]);
+							}
+						 }}/>
 			)}</div>;
 	}
 }

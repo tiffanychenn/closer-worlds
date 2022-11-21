@@ -1,4 +1,4 @@
-import { ImageStep, ReflectStep, StorySection, StoryStepType, TitleStep, WritePromptStep, InfoStep } from './../../data/story';
+import { ImageStep, ReflectStep, StorySection, StoryStepType, TitleStep, WritePromptStep, InfoStep, CustomFormStep, RoleSelectStep } from '../../data/story';
 
 export const PLACEHOLDER_IMG_URL = 'https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg';
 export const STAR_BG = './assets/stars_bg_16.png';
@@ -23,6 +23,11 @@ export const STORY_DATA: Array<StorySection> = [
 				player: 1,
 				playerAction: "Read out loud",
 			} as InfoStep,
+			{
+				type: StoryStepType.RoleSelect,
+				id: 'role-select',
+				tags: ["peaceful", "fun", "adventurous", "epic", "safe", "creative", "weird"],
+			} as RoleSelectStep,
 		],
 	},
 

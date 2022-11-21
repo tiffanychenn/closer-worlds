@@ -10,7 +10,7 @@ import { BackgroundImage } from "../atoms/image/BackgroundImage";
 import { ImageCard } from "../atoms/image/ImageCard";
 import { renderBoldText } from "../../utils/textUtils";
 import { DisplayGeneratedImage } from "../templates/DisplayGeneratedImage";
-import { ImageStep, InfoStep, ReflectStep, StoryStepType, WritePromptStep } from "../../data/story";
+import { ImageStep, InfoStep, ReflectStep, RoleSelectStep, StoryStepType, WritePromptStep } from "../../data/story";
 import { WritePrompt } from "../templates/WritePrompt";
 // import { TEST_STORY_DATA } from "./storyData";
 import { Reflect } from "../templates/Reflect";
@@ -26,6 +26,7 @@ import { ButtonPanel } from "../molecules/ButtonPanel";
 import { STORY_DATA } from "./storyData";
 import { InfoSlide } from "../templates/InfoSlide";
 import { TagGroup } from "../atoms/input/TagGroup";
+import { RoleSelectSlide } from "../templates/RoleSelectSlide";
 
 export default class ParticipantApp extends React.Component<{}> {
 	private logger: Logger;
@@ -111,7 +112,7 @@ export default class ParticipantApp extends React.Component<{}> {
 				<LoadingImageCard src="https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg" size="50%" allowNext={false} onNext={() => {}} buttonId="test-image-button" logger={this.logger}/>
 			</div> */}
 
-			<BackgroundImage src="./assets/stars_bg_16.png"/>
+			{/* <BackgroundImage src="./assets/stars_bg_16.png"/>
 			<ButtonPanel logger={this.logger} buttons={[{
 				id: 'test-next-button',
 				text: 'Next',
@@ -138,16 +139,15 @@ export default class ParticipantApp extends React.Component<{}> {
 							orientation="horizontal"/>
 				<TextSpacer/>
 				<Slider id="test-slider" logger={this.logger} leftLabel="Not at all" rightLabel="Super accurate"/>
-				{/* <Tag id="test-tag" logger={this.logger} text="test"/>
-				<TagInput id="test-tag-input" logger={this.logger} placeholder="other..."/> */}
 				<TextSpacer/>
 				<TagGroup id="test-tags" logger={this.logger} tags={['hello', 'world']} includeInput={true} placeholder="other..."/>
-			</ButtonPanel>
+			</ButtonPanel> */}
 
 			{/* <WritePrompt logger={this.logger} step={STORY_DATA[1].steps[0] as WritePromptStep} landscapePlayer={1} sectionImageUrls={[]}/> */}
 			{/* <Reflect logger={this.logger} step={STORY_DATA[1].steps[1] as ReflectStep} landscapePlayer={1} sectionImageUrls={[]} allowNext={true}/> */}
 			{/* <DisplayGeneratedImage logger={this.logger} step={STORY_DATA[1].steps[2] as ImageStep} sectionImageUrls={[]}/> */}
 			{/* <InfoSlide logger={this.logger} step={STORY_DATA[0].steps[1] as InfoStep} sectionImageUrls={[]} landscapePlayer={1}/> */}
+			<RoleSelectSlide logger={this.logger} step={STORY_DATA[0].steps[2] as RoleSelectStep}/>
 		</div>;
 	}
 }

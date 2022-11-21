@@ -1,3 +1,6 @@
+import * as React from "react";
+import { Logger } from "./logger";
+
 export interface StorySection {
 	steps: Array<StoryStep>;
 	genPrompt?: string; // Formatted like "this is some text with {0} and refers to the result from prompt {1} and so on"
@@ -10,6 +13,8 @@ export enum StoryStepType {
 	Reflect = 'reflect',
 	Image = 'image', // possibly image selection
 	Title = 'title', // title slide, should also probably put experiment generation code here
+	CustomForm = 'customform',
+	RoleSelect = 'roleselect',
 }
 
 export interface StoryStep {
@@ -26,17 +31,6 @@ export interface StoryStep {
 
 	timeLimitMs?: number; // If undefined, no time limit will appear.
 }
-
-/* Types of steps, and what data they need.
- * 
- * Almost everything has a question or a title. But it gets displayed so differently. Hm.
- * WritePrompt: The prompt string up to this point, with placeholder indices. The title or
- *   question, of course, that prompts it. A time limit, maybe, unless that's universal
- *   across these. Which player(s) should be speaking. Possibly a BG image.
- * Reflect: A title/question. That's really all. Also, which player(s) should speak. Possibly a BG image, probably not though.
- * Image: Just show the image. Possibly ask a question about the image? But probably not.
- * Info: This one's tough because of potential visual differences between these slides. Unsure.
- */
 
 // In any info text, {curr} will always be replaced with the current player (e.g., "player 1"),
 // and {other} will always be replaced with the other player (e.g., "player 2"). If the first
@@ -89,4 +83,19 @@ export interface InfoStep extends StoryStep {
 	player?: 1 | 2 | 'landscape' | 'buildings' | 'both',
 	playerAction?: string;
 	hint?: string;
+}
+
+export interface CustomFormStep extends StoryStep {
+	type: typeof StoryStepType.CustomForm;
+	player?: 1 | 2 | 'landscape' | 'buildings' | 'both';
+	playerAction?: string;
+	requiredFormElemIds: string[]; // For ensuring that everything is filled out.
+	makeContent: (logger: Logger, hasTimedOut: boolean, renderText: (text: string) => React.ReactNode) => React.ReactNode;
+	maxWidthIfNoImageCard?: string | false; // Defaults to 600px.
+	itemSpacing: string; // Defaults to 30px.
+}
+
+export interface RoleSelectStep extends StoryStep {
+	type: typeof StoryStepType.RoleSelect;
+	tags: string[]; // Used for the affect words question (i.e., "What kind of world do you dream of building? Why?").
 }

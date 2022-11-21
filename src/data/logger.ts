@@ -30,6 +30,11 @@ export class Logger {
 		}
 	}
 
+	/**
+	 * Retrieves the most recent values logged for a set of form element IDs.
+	 * @param formElemIds An array of form element IDs for which to search.
+	 * @returns A dictionary indexed by the form element IDs. If a value is undefined, then no value has yet been logged for that ID.
+	 */
 	getLatestValues(formElemIds: Array<string>): { [formElemId: string]: any } {
 		let result: { [formElemId: string]: any } = {};
 		for (let id of formElemIds) {
