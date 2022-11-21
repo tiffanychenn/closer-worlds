@@ -76,7 +76,7 @@ export function initExperimentData(experimentId: string, firstPlayerId: string, 
 			images: state.prompt.sectionImageUrls,
 		};
 
-		fetch(`${API_BASE_URL}/experiment`, {
+		fetch(`${API_BASE_URL}/startExperiment`, {
 			method: 'POST',
 			body: JSON.stringify(body),
 			headers: {

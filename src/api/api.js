@@ -102,6 +102,17 @@ app.post('/startExperiment', (req, res, next) => {
         // Experiment already exists
         // TODO
     }
+    else {
+        fs.mkdirSync("../../data/" + experimentData.id);
+        fs.writeFile("../../data/" + experimentData.id + "/" + experimentData.id + '.json', JSON.stringify(experimentData), (err) => {
+            // In case of a error throw err.
+            if (err) {
+                res.status(400).send("unable to save to file");
+                return;
+            }
+        })
+        res.status(200).send("success");
+    }
     // If it does, make sure the players are correct; otherwise, throw
     // If it does, and the players are correct, then send back the previous state and make sure it gets loaded in in the client -> make it possible to initialize state with API response in client
     // Otherwise, send back a happy handshake
@@ -116,9 +127,8 @@ app.post('/experiment', (req, res, next) => {
     }
     const hasExperimentFolder = fs.existsSync("../../data/" + req.body.id);
     if (!hasExperimentFolder) {
-        fs.mkdirSync("../../data/" + req.body.id);
-        // res.status(400).send("experiment id doesn't exist");
-        // return;
+        res.status(400).send("experiment id doesn't exist");
+        return;
     }
 
     fs.writeFile("../../data/" + req.body.id + "/" + req.body.id + '.json', JSON.stringify(experimentData), (err) => {
