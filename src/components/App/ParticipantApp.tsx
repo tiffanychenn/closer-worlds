@@ -28,7 +28,7 @@ import { InfoSlide } from "../templates/InfoSlide";
 import { TagGroup } from "../atoms/input/TagGroup";
 import { RoleSelectSlide } from "../templates/RoleSelectSlide";
 
-export const DEBUG_MODE = true;
+export const DEBUG_MODE = false;
 
 export default class ParticipantApp extends React.Component<{}> {
 	private logger: Logger;

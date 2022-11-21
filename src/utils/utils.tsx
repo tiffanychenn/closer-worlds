@@ -17,7 +17,7 @@ export function imagePathToUrl(path: string) {
 	if (path.substring(0, 4) == 'http') {
 		return path;
 	}
-	return `${API_BASE_URL}/${path}`;
+	return `${API_BASE_URL}/client/data/${path}`;
 }
 
 export function spread<T>(iter: IterableIterator<T>): T[] {

@@ -1,3 +1,4 @@
+import { DEBUG_MODE } from "../components/App/ParticipantApp";
 import { Logger } from "../data/logger";
 import { FetchStatus } from "../reducers/apiReducer";
 import { RootThunkAction } from "../reducers/rootReducer";
@@ -24,6 +25,8 @@ function setIsFetchingImage(value: FetchStatus): SetIsFetchingImageAction {
 
 export function generateImage(sectionIndex: number, prompt: string, logger: Logger): RootThunkAction {
 	return async (dispatch, getState) => {
+		if (DEBUG_MODE) return;
+
 		dispatch(setIsFetchingImage('fetching'));
 
 		const state = getState();
@@ -59,6 +62,11 @@ export function generateImage(sectionIndex: number, prompt: string, logger: Logg
 
 export function initExperimentData(experimentId: string, firstPlayerId: string, secondPlayerId: string, logger: Logger): RootThunkAction {
 	return async (dispatch, getState) => {
+		if (DEBUG_MODE) {
+			dispatch(initExperiment(experimentId, firstPlayerId, secondPlayerId));
+			return;
+		}
+
 		const state = getState();
 		const body = {
 			id: experimentId,
@@ -86,6 +94,8 @@ export function initExperimentData(experimentId: string, firstPlayerId: string, 
 
 export function pushExperimentData(logger: Logger): RootThunkAction {
 	return async (dispatch, getState) => {
+		if (DEBUG_MODE) return;
+
 		const state = getState();
 		const body = {
 			id: state.prompt.experimentId,

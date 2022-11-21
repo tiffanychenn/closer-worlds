@@ -31,6 +31,7 @@ app.get('/',(req,res) => {
 
 app.use('/client', express.static(path.join(__dirname, '../../dist/')));
 app.use('/client/assets', express.static(path.join(__dirname, '../../assets/')));
+app.use('/client/data', express.static(path.join(__dirname, '../../data/')));
 
 app.post('/image-gen', async (req,res) => {
     try {
@@ -40,14 +41,15 @@ app.post('/image-gen', async (req,res) => {
         const sectionIndex = req.body.sectionIndex;
         const buffer = Buffer.from(image, "base64");
         const filename = experimentId + "-" + sectionIndex + ".png";
-        fs.writeFile( "../../data/" + filename, buffer, (err) => {
+        const filepath = "../../data/" + experimentId + "/";
+        fs.writeFile(filepath + filename, buffer, (err) => {
             // In case of a error throw err.
             if (err) res.status(400).send("unable to save image");
         });
 
         const imageData = {
             filledPrompt: prompt,
-            imageURL: filename,
+            imageURL: experimentId + "/" + filename,
         };
 
         const newImages = Object.assign({}, req.body.images);
@@ -61,7 +63,7 @@ app.post('/image-gen', async (req,res) => {
             images: newImages,
         }
     
-        fs.writeFile("../../data/" + req.body.id + '.json', JSON.stringify(experimentData), (err) => {
+        fs.writeFile(filepath + experimentId + '.json', JSON.stringify(experimentData), (err) => {
             // In case of a error throw err.
             if (err) res.status(400).send("unable to save to file");
         })
@@ -77,9 +79,29 @@ app.post('/image-gen', async (req,res) => {
     }
 });
 
+function getExperimentData(body) {
+    const experimentData = {
+        id: body.id,
+        firstPlayerId: body.firstPlayerId,
+        secondPlayerId: body.secondPlayerId,
+        loggingData: body.loggingData,
+        images: body.images
+    };
+    return experimentData;
+}
+
 app.post('/startExperiment', (req, res, next) => {
-    // TODO
     // See if the current experiment ID already exists
+    const experimentData = getExperimentData(req.body);
+    if (!experimentData.id) {
+        res.status(400).send("No experiment ID was supplied.");
+        return;
+    }
+    
+    if (fs.existsSync("../../data/" + experimentData.id)) {
+        // Experiment already exists
+        // TODO
+    }
     // If it does, make sure the players are correct; otherwise, throw
     // If it does, and the players are correct, then send back the previous state and make sure it gets loaded in in the client -> make it possible to initialize state with API response in client
     // Otherwise, send back a happy handshake
@@ -87,18 +109,19 @@ app.post('/startExperiment', (req, res, next) => {
 
 // Update experiment data
 app.post('/experiment', (req, res, next) => {
-    const experimentData = {
-        id: req.body.id,
-        firstPlayerId: req.body.firstPlayerId,
-        secondPlayerId: req.body.secondPlayerId,
-        loggingData: req.body.loggingData,
-        images: req.body.images
-    }
+    const experimentData = getExperimentData(req.body);
     const hasDataFolder = fs.existsSync("../../data");
     if (!hasDataFolder) {
         fs.mkdirSync("../../data");
     }
-    fs.writeFile("../../data/" + req.body.id + '.json', JSON.stringify(experimentData), (err) => {
+    const hasExperimentFolder = fs.existsSync("../../data/" + req.body.id);
+    if (!hasExperimentFolder) {
+        fs.mkdirSync("../../data/" + req.body.id);
+        // res.status(400).send("experiment id doesn't exist");
+        // return;
+    }
+
+    fs.writeFile("../../data/" + req.body.id + "/" + req.body.id + '.json', JSON.stringify(experimentData), (err) => {
         // In case of a error throw err.
         if (err) {
             res.status(400).send("unable to save to file");
