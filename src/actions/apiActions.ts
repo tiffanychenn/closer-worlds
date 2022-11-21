@@ -41,6 +41,9 @@ export function generateImage(sectionIndex: number, prompt: string, logger: Logg
 		fetch(`${API_BASE_URL}/image-gen`, {
 			method: 'POST',
 			body: JSON.stringify(body),
+			headers: {
+				'Content-Type': 'application/json',
+				},
 		}).then((response) => response.json())
 		.then((data) => {
 			const returnedImgPath = data.imageURL;
@@ -68,6 +71,9 @@ export function initExperimentData(experimentId: string, firstPlayerId: string, 
 		fetch(`${API_BASE_URL}/experiment`, {
 			method: 'POST',
 			body: JSON.stringify(body),
+			headers: {
+				'Content-Type': 'application/json',
+				},
 		}).then(res => {
 			// TODO: Handle success case where there's no existing experiment
 			dispatch(initExperiment(experimentId, firstPlayerId, secondPlayerId));
@@ -92,6 +98,9 @@ export function pushExperimentData(logger: Logger): RootThunkAction {
 		fetch(`${API_BASE_URL}/experiment`, {
 			method: 'POST',
 			body: JSON.stringify(body),
+			headers: {
+				'Content-Type': 'application/json',
+				},
 		}).then(res => {
 			if (res.status !== 200) {
 				const msg = `API failed (status ${res.status}) to store experiment data for experiment ID ${state.prompt.experimentId}.`;

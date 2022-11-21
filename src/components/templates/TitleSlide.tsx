@@ -12,16 +12,15 @@ import { SlideBackground } from '../molecules/SlideBackground';
 import { ContentWithImageSlide } from '../organisms/ContentWithImageSlide';
 import { SectionImageUrls } from '../../reducers/promptReducer';
 import { BlankSlide } from '../organisms/BlankSlide';
-import { initExperiment } from '../../actions/promptActions';
 import { v4 as uuidv4 } from 'uuid';
-import { pushExperimentData } from '../../actions/apiActions';
+import { initExperimentData } from '../../actions/apiActions';
 import { connect } from 'react-redux';
 import { GAME_NAME, STAR_BG } from '../App/storyData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import ShortTextBox from '../atoms/input/ShortTextBox';
 
-interface Props {
+interface OwnProps {
 	logger: Logger;
 	step: TitleStep;
 	onNext: () => void;
@@ -34,7 +33,13 @@ interface State {
 	p2Id: string;
 }
 
-export class TitleSlide extends React.Component<Props, State> {
+interface ReduxDispatchProps {
+	initExperimentData: (experimentId: string, firstPlayerId: string, secondPlayerId: string, logger: Logger) => void;
+}
+
+type Props = OwnProps & ReduxDispatchProps;
+
+class TitleSlide extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
@@ -45,19 +50,8 @@ export class TitleSlide extends React.Component<Props, State> {
 		};
 	}
 
-	private async onClick() {
-		const { logger, onNext } = this.props;
-		const { expId, p1Id, p2Id } = this.state;
-		const experimentId = expId == "" ? uuidv4() : expId;
-		const firstPlayerId = p1Id == "" ? uuidv4() : p1Id;
-		const secondPlayerId = p2Id == "" ? uuidv4() : p2Id;
-		initExperiment(experimentId, firstPlayerId, secondPlayerId);
-		pushExperimentData(logger);
-		onNext();
-	}
-
 	render() {
-		const { logger, step } = this.props;
+		const { logger, step, initExperimentData, onNext } = this.props;
 		const { showDrawer } = this.state;
 
 		const headingStyle:  React.CSSProperties = {
@@ -97,7 +91,14 @@ export class TitleSlide extends React.Component<Props, State> {
 						   sectionImageUrls={[]}>
 			<div style={style}>
 				<h1 style={headingStyle}>{GAME_NAME}</h1>
-				<div style={{flex: 0}}><Button id="start-button" logger={logger} text="Start" onClick={() => this.onClick()}></Button></div>
+				<div style={{flex: 0}}><Button id="start-button" logger={logger} text="Start" onClick={() => {
+					const { expId, p1Id, p2Id } = this.state;
+					const experimentId = expId == "" ? uuidv4() : expId;
+					const firstPlayerId = p1Id == "" ? uuidv4() : p1Id;
+					const secondPlayerId = p2Id == "" ? uuidv4() : p2Id;
+					initExperimentData(experimentId, firstPlayerId, secondPlayerId, logger);
+					onNext();
+				}}></Button></div>
 			</div>
 			<div style={drawerContainerStyle}>{
 				showDrawer
@@ -115,4 +116,4 @@ export class TitleSlide extends React.Component<Props, State> {
 	}
 }
 
-export default connect(null, {initExperiment})(TitleSlide);
+export default connect(null, { initExperimentData })(TitleSlide);

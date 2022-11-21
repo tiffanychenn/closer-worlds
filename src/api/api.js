@@ -1,15 +1,16 @@
 const uuid = require("uuid")
 const express = require("express");
 const fs = require('fs');
-const bodyParser = require('body-parser');
 const path = require("path");
 const { Configuration, OpenAIApi } = require("openai");
 const { dir } = require("console");
+const bodyParser = require('body-parser');
 
 require('dotenv').config();
 
 // Initialize the express engine
 const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
  
 // Take a port 5000 for running server.
@@ -86,6 +87,7 @@ app.post('/startExperiment', (req, res, next) => {
 
 // Update experiment data
 app.post('/experiment', (req, res, next) => {
+    console.log(req.body);
     const experimentData = {
         id: req.body.id,
         firstPlayerId: req.body.firstPlayerId,
@@ -99,7 +101,10 @@ app.post('/experiment', (req, res, next) => {
     }
     fs.writeFile("../../data/" + req.body.id + '.json', JSON.stringify(experimentData), (err) => {
         // In case of a error throw err.
-        if (err) res.status(400).send("unable to save to file");
+        if (err) {
+            res.status(400).send("unable to save to file");
+            return;
+        }
     })
     res.status(200); // .send({success: true});
 });

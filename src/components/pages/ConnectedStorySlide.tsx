@@ -16,7 +16,7 @@ import { DisplayGeneratedImage } from '../templates/DisplayGeneratedImage';
 import { InfoSlide } from '../templates/InfoSlide';
 import { Reflect } from '../templates/Reflect';
 import { RoleSelectSlide } from '../templates/RoleSelectSlide';
-import { TitleSlide } from '../templates/TitleSlide';
+import TitleSlide from '../templates/TitleSlide';
 import { WritePrompt } from '../templates/WritePrompt';
 
 interface OwnProps {
