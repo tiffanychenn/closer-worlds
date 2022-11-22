@@ -16,7 +16,7 @@ import { DisplayGeneratedImage } from '../templates/DisplayGeneratedImage';
 import { InfoSlide } from '../templates/InfoSlide';
 import { Reflect } from '../templates/Reflect';
 import { RoleSelectSlide } from '../templates/RoleSelectSlide';
-import TitleSlide from '../templates/TitleSlide';
+import { TitleSlide } from '../templates/TitleSlide';
 import { WritePrompt } from '../templates/WritePrompt';
 
 interface OwnProps {
@@ -33,7 +33,7 @@ interface ReduxStateProps {
 }
 
 interface ReduxDispatchProps {
-	advanceStep: (logger: Logger) => void;
+	advanceStep: (logger: Logger, experimentId?: string, firstPlayerId?: string, secondPlayerId?: string) => void;
 	redoSection: () => void;
 	setLandscapePlayer: (value: 1 | 2) => void;
 }
@@ -80,7 +80,7 @@ class ConnectedStorySlide extends React.Component<Props> {
 				return <TitleSlide 
 					logger={logger}
 					step={step as TitleStep}
-					onNext={() => advanceStep(logger)}/>
+					onNext={(experimentId: string, firstPlayerId: string, secondPlayerId: string) => advanceStep(logger, experimentId, firstPlayerId, secondPlayerId)}/>
 			case StoryStepType.Info:
 				return <InfoSlide 
 					step={step as InfoStep}

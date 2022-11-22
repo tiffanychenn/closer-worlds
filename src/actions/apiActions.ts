@@ -2,6 +2,7 @@ import { DEBUG_MODE } from "../components/App/ParticipantApp";
 import { Logger } from "../data/logger";
 import { FetchStatus } from "../reducers/apiReducer";
 import { RootThunkAction } from "../reducers/rootReducer";
+import { loadExistingGame } from "./gameActions";
 import { initExperiment, saveImage } from "./promptActions";
 
 export const API_ACTION_NAMES = {
@@ -74,6 +75,8 @@ export function initExperimentData(experimentId: string, firstPlayerId: string, 
 			secondPlayerId: secondPlayerId,
 			loggingData: logger.dumpData(),
 			images: state.prompt.sectionImageUrls,
+			sectionIndex: state.game.storySection,
+			stepIndex: state.game.storyStep,
 		};
 
 		fetch(`${API_BASE_URL}/startExperiment`, {
@@ -82,12 +85,21 @@ export function initExperimentData(experimentId: string, firstPlayerId: string, 
 			headers: {
 				'Content-Type': 'application/json',
 				},
-		}).then(res => {
-			// TODO: Handle success case where there's no existing experiment
+		})
+		.then((response) => response.json())
+		.then(data => {
 			dispatch(initExperiment(experimentId, firstPlayerId, secondPlayerId));
+			if (data.isExistingExperiment) {
+				logger.loadPreviousExperimentData(data.experimentData.loggingData);
+				Object.keys(data.experimentData.images).forEach((sectionIndex) => {
+					const image = data.experimentData.images[sectionIndex];
+					dispatch(saveImage(parseInt(sectionIndex), image.filledPrompt, image.path))
+				});
+				dispatch(loadExistingGame(data.experimentData.sectionIndex, data.experimentData.stepIndex));
+			}
 		}).catch(reason => {
 			const msg = `API failed to initialize experiment data for experiment ID ${state.prompt.experimentId}. Reason: ${reason}`;
-			// TODO: Handle failure cases: 1) there's an existing experiment and the player IDs match so just restore state, or 2) exists but player IDs are wrong so something's weird
+			throw new Error(msg);
 		});
 	};
 }
@@ -103,6 +115,8 @@ export function pushExperimentData(logger: Logger): RootThunkAction {
 			secondPlayerId: state.prompt.secondPlayerId,
 			loggingData: logger.dumpData(),
 			images: state.prompt.sectionImageUrls,
+			sectionIndex: state.game.storySection,
+			stepIndex: state.game.storyStep,
 		};
 
 		fetch(`${API_BASE_URL}/experiment`, {

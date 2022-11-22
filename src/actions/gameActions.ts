@@ -1,10 +1,9 @@
 import { RootThunkAction } from "../reducers/rootReducer";
-import { getStoryStep } from "../utils/utils";
 import { STORY_DATA } from "../components/App/storyData";
 import { IAllowsRedo, StoryStepType } from "../data/story";
 import { Logger } from "../data/logger";
 import { fillPrompt } from "../utils/textUtils";
-import { generateImage, pushExperimentData } from "./apiActions";
+import { generateImage, initExperimentData, pushExperimentData } from "./apiActions";
 // REFACTOR: The story data should probably be part of state for modularity, but I'm not sure.
 
 export const GAME_ACTION_NAMES = {
@@ -73,7 +72,7 @@ function setHasUsedRedo(value: boolean): SetHasUsedRedoAction {
 // 	// Advance to the next step of the story, which is expected to be "reflect," and await response from WOZ telling us we can move on to the next step
 // }
 
-export function advanceStep(logger: Logger): RootThunkAction {
+export function advanceStep(logger: Logger, experimentId?: string, firstPlayerId?: string, secondPlayerId?: string): RootThunkAction {
 	return async (dispatch, getState) => {
 		const state = getState();
 		const sectionIndex = state.game.storySection;
@@ -84,6 +83,15 @@ export function advanceStep(logger: Logger): RootThunkAction {
 		// FIXME: If async things get weird, this might need to go last.
 		// TODO: If we want to regenerate an image at the very end, then we likely need to modify this.
 		// I have some ideas on this (using something like flags), but I want to only change it if we for sure need to.
+		if (sectionIndex === 0 && stepIndex === 0){
+			// add title slide stuff here
+			if (experimentId !== null && firstPlayerId !== null && secondPlayerId !== null) {
+				await dispatch(initExperimentData(experimentId, firstPlayerId, secondPlayerId, logger)).catch(function(error) {
+					throw error;
+				});
+			}
+		}
+
 		if (currStep.type == StoryStepType.WritePrompt) {
 			// Then first submit a request to generate the filled in prompt.
 			const prompt = currSection.genPrompt;
@@ -122,6 +130,23 @@ export function redoSection(): RootThunkAction {
 		if ((currStep as any).redoReturnsToStepIndex === undefined) return;
 		dispatch(setHasUsedRedo(true));
 		dispatch(setStepIndex((currStep as IAllowsRedo).redoReturnsToStepIndex));
+	};
+}
+
+export function loadExistingGame(sectionIndex: number, stepIndex: number): RootThunkAction {
+	return async (dispatch, getState) => {
+		const currSection = STORY_DATA[sectionIndex];
+		if (stepIndex == currSection.steps.length - 1) {
+			if (sectionIndex == STORY_DATA.length - 1) {
+				// TODO: Any ending steps required.
+				return;
+			}
+			dispatch(setSectionIndex(sectionIndex + 1));
+			dispatch(setStepIndex(0));
+		} else {
+			dispatch(setSectionIndex(sectionIndex));
+			dispatch(setStepIndex(stepIndex + 1));
+		}
 	};
 }
 

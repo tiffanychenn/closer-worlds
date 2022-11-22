@@ -20,10 +20,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import ShortTextBox from '../atoms/input/ShortTextBox';
 
-interface OwnProps {
+interface Props {
 	logger: Logger;
 	step: TitleStep;
-	onNext: () => void;
+	onNext: (experimentId: string, firstPlayerId: string, secondPlayerId: string) => void;
 }
 
 interface State {
@@ -33,13 +33,7 @@ interface State {
 	p2Id: string;
 }
 
-interface ReduxDispatchProps {
-	initExperimentData: (experimentId: string, firstPlayerId: string, secondPlayerId: string, logger: Logger) => void;
-}
-
-type Props = OwnProps & ReduxDispatchProps;
-
-class TitleSlide extends React.Component<Props, State> {
+export class TitleSlide extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
 		this.state = {
@@ -51,7 +45,7 @@ class TitleSlide extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { logger, step, initExperimentData, onNext } = this.props;
+		const { logger, step, onNext } = this.props;
 		const { showDrawer } = this.state;
 
 		const headingStyle:  React.CSSProperties = {
@@ -96,8 +90,7 @@ class TitleSlide extends React.Component<Props, State> {
 					const experimentId = expId == "" ? uuidv4() : expId;
 					const firstPlayerId = p1Id == "" ? uuidv4() : p1Id;
 					const secondPlayerId = p2Id == "" ? uuidv4() : p2Id;
-					initExperimentData(experimentId, firstPlayerId, secondPlayerId, logger);
-					onNext();
+					onNext(experimentId, firstPlayerId, secondPlayerId);
 				}}></Button></div>
 			</div>
 			<div style={drawerContainerStyle}>{
@@ -115,5 +108,3 @@ class TitleSlide extends React.Component<Props, State> {
 		</BlankSlide>
 	}
 }
-
-export default connect(null, { initExperimentData })(TitleSlide);

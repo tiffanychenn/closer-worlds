@@ -85,7 +85,9 @@ function getExperimentData(body) {
         firstPlayerId: body.firstPlayerId,
         secondPlayerId: body.secondPlayerId,
         loggingData: body.loggingData,
-        images: body.images
+        images: body.images,
+        sectionIndex: body.sectionIndex,
+        stepIndex: body.stepIndex,
     };
     return experimentData;
 }
@@ -93,25 +95,43 @@ function getExperimentData(body) {
 app.post('/startExperiment', (req, res, next) => {
     // See if the current experiment ID already exists
     const experimentData = getExperimentData(req.body);
+    const filepath = "../../data/" + experimentData.id;
+    const jsonFile = filepath + "/" + experimentData.id + '.json';
     if (!experimentData.id) {
         res.status(400).send("No experiment ID was supplied.");
         return;
     }
     
-    if (fs.existsSync("../../data/" + experimentData.id)) {
+    if (fs.existsSync(filepath)) {
         // Experiment already exists
-        // TODO
+        if (!fs.existsSync(jsonFile)) {
+            res.status(400).send("JSON for existing experiment does not exist.");
+            return;
+        }
+        const savedExperimentData = JSON.parse(fs.readFileSync(jsonFile, 'utf8'));
+        if ((savedExperimentData.firstPlayerId !== experimentData.firstPlayerId) || (savedExperimentData.secondPlayerId !== experimentData.secondPlayerId)) {
+            res.status(400).send("Player ID(s) do not match the saved ones for existing experiment.");
+            return;
+        }
+        res.status(200).send({
+            isExistingExperiment: true,
+            experimentData: savedExperimentData
+        });
+
     }
     else {
-        fs.mkdirSync("../../data/" + experimentData.id);
-        fs.writeFile("../../data/" + experimentData.id + "/" + experimentData.id + '.json', JSON.stringify(experimentData), (err) => {
+        fs.mkdirSync(filepath);
+        fs.writeFile(jsonFile, JSON.stringify(experimentData), (err) => {
             // In case of a error throw err.
             if (err) {
                 res.status(400).send("unable to save to file");
                 return;
             }
         })
-        res.status(200).send("success");
+        res.status(200).send({
+            isExistingExperiment: false,
+            experimentData: experimentData
+        });
     }
     // If it does, make sure the players are correct; otherwise, throw
     // If it does, and the players are correct, then send back the previous state and make sure it gets loaded in in the client -> make it possible to initialize state with API response in client

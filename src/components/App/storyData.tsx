@@ -12,7 +12,7 @@ export const PLANET_DEPARTURE_IMAGE = './assets/departure.png';
 
 export const GAME_NAME = "Dreamy";
 
-export const STORY_DATA: Array<StorySection> = [
+export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	{
 		steps: [
 			{
@@ -285,3 +285,5 @@ export const STORY_DATA: Array<StorySection> = [
 		],
 	},
 ];
+
+export const STORY_DATA = EXPERIMENTAL_STORY_DATA;
