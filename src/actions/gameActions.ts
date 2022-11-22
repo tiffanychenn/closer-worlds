@@ -11,6 +11,7 @@ export const GAME_ACTION_NAMES = {
 	SET_STEP_INDEX: 'SET_STEP_INDEX',
 	SET_LANDSCAPE_PLAYER: 'SET_LANDSCAPE_PLAYER',
 	SET_HAS_USED_REDO: 'SET_HAS_USED_REDO',
+	SET_ERROR: 'SET_ERROR',
 };
 
 export interface SetSectionIndexAction {
@@ -61,6 +62,18 @@ function setHasUsedRedo(value: boolean): SetHasUsedRedoAction {
 	};
 }
 
+export interface SetErrorAction {
+	type: typeof GAME_ACTION_NAMES.SET_ERROR;
+	value: string;
+}
+
+export function setError(value: string): SetErrorAction {
+	return {
+		type: GAME_ACTION_NAMES.SET_ERROR,
+		value,
+	};
+}
+
 // function fillAndGenerateBlank(value: string) {
 // 	// TODO
 // 	// Get storySection from current state
@@ -80,14 +93,17 @@ export function advanceStep(logger: Logger, experimentId?: string, firstPlayerId
 		const currSection = STORY_DATA[sectionIndex];
 		const currStep = currSection.steps[stepIndex];
 
+		let errorDone = false;
+
 		// FIXME: If async things get weird, this might need to go last.
 		// TODO: If we want to regenerate an image at the very end, then we likely need to modify this.
 		// I have some ideas on this (using something like flags), but I want to only change it if we for sure need to.
 		if (sectionIndex === 0 && stepIndex === 0){
 			// add title slide stuff here
 			if (experimentId !== null && firstPlayerId !== null && secondPlayerId !== null) {
-				await dispatch(initExperimentData(experimentId, firstPlayerId, secondPlayerId, logger)).catch(function(error) {
-					throw error;
+				dispatch(initExperimentData(experimentId, firstPlayerId, secondPlayerId, logger)).catch(function(error) {
+					dispatch(setError(error.message));
+					errorDone = true;
 				});
 			}
 		}
@@ -98,7 +114,8 @@ export function advanceStep(logger: Logger, experimentId?: string, firstPlayerId
 			if (!prompt) {
 				const msg = `ERROR in advanceStep: Section ${sectionIndex} has a WritePrompt step ${stepIndex}, but does not have a genPrompt, so no prompt can be generated.`;
 				console.log(msg);
-				throw new Error(msg);
+				dispatch(setError(msg));
+				errorDone = true;
 			}
 			const promptTransformers = currSection.promptTransformers || {};
 			const filledPrompt = fillPrompt(prompt, promptTransformers, logger);
@@ -108,16 +125,20 @@ export function advanceStep(logger: Logger, experimentId?: string, firstPlayerId
 			dispatch(pushExperimentData(logger));
 		}
 
-		// Increment story and step index
-		if (stepIndex == currSection.steps.length - 1) {
-			if (sectionIndex == STORY_DATA.length - 1) {
-				// TODO: Any ending steps required.
-				return;
+		const error = getState().game.error;
+		
+		if (!errorDone && !error) {
+			// Increment story and step index
+			if (stepIndex == currSection.steps.length - 1) {
+				if (sectionIndex == STORY_DATA.length - 1) {
+					// TODO: Any ending steps required.
+					return;
+				}
+				dispatch(setSectionIndex(sectionIndex + 1));
+				dispatch(setStepIndex(0));
+			} else {
+				dispatch(setStepIndex(stepIndex + 1));
 			}
-			dispatch(setSectionIndex(sectionIndex + 1));
-			dispatch(setStepIndex(0));
-		} else {
-			dispatch(setStepIndex(stepIndex + 1));
 		}
 	};
 }
@@ -150,4 +171,4 @@ export function loadExistingGame(sectionIndex: number, stepIndex: number): RootT
 	};
 }
 
-export type GameActions = SetSectionIndexAction | SetStepIndexAction | SetLandscapePlayerAction | SetHasUsedRedoAction; // TODO
+export type GameActions = SetSectionIndexAction | SetStepIndexAction | SetLandscapePlayerAction | SetHasUsedRedoAction | SetErrorAction; // TODO

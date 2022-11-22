@@ -7,7 +7,7 @@ import { getSectionImageOrString } from '../../utils/utils';
 import { STAR_BG } from '../App/storyData';
 import { Panel } from '../atoms/containers/Panel';
 import { BLUE_BG_LIGHT_SHADOW, IMG_BG_DARK_SHADOW } from '../atoms/image/ImageCard';
-import { DiscussionPrompt, Hint, SerifHeader, Text } from '../atoms/text/Text';
+import { DiscussionPrompt, Hint, SerifHeader, Text, Error } from '../atoms/text/Text';
 import { BlankSlide } from '../organisms/BlankSlide';
 import { BlankTwoColumnSlide } from '../organisms/BlankTwoColumnSlide';
 import { ContentWithImageSlide } from '../organisms/ContentWithImageSlide';
@@ -20,11 +20,12 @@ interface Props {
 	sectionImageUrls: SectionImageUrls;
 	onNext?: () => void;
 	allowNext: boolean; // Delegated up to parent because of DALL-E and possible socket callback.
+	error: string;
 }
 
 export class Reflect extends React.Component<Props> {
 	render() {
-		const { logger, step, landscapePlayer, sectionImageUrls, onNext, allowNext } = this.props;
+		const { logger, step, landscapePlayer, sectionImageUrls, onNext, allowNext, error } = this.props;
 		const playerNumber = playerRoleToNumber(step.player, landscapePlayer);
 		
 		const cardImage = getSectionImageOrString(step.cardImage, sectionImageUrls);
@@ -46,6 +47,7 @@ export class Reflect extends React.Component<Props> {
 		};
 
 		const content = <div style={containerStyle}>
+			<Error>{error}</Error>
 			<Panel bgOpacity={bgOpacity}>
 				<div style={contentStyle}>
 					<Text>The wand starts swirling and whirling, and begins to frantically paint the landscape.</Text>

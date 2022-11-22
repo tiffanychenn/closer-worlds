@@ -2,7 +2,7 @@ import { DEBUG_MODE } from "../components/App/ParticipantApp";
 import { Logger } from "../data/logger";
 import { FetchStatus } from "../reducers/apiReducer";
 import { RootThunkAction } from "../reducers/rootReducer";
-import { loadExistingGame } from "./gameActions";
+import { loadExistingGame, setError } from "./gameActions";
 import { initExperiment, saveImage } from "./promptActions";
 
 export const API_ACTION_NAMES = {
@@ -56,6 +56,7 @@ export function generateImage(sectionIndex: number, prompt: string, logger: Logg
 		}).catch(reason => {
 			const msg = "API failed to generate image for prompt: " + prompt + "\nReason: " + reason;
 			console.error(msg);
+			dispatch(setError(msg));
 			throw new Error(msg);
 		});
 	};
@@ -99,6 +100,7 @@ export function initExperimentData(experimentId: string, firstPlayerId: string, 
 			}
 		}).catch(reason => {
 			const msg = `API failed to initialize experiment data for experiment ID ${state.prompt.experimentId}. Reason: ${reason}`;
+			dispatch(setError(msg));
 			throw new Error(msg);
 		});
 	};
@@ -129,6 +131,7 @@ export function pushExperimentData(logger: Logger): RootThunkAction {
 			if (res.status !== 200) {
 				const msg = `API failed (status ${res.status}) to store experiment data for experiment ID ${state.prompt.experimentId}.`;
 				console.error(msg);
+				dispatch(setError(msg));
 				throw new Error(msg);
 			}
 		}).catch(reason => {

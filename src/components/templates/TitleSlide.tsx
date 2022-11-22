@@ -6,7 +6,7 @@ import { Button } from '../atoms/input/Button';
 import { BackgroundImage } from '../atoms/image/BackgroundImage';
 import { ImageCard } from '../atoms/image/ImageCard';
 import LongTextBox from '../atoms/input/LongTextBox';
-import { DiscussionPrompt, Hint, Text } from '../atoms/text/Text';
+import { DiscussionPrompt, Hint, Text, Error } from '../atoms/text/Text';
 import { PlayerTokenHeader } from '../molecules/PlayerTokenHeader';
 import { SlideBackground } from '../molecules/SlideBackground';
 import { ContentWithImageSlide } from '../organisms/ContentWithImageSlide';
@@ -24,6 +24,7 @@ interface Props {
 	logger: Logger;
 	step: TitleStep;
 	onNext: (experimentId: string, firstPlayerId: string, secondPlayerId: string) => void;
+	error: string;
 }
 
 interface State {
@@ -45,7 +46,7 @@ export class TitleSlide extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { logger, step, onNext } = this.props;
+		const { logger, step, onNext, error } = this.props;
 		const { showDrawer } = this.state;
 
 		const headingStyle:  React.CSSProperties = {
@@ -85,6 +86,7 @@ export class TitleSlide extends React.Component<Props, State> {
 						   sectionImageUrls={[]}>
 			<div style={style}>
 				<h1 style={headingStyle}>{GAME_NAME}</h1>
+				<Error>{error}</Error>
 				<div style={{flex: 0}}><Button id="start-button" logger={logger} text="Start" onClick={() => {
 					const { expId, p1Id, p2Id } = this.state;
 					const experimentId = expId == "" ? uuidv4() : expId;

@@ -1,5 +1,4 @@
-import { GameActions, GAME_ACTION_NAMES, SetLandscapePlayerAction, SetSectionIndexAction, SetStepIndexAction, SetHasUsedRedoAction } from './../actions/gameActions';
-import { StoryStepType } from "../data/story";
+import { GameActions, GAME_ACTION_NAMES, SetLandscapePlayerAction, SetSectionIndexAction, SetStepIndexAction, SetHasUsedRedoAction, SetErrorAction } from './../actions/gameActions';
 
 // My current thought is we map these--and possibly more--to different steps within a given story section (of which we have an array). The order of them may vary per section, but at the very least, each of these tells us what kind of page we need to display, and the section gives us the data and indices we need to use to display and act on those things.
 
@@ -8,6 +7,7 @@ export interface GameState {
 	storyStep: number;
 	landscapePlayer: 1 | 2;
 	hasUsedRedo: boolean;
+	error: string;
 }
 
 export const initialState: GameState = {
@@ -15,6 +15,7 @@ export const initialState: GameState = {
 	storyStep: 0,
 	landscapePlayer: 1, // Ok to assume 1, since this won't be used before necessary.
 	hasUsedRedo: false,
+	error: "",
 };
 
 export function reducer(state = initialState, action: GameActions): GameState {
@@ -42,6 +43,12 @@ export function reducer(state = initialState, action: GameActions): GameState {
 			return {
 				...state,
 				hasUsedRedo: value,
+			};
+		} case GAME_ACTION_NAMES.SET_ERROR: {
+			const { value } = action as SetErrorAction;
+			return {
+				...state,
+				error: value,
 			};
 		} default:
 			return state;

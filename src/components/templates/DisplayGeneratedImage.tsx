@@ -7,7 +7,7 @@ import { STAR_BG } from '../App/storyData';
 import { Panel } from '../atoms/containers/Panel';
 import { BLUE_BG_LIGHT_SHADOW, ImageCard, IMG_BG_DARK_SHADOW } from '../atoms/image/ImageCard';
 import { Button } from '../atoms/input/Button';
-import { PageHeader, Text } from '../atoms/text/Text';
+import { PageHeader, Text, Error as TextError } from '../atoms/text/Text';
 import { BlankSlide } from '../organisms/BlankSlide';
 import { BlankTwoColumnSlide } from '../organisms/BlankTwoColumnSlide';
 
@@ -18,13 +18,14 @@ interface Props {
 	onNext?: () => void;
 	onRedo?: () => void;
 	allowRedo: boolean;
+	error: string;
 }
 
 export class DisplayGeneratedImage extends React.Component<Props> {
 	static defaultProps = { allowRedo: true };
 
 	render() {
-		const { logger, step, sectionImageUrls, onNext, onRedo, allowRedo } = this.props;
+		const { logger, step, sectionImageUrls, onNext, onRedo, allowRedo, error } = this.props;
 
 		let cardImage = getSectionImageOrString(step.cardImage, sectionImageUrls);
 		if (!cardImage) {
@@ -68,6 +69,7 @@ export class DisplayGeneratedImage extends React.Component<Props> {
 									flexCol1="0" flexCol2="0">{{
 			col1: <ImageCard src={cardImage} size='85vh' maxOtherSize='85vh' sizeSide='width' boxShadow={boxShadow}/>,
 			col2: <div style={containerStyle}>
+				<TextError>{error}</TextError>
 				<Panel bgOpacity={bgOpacity} scroll={false}>
 					<div style={contentStyle}>
 						<PageHeader>All around you, the world has changed.</PageHeader>
