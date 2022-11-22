@@ -32,6 +32,7 @@ interface State {
 	expId: string;
 	p1Id: string;
 	p2Id: string;
+	hasOpenedDrawer: boolean;
 }
 
 export class TitleSlide extends React.Component<Props, State> {
@@ -42,12 +43,13 @@ export class TitleSlide extends React.Component<Props, State> {
 			expId: "",
 			p1Id: "",
 			p2Id: "",
+			hasOpenedDrawer: false,
 		};
 	}
 
 	render() {
 		const { logger, step, onNext, error } = this.props;
-		const { showDrawer } = this.state;
+		const { showDrawer, hasOpenedDrawer } = this.state;
 
 		const headingStyle:  React.CSSProperties = {
 			fontFamily: 'Sono',
@@ -96,6 +98,7 @@ export class TitleSlide extends React.Component<Props, State> {
 				}}></Button></div>
 			</div>
 			<div style={drawerContainerStyle}>{
+				hasOpenedDrawer && !showDrawer ? <></> : 
 				showDrawer
 				? <>
 					<FontAwesomeIcon icon={faChevronDown} size="2x" color="rgba(255,255,255,0.3)" onClick={() => this.setState({showDrawer: false})}/>
@@ -105,7 +108,7 @@ export class TitleSlide extends React.Component<Props, State> {
 						<ShortTextBox id="admin-p2-id" logger={logger} placeholder="Participant 2 ID" onInput={e => this.setState({p2Id: e.currentTarget.value})}/>
 					</div>
 				</>
-				: <FontAwesomeIcon icon={faChevronUp} size="2x" color="rgba(255,255,255,0.3)" onClick={() => this.setState({showDrawer: true})}/>
+				: <FontAwesomeIcon icon={faChevronUp} size="2x" color="rgba(255,255,255,0.3)" onClick={() => this.setState({showDrawer: true, hasOpenedDrawer: true})}/>
 			}</div>
 		</BlankSlide>
 	}
