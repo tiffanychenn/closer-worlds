@@ -19,6 +19,7 @@ import { GAME_NAME, STAR_BG } from '../App/storyData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import ShortTextBox from '../atoms/input/ShortTextBox';
+import { RadioGroup } from '../atoms/input/RadioGroup';
 
 interface Props {
 	logger: Logger;
@@ -33,6 +34,7 @@ interface State {
 	p1Id: string;
 	p2Id: string;
 	hasOpenedDrawer: boolean;
+	gameType: string;
 }
 
 export class TitleSlide extends React.Component<Props, State> {
@@ -44,6 +46,7 @@ export class TitleSlide extends React.Component<Props, State> {
 			p1Id: "",
 			p2Id: "",
 			hasOpenedDrawer: false,
+			gameType: "Experimental",
 		};
 	}
 
@@ -90,7 +93,7 @@ export class TitleSlide extends React.Component<Props, State> {
 				<h1 style={headingStyle}>{GAME_NAME}</h1>
 				<Error>{error}</Error>
 				<div style={{flex: 0}}><Button id="start-button" logger={logger} text="Start" onClick={() => {
-					const { expId, p1Id, p2Id } = this.state;
+					const { expId, p1Id, p2Id, gameType } = this.state;
 					const experimentId = expId == "" ? uuidv4() : expId;
 					const firstPlayerId = p1Id == "" ? uuidv4() : p1Id;
 					const secondPlayerId = p2Id == "" ? uuidv4() : p2Id;
@@ -106,6 +109,7 @@ export class TitleSlide extends React.Component<Props, State> {
 						<ShortTextBox id="admin-experiment-id" logger={logger} placeholder="Experiment ID" onInput={e => this.setState({expId: e.currentTarget.value})}/>
 						<ShortTextBox id="admin-p1-id" logger={logger} placeholder="Participant 1 ID" onInput={e => this.setState({p1Id: e.currentTarget.value})}/>
 						<ShortTextBox id="admin-p2-id" logger={logger} placeholder="Participant 2 ID" onInput={e => this.setState({p2Id: e.currentTarget.value})}/>
+						<RadioGroup id="game-type-radio-group-id" ids={["radio-button-experimental", "radio-button-control"]} labels={["Experimental", "Control"]} orientation="horizontal" logger={logger} onSelect={(value) => {this.setState({gameType: value});}}/>
 					</div>
 				</>
 				: <FontAwesomeIcon icon={faChevronUp} size="2x" color="rgba(255,255,255,0.3)" onClick={() => this.setState({showDrawer: true, hasOpenedDrawer: true})}/>
