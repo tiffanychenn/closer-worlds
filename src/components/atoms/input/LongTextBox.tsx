@@ -9,7 +9,7 @@ export interface Props extends LoggedFormElementProps {
 
 export default class LongTextBox extends LoggedFormElementComponent<Props> {
 	render() {
-		const { placeholder, onInput } = this.props;
+		const { placeholder, onInput, id } = this.props;
 
 		const style = css({
 			background: '#0A1547',
@@ -35,7 +35,7 @@ export default class LongTextBox extends LoggedFormElementComponent<Props> {
 			transition: 'all 0.2s',
 		});
 
-		return <textarea css={style} placeholder={placeholder} onInput={e => {
+		return <textarea css={style} id={id} placeholder={placeholder} onInput={e => {
 			this.onTextArea(e);
 			if (onInput) onInput(e);
 		}} onClick={e => this.onAnyEvent('!click')}></textarea>;

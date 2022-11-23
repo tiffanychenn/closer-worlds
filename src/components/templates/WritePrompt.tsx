@@ -2,8 +2,6 @@ import * as React from 'react';
 import { Logger } from '../../data/logger';
 import { WritePromptStep } from '../../data/story';
 import { playerRoleToNumber, renderBoldText, replacePlayerText } from '../../utils/textUtils';
-import { Button } from '../atoms/input/Button';
-import { BackgroundImage } from '../atoms/image/BackgroundImage';
 import { BLUE_BG_LIGHT_SHADOW, ImageCard, IMG_BG_DARK_SHADOW } from '../atoms/image/ImageCard';
 import { DiscussionPrompt, Hint, PageHeader, Text, Error, TIMEOUT_WARNING_TEXT, Warning } from '../atoms/text/Text';
 import { PlayerTokenHeader } from '../molecules/PlayerTokenHeader';

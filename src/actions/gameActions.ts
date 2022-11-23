@@ -116,7 +116,7 @@ export function advanceStep(logger: Logger, experimentId?: string, firstPlayerId
 			}
 		}
 
-		if (currStep.type == StoryStepType.WritePrompt) {
+		if (currStep.type == StoryStepType.WritePrompt && state.prompt.experimentType === "Experimental") {
 			// Then first submit a request to generate the filled in prompt.
 			const prompt = currSection.genPrompt;
 			if (!prompt) {
