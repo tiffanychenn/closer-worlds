@@ -31,6 +31,7 @@ interface ReduxStateProps {
 	isFetchingImage: FetchStatus;
 	hasUsedRedo: boolean;
 	error: string;
+	experimentType: string;
 }
 
 interface ReduxDispatchProps {
@@ -48,9 +49,9 @@ const DUMMY_STEP: StoryStep = {
 
 class ConnectedStorySlide extends React.Component<Props> {
 	render() {
-		const { sectionIndex, stepIndex, landscapePlayer, sectionImageUrls, logger, isFetchingImage, hasUsedRedo, error, advanceStep, redoSection, setLandscapePlayer } = this.props;
+		const { sectionIndex, stepIndex, landscapePlayer, sectionImageUrls, logger, isFetchingImage, hasUsedRedo, error, experimentType, advanceStep, redoSection, setLandscapePlayer } = this.props;
 		const modifiedError = error ? error + ". Please let the facilitators know about this error." : error;
-		const step = getStoryStep(sectionIndex, stepIndex);
+		const step = getStoryStep(sectionIndex, stepIndex, experimentType);
 		console.log('section image urls');
 		console.log(sectionImageUrls);
 		// TODO: Ensure that index is still within bounds, maybe?
@@ -138,6 +139,7 @@ const mapStateToProps = (state: State): ReduxStateProps => ({
 	isFetchingImage: state.api.isFetchingImage,
 	hasUsedRedo: state.game.hasUsedRedo,
 	error: state.game.error,
+	experimentType: state.prompt.experimentType,
 });
 
 export default connect(mapStateToProps, {advanceStep, redoSection, setLandscapePlayer})(ConnectedStorySlide);

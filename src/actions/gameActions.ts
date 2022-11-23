@@ -1,5 +1,5 @@
 import { RootThunkAction } from "../reducers/rootReducer";
-import { STORY_DATA } from "../components/App/storyData";
+import { CONTROL_STORY_DATA, EXPERIMENTAL_STORY_DATA } from "../components/App/storyData";
 import { IAllowsRedo, StoryStepType } from "../data/story";
 import { Logger } from "../data/logger";
 import { fillPrompt } from "../utils/textUtils";
@@ -90,6 +90,7 @@ export function advanceStep(logger: Logger, experimentId?: string, firstPlayerId
 		const state = getState();
 		const sectionIndex = state.game.storySection;
 		const stepIndex = state.game.storyStep;
+		let STORY_DATA = state.prompt.experimentType === "Experimental" ? EXPERIMENTAL_STORY_DATA : CONTROL_STORY_DATA;
 		const currSection = STORY_DATA[sectionIndex];
 		const currStep = currSection.steps[stepIndex];
 
@@ -100,11 +101,18 @@ export function advanceStep(logger: Logger, experimentId?: string, firstPlayerId
 		// I have some ideas on this (using something like flags), but I want to only change it if we for sure need to.
 		if (sectionIndex === 0 && stepIndex === 0){
 			// add title slide stuff here
-			if (experimentId !== null && firstPlayerId !== null && secondPlayerId !== null) {
+			if (experimentId !== null && firstPlayerId !== null && secondPlayerId !== null && experimentType !== null) {
+				STORY_DATA = experimentType === "Experimental" ? EXPERIMENTAL_STORY_DATA : CONTROL_STORY_DATA;
 				dispatch(initExperimentData(experimentId, firstPlayerId, secondPlayerId, experimentType, logger)).catch(function(error) {
 					dispatch(setError(error.message));
 					errorDone = true;
 				});
+			}
+			else {
+				const msg = "not complete experiment initialization";
+				console.log(msg);
+				dispatch(setError(msg));
+				errorDone = true;
 			}
 		}
 
@@ -147,6 +155,7 @@ export function redoSection(): RootThunkAction {
 	return async (dispatch, getState) => {
 		const state = getState();
 		if (state.game.hasUsedRedo) return; // Don't allow redo more than once!
+		const STORY_DATA = state.prompt.experimentType === "Experimental" ? EXPERIMENTAL_STORY_DATA : CONTROL_STORY_DATA;
 		const currStep = STORY_DATA[state.game.storySection].steps[state.game.storyStep];
 		if ((currStep as any).redoReturnsToStepIndex === undefined) return;
 		dispatch(setHasUsedRedo(true));
@@ -156,6 +165,8 @@ export function redoSection(): RootThunkAction {
 
 export function loadExistingGame(sectionIndex: number, stepIndex: number): RootThunkAction {
 	return async (dispatch, getState) => {
+		const state = getState();
+		const STORY_DATA = state.prompt.experimentType === "Experimental" ? EXPERIMENTAL_STORY_DATA : CONTROL_STORY_DATA;
 		const currSection = STORY_DATA[sectionIndex];
 		if (stepIndex == currSection.steps.length - 1) {
 			if (sectionIndex == STORY_DATA.length - 1) {

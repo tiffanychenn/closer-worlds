@@ -6,11 +6,9 @@ import { playerRoleToNumber, renderBoldText, replacePlayerText } from '../../uti
 import { getSectionImageOrString } from '../../utils/utils';
 import { STAR_BG } from '../App/storyData';
 import { Panel } from '../atoms/containers/Panel';
-import { BLUE_BG_LIGHT_SHADOW, IMG_BG_DARK_SHADOW } from '../atoms/image/ImageCard';
-import { DiscussionPrompt, Hint, SerifHeader, Text, Error } from '../atoms/text/Text';
-import { BlankSlide } from '../organisms/BlankSlide';
+import { BLUE_BG_LIGHT_SHADOW } from '../atoms/image/ImageCard';
+import { DiscussionPrompt, Text, Error } from '../atoms/text/Text';
 import { BlankTwoColumnSlide } from '../organisms/BlankTwoColumnSlide';
-import { ContentWithImageSlide } from '../organisms/ContentWithImageSlide';
 import { LoadingImageCard } from '../organisms/LoadingImageCard';
 
 interface Props {

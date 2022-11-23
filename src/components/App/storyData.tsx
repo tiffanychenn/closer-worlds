@@ -286,4 +286,20 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	},
 ];
 
-export const STORY_DATA = EXPERIMENTAL_STORY_DATA;
+export const CONTROL_STORY_DATA: Array<StorySection> = [
+	{
+		steps: [
+			{
+				type: StoryStepType.Title,
+				id: 'title',
+			} as TitleStep,
+			{
+				type: StoryStepType.Info,
+				id: 'intro',
+				backgroundImage: STAR_BG,
+				title: "Welcome to CONTROL" + GAME_NAME,
+				instructions: "Today, you embark on a creative journey together. To play the game, you'll need to answer a few questions about yourself. There are no wrong answers, so try not to overthink it.\n\nThis game uses images to help move your conversation along. They might be weird, but just go with it.",
+			} as InfoStep
+		],
+	},
+];

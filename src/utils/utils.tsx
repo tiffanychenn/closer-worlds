@@ -1,10 +1,9 @@
 import { API_BASE_URL } from "../actions/apiActions";
-import { STORY_DATA } from "../components/App/storyData";
-import { Logger } from "../data/logger";
-import { StoryStep } from "../data/story";
+import { CONTROL_STORY_DATA, EXPERIMENTAL_STORY_DATA } from "../components/App/storyData";
 import { SectionImageUrls } from "../reducers/promptReducer";
 
-export function getStoryStep(sectionIndex: number, stepIndex: number) {
+export function getStoryStep(sectionIndex: number, stepIndex: number, experimentType: string) {
+	const STORY_DATA = experimentType === "Experimental" ? EXPERIMENTAL_STORY_DATA : CONTROL_STORY_DATA;
 	if (STORY_DATA[sectionIndex]) {
 		return STORY_DATA[sectionIndex].steps[stepIndex];
 	} else {
