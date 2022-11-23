@@ -1,6 +1,8 @@
+import { DEBUG_MODE } from "../components/App/ParticipantApp";
 import { Logger } from "../data/logger";
 import { FetchStatus } from "../reducers/apiReducer";
 import { RootThunkAction } from "../reducers/rootReducer";
+import { loadExistingGame, setError } from "./gameActions";
 import { initExperiment, saveImage } from "./promptActions";
 
 export const API_ACTION_NAMES = {
@@ -24,6 +26,8 @@ function setIsFetchingImage(value: FetchStatus): SetIsFetchingImageAction {
 
 export function generateImage(sectionIndex: number, prompt: string, logger: Logger): RootThunkAction {
 	return async (dispatch, getState) => {
+		if (DEBUG_MODE) return;
+
 		dispatch(setIsFetchingImage('fetching'));
 
 		const state = getState();
@@ -41,6 +45,9 @@ export function generateImage(sectionIndex: number, prompt: string, logger: Logg
 		fetch(`${API_BASE_URL}/image-gen`, {
 			method: 'POST',
 			body: JSON.stringify(body),
+			headers: {
+				'Content-Type': 'application/json',
+				},
 		}).then((response) => response.json())
 		.then((data) => {
 			const returnedImgPath = data.imageURL;
@@ -49,13 +56,19 @@ export function generateImage(sectionIndex: number, prompt: string, logger: Logg
 		}).catch(reason => {
 			const msg = "API failed to generate image for prompt: " + prompt + "\nReason: " + reason;
 			console.error(msg);
+			dispatch(setError(msg));
 			throw new Error(msg);
 		});
 	};
 }
 
-export function initExperimentData(experimentId: string, firstPlayerId: string, secondPlayerId: string, logger: Logger): RootThunkAction {
+export function initExperimentData(experimentId: string, firstPlayerId: string, secondPlayerId: string, experimentType: string, logger: Logger): RootThunkAction {
 	return async (dispatch, getState) => {
+		if (DEBUG_MODE) {
+			dispatch(initExperiment(experimentId, firstPlayerId, secondPlayerId, experimentType));
+			return;
+		}
+
 		const state = getState();
 		const body = {
 			id: experimentId,
@@ -63,23 +76,41 @@ export function initExperimentData(experimentId: string, firstPlayerId: string, 
 			secondPlayerId: secondPlayerId,
 			loggingData: logger.dumpData(),
 			images: state.prompt.sectionImageUrls,
+			sectionIndex: state.game.storySection,
+			stepIndex: state.game.storyStep,
+			experimentType: experimentType
 		};
 
-		fetch(`${API_BASE_URL}/experiment`, {
+		fetch(`${API_BASE_URL}/startExperiment`, {
 			method: 'POST',
 			body: JSON.stringify(body),
-		}).then(res => {
-			// TODO: Handle success case where there's no existing experiment
-			dispatch(initExperiment(experimentId, firstPlayerId, secondPlayerId));
+			headers: {
+				'Content-Type': 'application/json',
+				},
+		})
+		.then((response) => response.json())
+		.then(data => {
+			dispatch(initExperiment(experimentId, firstPlayerId, secondPlayerId, experimentType));
+			if (data.isExistingExperiment) {
+				logger.loadPreviousExperimentData(data.experimentData.loggingData);
+				Object.keys(data.experimentData.images).forEach((sectionIndex) => {
+					const image = data.experimentData.images[sectionIndex];
+					dispatch(saveImage(parseInt(sectionIndex), image.filledPrompt, image.path))
+				});
+				dispatch(loadExistingGame(data.experimentData.sectionIndex, data.experimentData.stepIndex));
+			}
 		}).catch(reason => {
 			const msg = `API failed to initialize experiment data for experiment ID ${state.prompt.experimentId}. Reason: ${reason}`;
-			// TODO: Handle failure cases: 1) there's an existing experiment and the player IDs match so just restore state, or 2) exists but player IDs are wrong so something's weird
+			dispatch(setError(msg));
+			throw new Error(msg);
 		});
 	};
 }
 
 export function pushExperimentData(logger: Logger): RootThunkAction {
 	return async (dispatch, getState) => {
+		if (DEBUG_MODE) return;
+
 		const state = getState();
 		const body = {
 			id: state.prompt.experimentId,
@@ -87,15 +118,22 @@ export function pushExperimentData(logger: Logger): RootThunkAction {
 			secondPlayerId: state.prompt.secondPlayerId,
 			loggingData: logger.dumpData(),
 			images: state.prompt.sectionImageUrls,
+			sectionIndex: state.game.storySection,
+			stepIndex: state.game.storyStep,
+			experimentType: state.prompt.experimentType,
 		};
 
 		fetch(`${API_BASE_URL}/experiment`, {
 			method: 'POST',
 			body: JSON.stringify(body),
+			headers: {
+				'Content-Type': 'application/json',
+			},
 		}).then(res => {
 			if (res.status !== 200) {
 				const msg = `API failed (status ${res.status}) to store experiment data for experiment ID ${state.prompt.experimentId}.`;
 				console.error(msg);
+				dispatch(setError(msg));
 				throw new Error(msg);
 			}
 		}).catch(reason => {

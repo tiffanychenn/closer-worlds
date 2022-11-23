@@ -2,10 +2,8 @@ import * as React from 'react';
 import { Logger } from '../../data/logger';
 import { WritePromptStep } from '../../data/story';
 import { playerRoleToNumber, renderBoldText, replacePlayerText } from '../../utils/textUtils';
-import { Button } from '../atoms/input/Button';
-import { BackgroundImage } from '../atoms/image/BackgroundImage';
 import { BLUE_BG_LIGHT_SHADOW, ImageCard, IMG_BG_DARK_SHADOW } from '../atoms/image/ImageCard';
-import { DiscussionPrompt, Hint, PageHeader, Text, TIMEOUT_WARNING_TEXT, Warning } from '../atoms/text/Text';
+import { DiscussionPrompt, Hint, PageHeader, Text, Error, TIMEOUT_WARNING_TEXT, Warning } from '../atoms/text/Text';
 import { PlayerTokenHeader } from '../molecules/PlayerTokenHeader';
 import { SectionImageUrls } from '../../reducers/promptReducer';
 import { getSectionImageOrString } from '../../utils/utils';
@@ -21,6 +19,7 @@ interface Props {
 	landscapePlayer: 1 | 2;
 	sectionImageUrls: SectionImageUrls;
 	onNext?: () => void;
+	error: string;
 }
 
 interface State {
@@ -52,7 +51,7 @@ export class WritePrompt extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { logger, step, landscapePlayer, sectionImageUrls, onNext } = this.props;
+		const { logger, step, landscapePlayer, sectionImageUrls, onNext, error } = this.props;
 		const { isOverLimit, hasText, hasTimedOut } = this.state;
 		const playerNumber = playerRoleToNumber(step.player, landscapePlayer);
 
@@ -86,6 +85,7 @@ export class WritePrompt extends React.Component<Props, State> {
 		};
 
 		const content = <div style={containerStyle}>
+			<Error>{error}</Error>
 			<PlayerTokenHeader player={playerNumber}>{replacePlayerText(step.playerAction, playerNumber)}</PlayerTokenHeader>
 			<ButtonPanel logger={logger} bgOpacity={bgOpacity} buttons={[nextButton]} showTimeout={hasTimedOut}>
 				<div style={contentStyle}>

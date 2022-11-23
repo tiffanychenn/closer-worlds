@@ -49,7 +49,7 @@ export interface IAllowsRedo {
 
 export interface WritePromptStep extends StoryStep {
 	type: typeof StoryStepType.WritePrompt;
-	player: 'landscape' | 'buildings' | 'both';
+	player: 1 | 2 | 'landscape' | 'buildings' | 'both';
 	playerAction: string;
 	title: string;
 	instructions: string;

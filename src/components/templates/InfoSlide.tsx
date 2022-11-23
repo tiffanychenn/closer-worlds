@@ -6,7 +6,7 @@ import { Button } from '../atoms/input/Button';
 import { BackgroundImage } from '../atoms/image/BackgroundImage';
 import { BLUE_BG_LIGHT_SHADOW, ImageCard, IMG_BG_DARK_SHADOW } from '../atoms/image/ImageCard';
 import LongTextBox from '../atoms/input/LongTextBox';
-import { DiscussionPrompt, Hint, PageHeader, Text } from '../atoms/text/Text';
+import { DiscussionPrompt, Hint, PageHeader, Text, Error } from '../atoms/text/Text';
 import { PlayerTokenHeader } from '../molecules/PlayerTokenHeader';
 import { SlideBackground } from '../molecules/SlideBackground';
 import { ContentWithImageSlide } from '../organisms/ContentWithImageSlide';
@@ -23,6 +23,7 @@ interface Props {
 	sectionImageUrls: SectionImageUrls;
 	landscapePlayer: 1 | 2;
 	onNext?: () => void;
+    error: string;
 }
 
 interface State {
@@ -36,7 +37,7 @@ export class InfoSlide extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { logger, step, sectionImageUrls, onNext, landscapePlayer } = this.props;
+		const { logger, step, sectionImageUrls, onNext, landscapePlayer, error } = this.props;
 		const { hasTimedOut } = this.state;
 		
 		// TODO: Properly style the mess below, haha.
@@ -80,6 +81,7 @@ export class InfoSlide extends React.Component<Props, State> {
 		}
 
 		const content = <div style={containerStyle}>
+            <Error>{error}</Error>
 			{playerNumber && <PlayerTokenHeader player={playerNumber}>{replacePlayerText(step.playerAction, playerNumber)}</PlayerTokenHeader>}
 			<ButtonPanel logger={logger} bgOpacity={bgOpacity} buttons={buttons} showTimeout={hasTimedOut}>
 				<div style={contentStyle}>

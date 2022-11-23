@@ -6,13 +6,14 @@ import { STAR_BG } from '../App/storyData';
 import { GAP_BETWEEN_QUESTIONS, QuestionGroup } from '../atoms/containers/QuestionGroup';
 import { RadioGroup } from '../atoms/input/RadioGroup';
 import { TagGroup } from '../atoms/input/TagGroup';
-import { PageHeader, TextSpacer } from '../atoms/text/Text';
+import { PageHeader, TextSpacer, Error } from '../atoms/text/Text';
 import { CustomFormSlide } from './CustomFormSlide';
 
 interface Props {
 	logger: Logger;
 	step: RoleSelectStep;
 	onNext?: (landscapePlayer: 1 | 2) => void;
+	error: string;
 }
 
 interface State {
@@ -30,7 +31,7 @@ export class RoleSelectSlide extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { logger, step, onNext } = this.props;
+		const { logger, step, onNext, error } = this.props;
 		const { landscapePlayer } = this.state;
 
 		const fakeStep: CustomFormStep = {
@@ -78,6 +79,7 @@ export class RoleSelectSlide extends React.Component<Props, State> {
 								// Neither landscapePlayer nor sectionImageUrls will be used
 								// here, so it's ok to use dummy values.
 								landscapePlayer={1}
-								sectionImageUrls={[]}/>
+								sectionImageUrls={[]}
+								error={error}/>
 	}
 }

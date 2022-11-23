@@ -12,7 +12,7 @@ export const PLANET_DEPARTURE_IMAGE = './assets/departure.png';
 
 export const GAME_NAME = "Dreamy";
 
-export const STORY_DATA: Array<StorySection> = [
+export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	{
 		steps: [
 			{
@@ -280,6 +280,214 @@ export const STORY_DATA: Array<StorySection> = [
 				backgroundImage: 4,
 				blurBG: true,
 				instructions: "Suddenly, a teleportation machine appears in front of you. Booming out from a speaker onboard, you hear the voices of the researchers: \"It's time to come back to the Media Lab!\"\n\nBoth of you walk into the machine, take one last look at the world you made, and return home.\n\nThe end.",
+				hideNext: true,
+			} as InfoStep,
+		],
+	},
+];
+
+export const CONTROL_STORY_DATA: Array<StorySection> = [
+	{
+		steps: [
+			{
+				type: StoryStepType.Title,
+				id: 'title',
+			} as TitleStep,
+			{
+				type: StoryStepType.Info,
+				id: 'intro',
+				backgroundImage: STAR_BG,
+				title: "Welcome to " + GAME_NAME,
+				instructions: "Today, you embark on a journey together. To play the game, you'll need to answer a few questions about yourself. There are no wrong answers, so try not to overthink it.",
+			} as InfoStep,
+			{
+				type: StoryStepType.Info,
+				id: 'choose-player-number',
+				backgroundImage: STAR_BG,
+				title: 'Choose your character',
+				instructions: "To play the game, one of you will need to be player 1, and the other will, you guessed it, be player 2.",
+			} as InfoStep,
+		],
+	},
+	{
+		steps: [
+			{
+				type: StoryStepType.WritePrompt,
+				id: 'fast-friends-set-1-question-1-player-1',
+				player: 1,
+				playerAction: 'Take the lead',
+				title: "Answer this question:",
+				instructions: "Given the choice of anyone in the world, whom would you want as a dinner guest?",
+				exampleText: "Type (as much as you want of) your response here",
+				backgroundImage: STAR_BG,
+				cardImage: PLANET_ARRIVAL_IMG,
+				// TODO: Choose time and word/character limits.
+			} as WritePromptStep,
+			{
+				type: StoryStepType.WritePrompt,
+				id: 'fast-friends-set-1-question-1-player-2',
+				player: 2,
+				playerAction: 'Take the lead',
+				title: "Answer this question:",
+				instructions: "Given the choice of anyone in the world, whom would you want as a dinner guest?",
+				exampleText: "Type (as much as you want of) your response here",
+				backgroundImage: STAR_BG,
+				cardImage: PLANET_ARRIVAL_IMG,
+				// TODO: Choose time and word/character limits.
+			} as WritePromptStep,
+		],
+	},
+	{
+		steps: [
+			{
+				type: StoryStepType.WritePrompt,
+				id: 'fast-friends-set-1-question-2-player-2',
+				player: 2,
+				playerAction: 'Take the lead',
+				title: "Answer this question:",
+				instructions: "If you could wake up tomorrow having gained any one quality or ability, what would it be?",
+				exampleText: "Type (as much as you want of) your response here",
+				backgroundImage: STAR_BG,
+				cardImage: PLANET_ARRIVAL_IMG,
+				// TODO: Choose time and word/character limits.
+			} as WritePromptStep,
+			{
+				type: StoryStepType.WritePrompt,
+				id: 'fast-friends-set-1-question-2-player-1',
+				player: 1,
+				playerAction: 'Take the lead',
+				title: "Answer this question:",
+				instructions: "If you could wake up tomorrow having gained any one quality or ability, what would it be?",
+				exampleText: "Type (as much as you want of) your response here",
+				backgroundImage: STAR_BG,
+				cardImage: PLANET_ARRIVAL_IMG,
+				// TODO: Choose time and word/character limits.
+			} as WritePromptStep,
+		],
+	},
+	{
+		steps: [
+			{
+				type: StoryStepType.WritePrompt,
+				id: 'fast-friends-set-2-question-3-player-2',
+				player: 2,
+				playerAction: 'Take the lead',
+				title: "Answer this question:",
+				instructions: "If a crystal ball could tell you the truth about yourself, your life, the future, or anything else, what would you want to know?",
+				exampleText: "Type (as much as you want of) your response here",
+				backgroundImage: STAR_BG,
+				cardImage: PLANET_ARRIVAL_IMG,
+				// TODO: Choose time and word/character limits.
+			} as WritePromptStep,
+			{
+				type: StoryStepType.WritePrompt,
+				id: 'fast-friends-set-2-question-3-player-1',
+				player: 1,
+				playerAction: 'Take the lead',
+				title: "Answer this question:",
+				instructions: "If a crystal ball could tell you the truth about yourself, your life, the future, or anything else, what would you want to know?",
+				exampleText: "Type (as much as you want of) your response here",
+				backgroundImage: STAR_BG,
+				cardImage: PLANET_ARRIVAL_IMG,
+				// TODO: Choose time and word/character limits.
+			} as WritePromptStep,
+		],
+	},
+	{
+		steps: [
+			{
+				type: StoryStepType.WritePrompt,
+				id: 'fast-friends-set-2-question-4-player-1',
+				player: 1,
+				playerAction: 'Take the lead',
+				title: "Answer this question:",
+				instructions: "How close and warm is your family? Do you feel your childhood was happier than most other people's?",
+				exampleText: "Type (as much as you want of) your response here",
+				backgroundImage: STAR_BG,
+				cardImage: PLANET_ARRIVAL_IMG,
+				// TODO: Choose time and word/character limits.
+			} as WritePromptStep,
+			{
+				type: StoryStepType.WritePrompt,
+				id: 'fast-friends-set-2-question-4-player-2',
+				player: 2,
+				playerAction: 'Take the lead',
+				title: "Answer this question:",
+				exampleText: "Type (as much as you want of) your response here",
+				instructions: "How close and warm is your family? Do you feel your childhood was happier than most other people's?",
+				backgroundImage: STAR_BG,
+				cardImage: PLANET_ARRIVAL_IMG,
+				// TODO: Choose time and word/character limits.
+			} as WritePromptStep,
+		],
+	},
+	{
+		steps: [
+			{
+				type: StoryStepType.WritePrompt,
+				id: 'fast-friends-set-3-question-5-player-1',
+				player: 1,
+				playerAction: 'Take the lead',
+				title: "Answer this question:",
+				instructions: "If you were going to become a close friend with your partner, what would be important for them to know?",
+				exampleText: "Type (as much as you want of) your response here",
+				backgroundImage: STAR_BG,
+				cardImage: PLANET_ARRIVAL_IMG,
+				// TODO: Choose time and word/character limits.
+			} as WritePromptStep,
+			{
+				type: StoryStepType.WritePrompt,
+				id: 'fast-friends-set-3-question-5-player-2',
+				player: 2,
+				playerAction: 'Take the lead',
+				title: "Answer this question:",
+				instructions: "If you were going to become a close friend with your partner, what would be important for them to know?",
+				exampleText: "Type (as much as you want of) your response here",
+				backgroundImage: STAR_BG,
+				cardImage: PLANET_ARRIVAL_IMG,
+				// TODO: Choose time and word/character limits.
+			} as WritePromptStep,
+		],
+	},
+	{
+		steps: [
+			{
+				type: StoryStepType.WritePrompt,
+				id: 'fast-friends-set-3-question-6-player-2',
+				player: 2,
+				playerAction: 'Take the lead',
+				title: "Answer this question:",
+				instructions: "If you were to die this evening with no opportunity to communicate with anyone, what would you most regret not having told someone? Why haven't you told them yet?",
+				exampleText: "Type (as much as you want of) your response here",
+				backgroundImage: STAR_BG,
+				cardImage: PLANET_ARRIVAL_IMG,
+				// TODO: Choose time and word/character limits.
+			} as WritePromptStep,
+			{
+				type: StoryStepType.WritePrompt,
+				id: 'fast-friends-set-3-question-6-player-1',
+				player: 1,
+				playerAction: 'Take the lead',
+				title: "Answer this question:",
+				instructions: "If you were to die this evening with no opportunity to communicate with anyone, what would you most regret not having told someone? Why haven't you told them yet?",
+				exampleText: "Type (as much as you want of) your response here",
+				backgroundImage: STAR_BG,
+				cardImage: PLANET_ARRIVAL_IMG,
+				// TODO: Choose time and word/character limits.
+			} as WritePromptStep,
+		],
+	},
+	{
+		steps: [
+			{
+				type: StoryStepType.Info,
+				id: 'ending',
+				player: 'both',
+				playerAction: 'Read the following',
+				backgroundImage: STAR_BG,
+				cardImage: PLANET_ARRIVAL_IMG,
+				blurBG: true,
+				instructions: "Thank you for sharing and playing the game!\n\nThe end.",
 				hideNext: true,
 			} as InfoStep,
 		],

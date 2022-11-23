@@ -6,25 +6,26 @@ import { Button } from '../atoms/input/Button';
 import { BackgroundImage } from '../atoms/image/BackgroundImage';
 import { ImageCard } from '../atoms/image/ImageCard';
 import LongTextBox from '../atoms/input/LongTextBox';
-import { DiscussionPrompt, Hint, Text } from '../atoms/text/Text';
+import { DiscussionPrompt, Hint, Text, Error } from '../atoms/text/Text';
 import { PlayerTokenHeader } from '../molecules/PlayerTokenHeader';
 import { SlideBackground } from '../molecules/SlideBackground';
 import { ContentWithImageSlide } from '../organisms/ContentWithImageSlide';
 import { SectionImageUrls } from '../../reducers/promptReducer';
 import { BlankSlide } from '../organisms/BlankSlide';
-import { initExperiment } from '../../actions/promptActions';
 import { v4 as uuidv4 } from 'uuid';
-import { pushExperimentData } from '../../actions/apiActions';
+import { initExperimentData } from '../../actions/apiActions';
 import { connect } from 'react-redux';
 import { GAME_NAME, STAR_BG } from '../App/storyData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import ShortTextBox from '../atoms/input/ShortTextBox';
+import { RadioGroup } from '../atoms/input/RadioGroup';
 
 interface Props {
 	logger: Logger;
 	step: TitleStep;
-	onNext: () => void;
+	onNext: (experimentId: string, firstPlayerId: string, secondPlayerId: string, experimentType: string) => void;
+	error: string;
 }
 
 interface State {
@@ -32,6 +33,8 @@ interface State {
 	expId: string;
 	p1Id: string;
 	p2Id: string;
+	hasOpenedDrawer: boolean;
+	experimentType: string;
 }
 
 export class TitleSlide extends React.Component<Props, State> {
@@ -42,23 +45,14 @@ export class TitleSlide extends React.Component<Props, State> {
 			expId: "",
 			p1Id: "",
 			p2Id: "",
+			hasOpenedDrawer: false,
+			experimentType: "Experimental",
 		};
 	}
 
-	private async onClick() {
-		const { logger, onNext } = this.props;
-		const { expId, p1Id, p2Id } = this.state;
-		const experimentId = expId == "" ? uuidv4() : expId;
-		const firstPlayerId = p1Id == "" ? uuidv4() : p1Id;
-		const secondPlayerId = p2Id == "" ? uuidv4() : p2Id;
-		initExperiment(experimentId, firstPlayerId, secondPlayerId);
-		pushExperimentData(logger);
-		onNext();
-	}
-
 	render() {
-		const { logger, step } = this.props;
-		const { showDrawer } = this.state;
+		const { logger, step, onNext, error } = this.props;
+		const { showDrawer, hasOpenedDrawer } = this.state;
 
 		const headingStyle:  React.CSSProperties = {
 			fontFamily: 'Sono',
@@ -97,9 +91,17 @@ export class TitleSlide extends React.Component<Props, State> {
 						   sectionImageUrls={[]}>
 			<div style={style}>
 				<h1 style={headingStyle}>{GAME_NAME}</h1>
-				<div style={{flex: 0}}><Button id="start-button" logger={logger} text="Start" onClick={() => this.onClick()}></Button></div>
+				<Error>{error}</Error>
+				<div style={{flex: 0}}><Button id="start-button" logger={logger} text="Start" onClick={() => {
+					const { expId, p1Id, p2Id, experimentType } = this.state;
+					const experimentId = expId == "" ? uuidv4() : expId;
+					const firstPlayerId = p1Id == "" ? uuidv4() : p1Id;
+					const secondPlayerId = p2Id == "" ? uuidv4() : p2Id;
+					onNext(experimentId, firstPlayerId, secondPlayerId, experimentType);
+				}}></Button></div>
 			</div>
 			<div style={drawerContainerStyle}>{
+				hasOpenedDrawer && !showDrawer ? <></> : 
 				showDrawer
 				? <>
 					<FontAwesomeIcon icon={faChevronDown} size="2x" color="rgba(255,255,255,0.3)" onClick={() => this.setState({showDrawer: false})}/>
@@ -107,12 +109,11 @@ export class TitleSlide extends React.Component<Props, State> {
 						<ShortTextBox id="admin-experiment-id" logger={logger} placeholder="Experiment ID" onInput={e => this.setState({expId: e.currentTarget.value})}/>
 						<ShortTextBox id="admin-p1-id" logger={logger} placeholder="Participant 1 ID" onInput={e => this.setState({p1Id: e.currentTarget.value})}/>
 						<ShortTextBox id="admin-p2-id" logger={logger} placeholder="Participant 2 ID" onInput={e => this.setState({p2Id: e.currentTarget.value})}/>
+						<RadioGroup id="game-type-radio-group-id" ids={["radio-button-experimental", "radio-button-control"]} labels={["Experimental", "Control"]} orientation="horizontal" logger={logger} onSelect={(value) => {this.setState({experimentType: value});}}/>
 					</div>
 				</>
-				: <FontAwesomeIcon icon={faChevronUp} size="2x" color="rgba(255,255,255,0.3)" onClick={() => this.setState({showDrawer: true})}/>
+				: <FontAwesomeIcon icon={faChevronUp} size="2x" color="rgba(255,255,255,0.3)" onClick={() => this.setState({showDrawer: true, hasOpenedDrawer: true})}/>
 			}</div>
 		</BlankSlide>
 	}
 }
-
-export default connect(null, {initExperiment})(TitleSlide);

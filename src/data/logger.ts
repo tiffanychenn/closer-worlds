@@ -62,6 +62,17 @@ export class Logger {
 		};
 	}
 
+	/**
+	 * Retrieves the most recent values logged for a set of form element IDs.
+	 * @param formElemIds An array of form element IDs for which to search.
+	 * @returns true if successful
+	 */
+	loadPreviousExperimentData(loggingData: {entries: typeof this.entries, timesPerId: typeof this.timesPerId}): boolean {
+		this.entries = {...loggingData.entries};
+		this.timesPerId = {...loggingData.timesPerId};
+		return true;
+	}
+
 	addListener(id: string, listener: (changedFormElemId: string) => void) {
 		this.listeners[id] = listener;
 	}

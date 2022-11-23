@@ -11,6 +11,7 @@ import { ButtonData, ButtonPanel } from '../molecules/ButtonPanel';
 import { PlayerTokenHeader } from '../molecules/PlayerTokenHeader';
 import { BlankSlide } from '../organisms/BlankSlide';
 import { BlankTwoColumnSlide } from '../organisms/BlankTwoColumnSlide';
+import { Error } from '../atoms/text/Text';
 
 interface Props {
 	logger: Logger;
@@ -18,6 +19,7 @@ interface Props {
 	landscapePlayer: 1 | 2;
 	sectionImageUrls: SectionImageUrls;
 	onNext?: () => void;
+	error: string;
 }
 
 interface State {
@@ -51,7 +53,7 @@ export class CustomFormSlide extends React.Component<Props, State> {
 	}
 	
 	render() {
-		const { logger, step, landscapePlayer, sectionImageUrls, onNext } = this.props;
+		const { logger, step, landscapePlayer, sectionImageUrls, onNext, error } = this.props;
 		const { hasTimedOut } = this.state;
 		const playerNumber = step.player ? playerRoleToNumber(step.player, landscapePlayer) : undefined;
 
@@ -97,6 +99,7 @@ export class CustomFormSlide extends React.Component<Props, State> {
 		}
 
 		const content = <div style={containerStyle}>
+			<Error>{error}</Error>
 			{playerNumber && <PlayerTokenHeader player={playerNumber}>{replacePlayerText(step.playerAction, playerNumber)}</PlayerTokenHeader>}
 			<ButtonPanel logger={logger} bgOpacity={bgOpacity} buttons={[nextButton]} showTimeout={hasTimedOut}>
 				<div style={contentStyle}>

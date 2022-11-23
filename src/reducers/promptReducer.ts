@@ -17,6 +17,7 @@ export interface PromptState {
 	experimentId: string;
 	firstPlayerId: string;
 	secondPlayerId: string;
+	experimentType: string;
 }
 
 export const initialState: PromptState = {
@@ -26,6 +27,7 @@ export const initialState: PromptState = {
 	experimentId: "",
 	firstPlayerId: "",
 	secondPlayerId: "",
+	experimentType: "Experimental",
 };
 
 export function reducer(state = initialState, action: PromptActions): PromptState {
@@ -50,12 +52,13 @@ export function reducer(state = initialState, action: PromptActions): PromptStat
 				sectionImageUrls: newSectionImageUrls,
 			};
 		} case PROMPT_ACTION_NAMES.INIT_EXPERIMENT: {
-			const { experimentId, firstPlayerId, secondPlayerId } = action as InitExperimentAction;
+			const { experimentId, firstPlayerId, secondPlayerId, experimentType } = action as InitExperimentAction;
 			return {
 				...state,
 				experimentId,
 				firstPlayerId,
 				secondPlayerId,
+				experimentType,
 			};
 		} default:
 			return state;

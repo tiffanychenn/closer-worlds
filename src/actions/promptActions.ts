@@ -51,14 +51,16 @@ export interface InitExperimentAction {
 	experimentId: string;
 	firstPlayerId: string;
 	secondPlayerId: string;
+	experimentType: string;
 }
 
-export function initExperiment(experimentId: string, firstPlayerId: string, secondPlayerId: string) {
+export function initExperiment(experimentId: string, firstPlayerId: string, secondPlayerId: string, experimentType: string) {
 	return {
 		type: PROMPT_ACTION_NAMES.INIT_EXPERIMENT,
 		experimentId,
 		firstPlayerId,
 		secondPlayerId,
+		experimentType,
 	};
 }
 
