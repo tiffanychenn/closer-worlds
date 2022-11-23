@@ -211,7 +211,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				type: StoryStepType.Reflect,
 				id: 'gift-reflect',
 				player: 'landscape',
-				question: "{Other}, how would it feel to recieve this?", // TODO
+				question: "{Other}, how would it feel to receive this?", // TODO
 				backgroundImage: 3,
 				cardImage: 3,
 				blurBG: true,
