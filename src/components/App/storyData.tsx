@@ -12,6 +12,8 @@ export const PLANET_DEPARTURE_IMAGE = './assets/departure.png';
 
 export const GAME_NAME = "Dreamy";
 
+const ONE_SECOND_MS = 1000;
+
 export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	{
 		steps: [
@@ -83,6 +85,8 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				exampleText: "e.g., big pink puffy trees near lots of rivers",
 				backgroundImage: STAR_BG,
 				cardImage: PLANET_ARRIVAL_IMG,
+				timeLimitMs: 60 * ONE_SECOND_MS,
+				wordLimit: 15,
 				// TODO: Choose time and word/character limits.
 			} as WritePromptStep,
 			{
@@ -106,7 +110,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	},
 
 	{
-		genPrompt: "landscape with {landscape-prompt-blank} with buildings that look like {buildings-prompt-blank}",
+		genPrompt: "landscape with {landscape-prompt-blank}, buildings that look like {buildings-prompt-blank}",
 		steps: [
 			{
 				type: StoryStepType.WritePrompt,
@@ -120,13 +124,15 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				cardImage: 1,
 				blurBG: true,
 				overlayBG: true,
+				timeLimitMs: 60 * ONE_SECOND_MS,
+				wordLimit: 15,
 				// TODO: Choose time and word/character limits.
 			} as WritePromptStep,
 			{
 				type: StoryStepType.Reflect,
 				id: 'buildings-reflect',
-				player: 'landscape',
-				question: "Question TBD.", // TODO
+				player: 'buildings',
+				question: "{Curr}, explain what spaces you were remembering and a memory you have in one of those spaces, and how that made you feel like your truest self.", // TODO
 				backgroundImage: 1,
 				cardImage: 1,
 				blurBG: true,
@@ -145,7 +151,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	},
 
 	{
-		genPrompt: "TODO", // TODO
+		genPrompt: "landscape with {landscape-prompt-blank}, buildings that look like {buildings-prompt-blank}, in the background {miss-prompt-blank}",
 		steps: [
 			{
 				type: StoryStepType.WritePrompt,
@@ -158,13 +164,15 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				backgroundImage: 2,
 				cardImage: 2,
 				blurBG: true,
+				timeLimitMs: 60 * ONE_SECOND_MS,
+				wordLimit: 15,
 				// TODO: Choose time and word/character limits.
 			} as WritePromptStep,
 			{
 				type: StoryStepType.Reflect,
 				id: 'miss-reflect',
 				player: 'buildings',
-				question: "Question TBD.", // TODO
+				question: "{Other}, is this a meaningful gift? What makes this gift meaningful to you?",
 				backgroundImage: 2,
 				cardImage: 2,
 				blurBG: true,
@@ -182,7 +190,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	},
 
 	{
-		genPrompt: "TODO", // TODO
+		genPrompt: "landscape with {landscape-prompt-blank}, buildings that look like {buildings-prompt-blank}, in the background {miss-prompt-blank}, in the foreground {gift-prompt-blank}",
 		steps: [
 			{
 				type: StoryStepType.WritePrompt,
@@ -195,13 +203,15 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				backgroundImage: 3,
 				cardImage: 3,
 				blurBG: true,
+				timeLimitMs: 60 * ONE_SECOND_MS,
+				wordLimit: 15,
 				// TODO: Choose time and word/character limits.
 			} as WritePromptStep,
 			{
 				type: StoryStepType.Reflect,
 				id: 'gift-reflect',
-				player: 'buildings',
-				question: "Question TBD.", // TODO
+				player: 'landscape',
+				question: "{Other}, how would it feel to recieve this?", // TODO
 				backgroundImage: 3,
 				cardImage: 3,
 				blurBG: true,
@@ -221,11 +231,11 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	// TODO: Possible 5th question?
 
 	{
-		genPrompt: "TODO", // TODO,
-		promptTransformers: {
-			'represented-slider': value => value < 50 ? '!redo' : '',
-			// TODO: This won't actually hit, since these steps aren't write prompt steps.
-		},
+		// genPrompt: "TODO", // TODO,
+		// promptTransformers: {
+		// 	'represented-slider': value => value < 50 ? '!redo' : '',
+		// 	// TODO: This won't actually hit, since these steps aren't write prompt steps.
+		// },
 		steps: [
 			{
 				type: StoryStepType.CustomForm,
@@ -245,6 +255,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 							leftLabel="Not at all"
 							rightLabel="Super accurate"/>
 				</>,
+				timeLimitMs: 60 * ONE_SECOND_MS,
 			} as CustomFormStep,
 			{
 				type: StoryStepType.CustomForm,
@@ -265,6 +276,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 					<ShortTextBox id="life-value-2" logger={logger}/>
 					<ShortTextBox id="life-value-3" logger={logger}/>
 				</>,
+				timeLimitMs: 60 * ONE_SECOND_MS,
 			} as CustomFormStep,
 		],
 	},

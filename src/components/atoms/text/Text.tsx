@@ -54,7 +54,7 @@ export class Error extends React.Component<Props> {
 	}
 }
 
-export const TIMEOUT_WARNING_TEXT = "Placeholder timeout warning text."; // TODO: Rewrite placeholder timeout warning text.
+export const TIMEOUT_WARNING_TEXT = "Start wrapping up your conversation, and move onto the next step soon."; // TODO: Rewrite placeholder timeout warning text.
 
 export class Warning extends React.Component<Props> {
 	render() {
