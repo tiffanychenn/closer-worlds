@@ -62,10 +62,10 @@ export function generateImage(sectionIndex: number, prompt: string, logger: Logg
 	};
 }
 
-export function initExperimentData(experimentId: string, firstPlayerId: string, secondPlayerId: string, logger: Logger): RootThunkAction {
+export function initExperimentData(experimentId: string, firstPlayerId: string, secondPlayerId: string, experimentType: string, logger: Logger): RootThunkAction {
 	return async (dispatch, getState) => {
 		if (DEBUG_MODE) {
-			dispatch(initExperiment(experimentId, firstPlayerId, secondPlayerId));
+			dispatch(initExperiment(experimentId, firstPlayerId, secondPlayerId, experimentType));
 			return;
 		}
 
@@ -78,6 +78,7 @@ export function initExperimentData(experimentId: string, firstPlayerId: string, 
 			images: state.prompt.sectionImageUrls,
 			sectionIndex: state.game.storySection,
 			stepIndex: state.game.storyStep,
+			experimentType: experimentType
 		};
 
 		fetch(`${API_BASE_URL}/startExperiment`, {
@@ -89,7 +90,7 @@ export function initExperimentData(experimentId: string, firstPlayerId: string, 
 		})
 		.then((response) => response.json())
 		.then(data => {
-			dispatch(initExperiment(experimentId, firstPlayerId, secondPlayerId));
+			dispatch(initExperiment(experimentId, firstPlayerId, secondPlayerId, experimentType));
 			if (data.isExistingExperiment) {
 				logger.loadPreviousExperimentData(data.experimentData.loggingData);
 				Object.keys(data.experimentData.images).forEach((sectionIndex) => {
@@ -119,6 +120,7 @@ export function pushExperimentData(logger: Logger): RootThunkAction {
 			images: state.prompt.sectionImageUrls,
 			sectionIndex: state.game.storySection,
 			stepIndex: state.game.storyStep,
+			experimentType: state.prompt.experimentType,
 		};
 
 		fetch(`${API_BASE_URL}/experiment`, {

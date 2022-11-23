@@ -85,7 +85,7 @@ export function setError(value: string): SetErrorAction {
 // 	// Advance to the next step of the story, which is expected to be "reflect," and await response from WOZ telling us we can move on to the next step
 // }
 
-export function advanceStep(logger: Logger, experimentId?: string, firstPlayerId?: string, secondPlayerId?: string): RootThunkAction {
+export function advanceStep(logger: Logger, experimentId?: string, firstPlayerId?: string, secondPlayerId?: string, experimentType?: string): RootThunkAction {
 	return async (dispatch, getState) => {
 		const state = getState();
 		const sectionIndex = state.game.storySection;
@@ -101,7 +101,7 @@ export function advanceStep(logger: Logger, experimentId?: string, firstPlayerId
 		if (sectionIndex === 0 && stepIndex === 0){
 			// add title slide stuff here
 			if (experimentId !== null && firstPlayerId !== null && secondPlayerId !== null) {
-				dispatch(initExperimentData(experimentId, firstPlayerId, secondPlayerId, logger)).catch(function(error) {
+				dispatch(initExperimentData(experimentId, firstPlayerId, secondPlayerId, experimentType, logger)).catch(function(error) {
 					dispatch(setError(error.message));
 					errorDone = true;
 				});

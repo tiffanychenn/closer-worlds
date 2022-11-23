@@ -88,6 +88,7 @@ function getExperimentData(body) {
         images: body.images,
         sectionIndex: body.sectionIndex,
         stepIndex: body.stepIndex,
+        experimentType: body.experimentType,
     };
     return experimentData;
 }

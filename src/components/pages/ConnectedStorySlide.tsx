@@ -34,7 +34,7 @@ interface ReduxStateProps {
 }
 
 interface ReduxDispatchProps {
-	advanceStep: (logger: Logger, experimentId?: string, firstPlayerId?: string, secondPlayerId?: string) => void;
+	advanceStep: (logger: Logger, experimentId?: string, firstPlayerId?: string, secondPlayerId?: string, experimentType?: string) => void;
 	redoSection: () => void;
 	setLandscapePlayer: (value: 1 | 2) => void;
 }
@@ -85,7 +85,7 @@ class ConnectedStorySlide extends React.Component<Props> {
 				return <TitleSlide 
 					logger={logger}
 					step={step as TitleStep}
-					onNext={(experimentId: string, firstPlayerId: string, secondPlayerId: string) => advanceStep(logger, experimentId, firstPlayerId, secondPlayerId)}
+					onNext={(experimentId: string, firstPlayerId: string, secondPlayerId: string, experimentType: string) => advanceStep(logger, experimentId, firstPlayerId, secondPlayerId, experimentType)}
 					error={modifiedError}/>
 			case StoryStepType.Info:
 				return <InfoSlide 
