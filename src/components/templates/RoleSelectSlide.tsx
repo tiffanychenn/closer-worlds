@@ -13,6 +13,7 @@ interface Props {
 	logger: Logger;
 	step: RoleSelectStep;
 	onNext?: (landscapePlayer: 1 | 2) => void;
+	onBack?: () => void;
 	error: string;
 }
 
@@ -31,7 +32,7 @@ export class RoleSelectSlide extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { logger, step, onNext, error } = this.props;
+		const { logger, step, onNext, onBack, error } = this.props;
 		const { landscapePlayer } = this.state;
 
 		const fakeStep: CustomFormStep = {
@@ -60,15 +61,17 @@ export class RoleSelectSlide extends React.Component<Props, State> {
 									ids={["role-select-landscape-p1", "role-select-landscape-p2"]}
 									labels={[ROLE_SELECT_VALUE_P1, ROLE_SELECT_VALUE_P2]}
 									orientation="horizontal"
-									onSelect={value => this.setState({ landscapePlayer: value == ROLE_SELECT_VALUE_P1 ? 1 : 2 })}/>
-					</QuestionGroup>
+									onSelect={value => this.setState({ landscapePlayer: value == ROLE_SELECT_VALUE_P1 ? 1 : 2 })}
+									selected={this.state.landscapePlayer === 1 ? ROLE_SELECT_VALUE_P1 : (this.state.landscapePlayer === 2 ? ROLE_SELECT_VALUE_P2 : undefined)}/>
 					<PageHeader>and who most enjoys to build?</PageHeader>
-					{/* TODO: Figure out how to properly do this with UX. */}
-					{/* <RadioGroup id="role-select-nature"
+					<RadioGroup id="role-select-nature"
 								logger={logger}
 								ids={["role-select-landscape-p1", "role-select-landscape-p2"]}
 								labels={["Player 1", "Player 2"]}
-								orientation="horizontal"/> */}
+								orientation="horizontal"
+								onSelect={value => this.setState({ landscapePlayer: value == ROLE_SELECT_VALUE_P1 ? 2 : 1 })}
+								selected={this.state.landscapePlayer === 1 ? ROLE_SELECT_VALUE_P2 : (this.state.landscapePlayer === 2 ? ROLE_SELECT_VALUE_P1 : undefined) }/>
+					</QuestionGroup>
 				</>;
 			},
 		};
@@ -76,6 +79,7 @@ export class RoleSelectSlide extends React.Component<Props, State> {
 		return <CustomFormSlide step={fakeStep}
 								logger={logger}
 								onNext={() => onNext(landscapePlayer)}
+								onBack={() => onBack()}
 								// Neither landscapePlayer nor sectionImageUrls will be used
 								// here, so it's ok to use dummy values.
 								landscapePlayer={1}

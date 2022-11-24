@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { advanceStep, redoSection, setLandscapePlayer } from '../../actions/gameActions';
+import { advanceStep, redoSection, redoStep, setLandscapePlayer } from '../../actions/gameActions';
 import { Logger } from '../../data/logger';
 import { CustomFormStep, ImageStep, InfoStep, ReflectStep, RoleSelectStep, StoryStep, StoryStepType, TitleStep, WritePromptStep } from '../../data/story';
 import { FetchStatus } from '../../reducers/apiReducer';
@@ -37,6 +37,7 @@ interface ReduxStateProps {
 interface ReduxDispatchProps {
 	advanceStep: (logger: Logger, experimentId?: string, firstPlayerId?: string, secondPlayerId?: string, experimentType?: string) => void;
 	redoSection: () => void;
+	redoStep: () => void;
 	setLandscapePlayer: (value: 1 | 2) => void;
 }
 
@@ -49,7 +50,7 @@ const DUMMY_STEP: StoryStep = {
 
 class ConnectedStorySlide extends React.Component<Props> {
 	render() {
-		const { sectionIndex, stepIndex, landscapePlayer, sectionImageUrls, logger, isFetchingImage, hasUsedRedo, error, experimentType, advanceStep, redoSection, setLandscapePlayer } = this.props;
+		const { sectionIndex, stepIndex, landscapePlayer, sectionImageUrls, logger, isFetchingImage, hasUsedRedo, error, experimentType, advanceStep, redoSection, redoStep, setLandscapePlayer } = this.props;
 		const modifiedError = error ? error + ". Please let the facilitators know about this error." : error;
 		const step = getStoryStep(sectionIndex, stepIndex, experimentType);
 		console.log('section image urls');
@@ -63,6 +64,7 @@ class ConnectedStorySlide extends React.Component<Props> {
 					landscapePlayer={landscapePlayer}
 					sectionImageUrls={sectionImageUrls}
 					onNext={() => advanceStep(logger)}
+					onBack={() => redoStep()}
 					error={modifiedError}/>;
 			case StoryStepType.Reflect:
 				return <Reflect
@@ -93,6 +95,7 @@ class ConnectedStorySlide extends React.Component<Props> {
 					step={step as InfoStep}
 					sectionImageUrls={sectionImageUrls}
 					onNext={() => advanceStep(logger)}
+					onBack={() => redoStep()}
 					logger={logger}
 					landscapePlayer={landscapePlayer}
 					error={modifiedError}/>
@@ -101,6 +104,7 @@ class ConnectedStorySlide extends React.Component<Props> {
 					step={step as CustomFormStep}
 					sectionImageUrls={sectionImageUrls}
 					onNext={() => advanceStep(logger)}
+					onBack={() => redoStep()}
 					logger={logger}
 					landscapePlayer={landscapePlayer}
 					error={modifiedError}/>
@@ -112,6 +116,7 @@ class ConnectedStorySlide extends React.Component<Props> {
 						setLandscapePlayer(landscapePlayer);
 						advanceStep(logger);
 					}}
+					onBack={() => redoStep()}
 					error={modifiedError}/>
 			default:
 				return <BlankSlide step={DUMMY_STEP} sectionImageUrls={[]}><Text>ERROR: Tried to display a story section that isn't yet implemented.</Text></BlankSlide>;
@@ -142,4 +147,4 @@ const mapStateToProps = (state: State): ReduxStateProps => ({
 	experimentType: state.prompt.experimentType,
 });
 
-export default connect(mapStateToProps, {advanceStep, redoSection, setLandscapePlayer})(ConnectedStorySlide);
+export default connect(mapStateToProps, {advanceStep, redoSection, redoStep, setLandscapePlayer})(ConnectedStorySlide);
