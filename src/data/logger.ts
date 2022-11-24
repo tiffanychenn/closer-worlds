@@ -3,9 +3,12 @@
 // 	value: any; // Should be something that's serializable as JSON!
 // }
 
+type LoggerEntriesType = { [timeSinceEpoch: number]: { [formElemId: string]: any } };
+type LoggerTimesPerIdType = { [formElemId: string]: Array<number> };
+
 export class Logger {
-	private entries: { [timeSinceEpoch: number]: { [formElemId: string]: any } };
-	private timesPerId: { [formElemId: string]: Array<number> };
+	private entries: LoggerEntriesType;
+	private timesPerId: LoggerTimesPerIdType;
 	private listeners: { [id: string]: (changedFormElemId: string) => void };
 
 	constructor(readonly storeData?: (entries: { [timeSinceEpoch: number]: { [formElemId: string]: any } }, timesPerId: { [formElemId: string]: Array<number> }) => void) {
@@ -55,7 +58,7 @@ export class Logger {
 		return result;
 	}
 
-	dumpData(): { entries: typeof this.entries, timesPerId: typeof this.timesPerId } {
+	dumpData(): { entries: LoggerEntriesType, timesPerId: LoggerTimesPerIdType } {
 		return {
 			entries: JSON.parse(JSON.stringify(this.entries)),
 			timesPerId: JSON.parse(JSON.stringify(this.timesPerId)),
@@ -67,7 +70,7 @@ export class Logger {
 	 * @param formElemIds An array of form element IDs for which to search.
 	 * @returns true if successful
 	 */
-	loadPreviousExperimentData(loggingData: {entries: typeof this.entries, timesPerId: typeof this.timesPerId}): boolean {
+	loadPreviousExperimentData(loggingData: {entries: LoggerEntriesType, timesPerId: LoggerTimesPerIdType}): boolean {
 		this.entries = {...loggingData.entries};
 		this.timesPerId = {...loggingData.timesPerId};
 		return true;
