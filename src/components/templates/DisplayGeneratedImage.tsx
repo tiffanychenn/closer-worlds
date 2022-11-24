@@ -7,7 +7,7 @@ import { STAR_BG } from '../App/storyData';
 import { Panel } from '../atoms/containers/Panel';
 import { BLUE_BG_LIGHT_SHADOW, ImageCard, IMG_BG_DARK_SHADOW } from '../atoms/image/ImageCard';
 import { Button } from '../atoms/input/Button';
-import { PageHeader, Text, Error as TextError } from '../atoms/text/Text';
+import { PageHeader, Text, Error as TextError, Hint } from '../atoms/text/Text';
 import { BlankSlide } from '../organisms/BlankSlide';
 import { BlankTwoColumnSlide } from '../organisms/BlankTwoColumnSlide';
 
@@ -75,7 +75,10 @@ export class DisplayGeneratedImage extends React.Component<Props> {
 						<PageHeader>All around you, the world has changed.</PageHeader>
 						<div style={buttonsStyle}>
 							<Button id={step.id + '-next-button'} logger={logger} text="Next" onClick={onNext}/>
-							{allowRedo && <Button id={step.id + '-redo-button'} logger={logger} text="Try again" onClick={onRedo} useOutlineStyle={true}/>}
+							{allowRedo && <>
+							<Button id={step.id + '-redo-button'} logger={logger} text="Try again" onClick={onRedo} useOutlineStyle={true}/>
+							<Hint>If you try again with the same text, a different image will come out!</Hint>
+							</>}
 						</div>
 					</div>
 				</Panel>

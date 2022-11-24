@@ -23,6 +23,7 @@ interface Props {
 	sectionImageUrls: SectionImageUrls;
 	landscapePlayer: 1 | 2;
 	onNext?: () => void;
+    onBack?: () => void;
     error: string;
 }
 
@@ -37,7 +38,7 @@ export class InfoSlide extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { logger, step, sectionImageUrls, onNext, landscapePlayer, error } = this.props;
+		const { logger, step, sectionImageUrls, onNext, onBack, landscapePlayer, error } = this.props;
 		const { hasTimedOut } = this.state;
 		
 		// TODO: Properly style the mess below, haha.
@@ -67,7 +68,7 @@ export class InfoSlide extends React.Component<Props, State> {
 			display: 'flex',
 			flexDirection: 'column',
 			gap: '30px',
-			maxWidth: cardImage ? undefined : 'max(50vw, 600px',
+			maxWidth: cardImage ? undefined : 'max(50vw, 600px)',
 		};
 
 		const nextButton: ButtonData = {
@@ -75,8 +76,14 @@ export class InfoSlide extends React.Component<Props, State> {
 			text: 'Next',
 			onClick: onNext,
 		};
+        const backButton: ButtonData = {
+			id: step.id + '-back-button',
+			text: 'Back',
+			onClick: onBack,
+		};
 		const buttons: ButtonData[] = [];
 		if (!step.hideNext) {
+            buttons.push(backButton);
 			buttons.push(nextButton);
 		}
 
