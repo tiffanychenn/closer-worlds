@@ -67,7 +67,7 @@ export class InfoSlide extends React.Component<Props, State> {
 			display: 'flex',
 			flexDirection: 'column',
 			gap: '30px',
-			maxWidth: cardImage ? undefined : 'max(50vw, 600px',
+			maxWidth: cardImage ? undefined : 'max(50vw, 600px)',
 		};
 
 		const nextButton: ButtonData = {
@@ -75,9 +75,15 @@ export class InfoSlide extends React.Component<Props, State> {
 			text: 'Next',
 			onClick: onNext,
 		};
+        const backButton: ButtonData = {
+			id: step.id + '-back-button',
+			text: 'Back',
+			onClick: onNext,
+		};
 		const buttons: ButtonData[] = [];
 		if (!step.hideNext) {
 			buttons.push(nextButton);
+            buttons.push(backButton);
 		}
 
 		const content = <div style={containerStyle}>

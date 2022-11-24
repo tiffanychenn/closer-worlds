@@ -163,6 +163,27 @@ export function redoSection(): RootThunkAction {
 	};
 }
 
+
+export function redoStep(): RootThunkAction {
+	return async (dispatch, getState) => {
+		const state = getState();
+		const sectionIndex = state.game.storySection;
+		const stepIndex = state.game.storyStep;
+		const STORY_DATA = state.prompt.experimentType === "Experimental" ? EXPERIMENTAL_STORY_DATA : CONTROL_STORY_DATA;
+		if (stepIndex === 0) {
+			if (sectionIndex === 0) {
+				// this is title slide!
+				return;
+			}
+			const prevSection = STORY_DATA[sectionIndex - 1];
+			dispatch(setSectionIndex(sectionIndex - 1));
+			dispatch(setStepIndex(prevSection.steps.length - 1));
+		} else {
+			dispatch(setStepIndex(stepIndex - 1));
+		}
+	};
+}
+
 export function loadExistingGame(sectionIndex: number, stepIndex: number): RootThunkAction {
 	return async (dispatch, getState) => {
 		const state = getState();
