@@ -19,6 +19,7 @@ interface Props {
 	landscapePlayer: 1 | 2;
 	sectionImageUrls: SectionImageUrls;
 	onNext?: () => void;
+	onBack?: () => void;
 	error: string;
 }
 
@@ -53,7 +54,7 @@ export class CustomFormSlide extends React.Component<Props, State> {
 	}
 	
 	render() {
-		const { logger, step, landscapePlayer, sectionImageUrls, onNext, error } = this.props;
+		const { logger, step, landscapePlayer, sectionImageUrls, onNext, onBack, error } = this.props;
 		const { hasTimedOut } = this.state;
 		const playerNumber = step.player ? playerRoleToNumber(step.player, landscapePlayer) : undefined;
 
@@ -80,6 +81,11 @@ export class CustomFormSlide extends React.Component<Props, State> {
 			onClick: onNext,
 			disabled: !allowNext,
 		};
+		const backButton: ButtonData = {
+			id: step.id + '-back-button',
+			text: 'Back',
+			onClick: onBack,
+		};
 
 		const containerStyle: React.CSSProperties = {
 			height: '80vh',
@@ -101,7 +107,7 @@ export class CustomFormSlide extends React.Component<Props, State> {
 		const content = <div style={containerStyle}>
 			<Error>{error}</Error>
 			{playerNumber && <PlayerTokenHeader player={playerNumber}>{replacePlayerText(step.playerAction, playerNumber)}</PlayerTokenHeader>}
-			<ButtonPanel logger={logger} bgOpacity={bgOpacity} buttons={[nextButton]} showTimeout={hasTimedOut}>
+			<ButtonPanel logger={logger} bgOpacity={bgOpacity} buttons={[backButton, nextButton]} showTimeout={hasTimedOut}>
 				<div style={contentStyle}>
 					{step.makeContent(logger, hasTimedOut, text => renderBoldText(replacePlayerText(text, playerNumber)))}
 				</div>

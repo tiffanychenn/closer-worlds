@@ -13,6 +13,7 @@ interface Props {
 	logger: Logger;
 	step: RoleSelectStep;
 	onNext?: (landscapePlayer: 1 | 2) => void;
+	onBack?: () => void;
 	error: string;
 }
 
@@ -31,7 +32,7 @@ export class RoleSelectSlide extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { logger, step, onNext, error } = this.props;
+		const { logger, step, onNext, onBack, error } = this.props;
 		const { landscapePlayer } = this.state;
 
 		const fakeStep: CustomFormStep = {
@@ -78,6 +79,7 @@ export class RoleSelectSlide extends React.Component<Props, State> {
 		return <CustomFormSlide step={fakeStep}
 								logger={logger}
 								onNext={() => onNext(landscapePlayer)}
+								onBack={() => onBack()}
 								// Neither landscapePlayer nor sectionImageUrls will be used
 								// here, so it's ok to use dummy values.
 								landscapePlayer={1}

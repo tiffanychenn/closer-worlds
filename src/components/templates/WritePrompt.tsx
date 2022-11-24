@@ -19,6 +19,7 @@ interface Props {
 	landscapePlayer: 1 | 2;
 	sectionImageUrls: SectionImageUrls;
 	onNext?: () => void;
+	onBack?: () => void;
 	error: string;
 }
 
@@ -51,7 +52,7 @@ export class WritePrompt extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { logger, step, landscapePlayer, sectionImageUrls, onNext, error } = this.props;
+		const { logger, step, landscapePlayer, sectionImageUrls, onNext, onBack, error } = this.props;
 		const { isOverLimit, hasText, hasTimedOut } = this.state;
 		const playerNumber = playerRoleToNumber(step.player, landscapePlayer);
 
@@ -67,6 +68,11 @@ export class WritePrompt extends React.Component<Props, State> {
 			text: 'Next',
 			onClick: onNext,
 			disabled: !allowNext,
+		};
+		const backButton: ButtonData = {
+			id: step.id + '-back-button',
+			text: 'Back',
+			onClick: onBack,
 		};
 
 		const containerStyle: React.CSSProperties = {
@@ -87,7 +93,7 @@ export class WritePrompt extends React.Component<Props, State> {
 		const content = <div style={containerStyle}>
 			<Error>{error}</Error>
 			<PlayerTokenHeader player={playerNumber}>{replacePlayerText(step.playerAction, playerNumber)}</PlayerTokenHeader>
-			<ButtonPanel logger={logger} bgOpacity={bgOpacity} buttons={[nextButton]} showTimeout={hasTimedOut}>
+			<ButtonPanel logger={logger} bgOpacity={bgOpacity} buttons={[backButton, nextButton]} showTimeout={hasTimedOut}>
 				<div style={contentStyle}>
 					<PageHeader>{replacePlayerText(step.title, playerNumber)}</PageHeader>
 					<Text>{renderBoldText(replacePlayerText(step.instructions, playerNumber))}</Text>
