@@ -6,11 +6,12 @@ export interface Props extends LoggedFormElementProps {
 	label?: string;
 	name?: string;
 	onInput?: (e: React.FormEvent<HTMLInputElement>) => void;
+	selected?: boolean;
 }
 
 export default class RadioButton extends LoggedFormElementComponent<Props> {
 	render() {
-		const { label, id, name, onInput } = this.props;
+		const { label, id, name, onInput, selected } = this.props;
 
 		const style = css({
 			appearance: 'none',
@@ -48,7 +49,7 @@ export default class RadioButton extends LoggedFormElementComponent<Props> {
 		});
 
 		return <label css={labelStyle}>
-			<input type="radio" id={id} name={name} css={style} onInput={e => {
+			<input type="radio" checked={selected} id={id} name={name} css={style} onChange={e => {
 				this.onInput(e);
 				if (onInput) onInput(e);
 			}}></input>
