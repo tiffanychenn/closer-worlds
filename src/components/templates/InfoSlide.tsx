@@ -82,10 +82,8 @@ export class InfoSlide extends React.Component<Props, State> {
 			onClick: onBack,
 		};
 		const buttons: ButtonData[] = [];
-		if (!step.hideNext) {
-            buttons.push(backButton);
-			buttons.push(nextButton);
-		}
+		if (!step.hideBack) buttons.push(backButton);
+		if (!step.hideNext) buttons.push(nextButton);
 
 		const content = <div style={containerStyle}>
             <Error>{error}</Error>

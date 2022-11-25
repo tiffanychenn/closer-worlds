@@ -124,6 +124,7 @@ export function advanceStep(logger: Logger, experimentId?: string, firstPlayerId
 				console.log(msg);
 				dispatch(setError(msg));
 				errorDone = true;
+				// FIXME: This won't work--it's like a race condition. By the time "errorDone" is true, the code below that gets state will already have been false. You'd have to await the error, since these are async functions.
 			}
 			const promptTransformers = currSection.promptTransformers || {};
 			const filledPrompt = fillPrompt(prompt, promptTransformers, logger);

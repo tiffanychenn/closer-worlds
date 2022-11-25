@@ -52,7 +52,7 @@ export class TitleSlide extends React.Component<Props, State> {
 
 	render() {
 		const { logger, step, onNext, error } = this.props;
-		const { showDrawer, hasOpenedDrawer } = this.state;
+		const { showDrawer, hasOpenedDrawer, experimentType } = this.state;
 
 		const headingStyle:  React.CSSProperties = {
 			fontFamily: 'Sono',
@@ -109,7 +109,13 @@ export class TitleSlide extends React.Component<Props, State> {
 						<ShortTextBox id="admin-experiment-id" logger={logger} placeholder="Experiment ID" onInput={e => this.setState({expId: e.currentTarget.value})}/>
 						<ShortTextBox id="admin-p1-id" logger={logger} placeholder="Participant 1 ID" onInput={e => this.setState({p1Id: e.currentTarget.value})}/>
 						<ShortTextBox id="admin-p2-id" logger={logger} placeholder="Participant 2 ID" onInput={e => this.setState({p2Id: e.currentTarget.value})}/>
-						<RadioGroup id="game-type-radio-group-id" ids={["radio-button-experimental", "radio-button-control"]} labels={["Experimental", "Control"]} orientation="horizontal" logger={logger} onSelect={(value) => {this.setState({experimentType: value});}}/>
+						<RadioGroup id="game-type-radio-group-id"
+									ids={["radio-button-experimental", "radio-button-control"]}
+									labels={["Experimental", "Control"]}
+									orientation="horizontal"
+									logger={logger}
+									onSelect={(value) => {this.setState({experimentType: value});}}
+									selected={experimentType}/>
 					</div>
 				</>
 				: <FontAwesomeIcon icon={faChevronUp} size="2x" color="rgba(255,255,255,0.3)" onClick={() => this.setState({showDrawer: true, hasOpenedDrawer: true})}/>

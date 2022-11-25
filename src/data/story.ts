@@ -84,6 +84,7 @@ export interface InfoStep extends StoryStep {
 	playerAction?: string;
 	hint?: string;
 	hideNext?: boolean;
+	hideBack?: boolean;
 }
 
 export interface CustomFormStep extends StoryStep {
@@ -99,4 +100,9 @@ export interface CustomFormStep extends StoryStep {
 export interface RoleSelectStep extends StoryStep {
 	type: typeof StoryStepType.RoleSelect;
 	tags: string[]; // Used for the affect words question (i.e., "What kind of world do you dream of building? Why?").
+}
+
+export interface ControlSet {
+	timeoutMs: number;
+	questions: string[];
 }

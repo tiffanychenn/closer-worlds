@@ -12,8 +12,7 @@ export function getStoryStep(sectionIndex: number, stepIndex: number, experiment
 }
 
 export function imagePathToUrl(path: string) {
-	// FIXME: This might not work depending on how images are served.
-	if (path.substring(0, 4) == 'http') {
+	if (path.substring(0, 4) == 'http' || path[0] == '#') {
 		return path;
 	}
 	return `${API_BASE_URL}/client/data/${path}`;

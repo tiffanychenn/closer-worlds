@@ -13,7 +13,11 @@ export class BackgroundImage extends React.Component<Props> {
 	render() {
 		const { src, blur, overlayColor, overlayOpacity } = this.props;
 		return <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}>
-			{src && <img src={src} style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center center', filter: `blur(${blur})`}}/>}
+			{src && (
+				src[0] == '#'
+					? <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: src}}></div>
+					: <img src={src} style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center center', filter: `blur(${blur})`}}/>
+			)}
 			{overlayColor && <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: overlayColor, opacity: overlayOpacity}}></div>}
 		</div>;
 	}
