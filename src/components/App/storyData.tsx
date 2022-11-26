@@ -57,19 +57,29 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				instructions: "While wandering the strange planet, you're delighted to discover a magic wand that can create anything in your imagination.\n\nAfter taking care of basic necessities, you're struck with inspiration: you can use this wand to create the world of your dreams!\n\nTogether, you decide to stay a while, and create a dream place for you both to live.",
 			} as InfoStep,
 			{
+				type: StoryStepType.CustomForm,
+				id: 'intro-world-tags',
+				backgroundImage: STAR_BG,
+				player: 'both',
+				playerAction: "Discuss the following",
+				maxWidthIfNoImageCard: false,
+				timeLimitMs: 1 * 60 * ONE_SECOND_MS,
+				requiredFormElemIds: ['world-tags'],
+				makeContent: (logger, hasTimedOut, renderText) => <>
+					<PageHeader>Set the stage:</PageHeader>
+					<Text>{renderText("Consider the things that you both have in common. What is the vibe of a world that you both would enjoy?")}</Text>
+					<Hint showLabel={false}>{renderText("Select all which apply, or write one of your own.")}</Hint>
+					<TagGroup id="world-tags"
+							  logger={logger}
+							  includeInput={true}
+							  placeholder="other..."
+							  tags={["peaceful", "fun", "adventurous", "epic", "safe", "creative", "weird"]}/>
+				</>,
+			} as CustomFormStep,
+			{
 				type: StoryStepType.RoleSelect,
 				id: 'role-select',
-				tags: ["peaceful", "fun", "adventurous", "epic", "safe", "creative", "weird"],
 			} as RoleSelectStep,
-			{
-				type: StoryStepType.Info,
-				id: 'role-explanation',
-				backgroundImage: STAR_BG,
-				player: 'buildings',
-				playerAction: "Read out loud",
-				instructions: "To collaborate effectively, you decide to break up the tasks into what each person is most interested in.\n\nYou decide that {other} will start with the landscape, and {curr} will start with the buildings."
-				// NOTE: If you change "player" above, be sure to change {other} and {curr} above!
-			} as InfoStep,
 		],
 	},
 
