@@ -12,7 +12,6 @@ export interface PromptState {
 	// blanks: { [storySection: number]: string };
 	// sectionImageUrls: { [storySection: number]: string };
 	sectionImageUrls: SectionImageUrls;
-	// TODO: Add prompt to this data
 	
 	experimentId: string;
 	firstPlayerId: string;

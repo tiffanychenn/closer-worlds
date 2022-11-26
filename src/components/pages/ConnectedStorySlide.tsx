@@ -53,7 +53,7 @@ class ConnectedStorySlide extends React.Component<Props> {
 		const { sectionIndex, stepIndex, landscapePlayer, sectionImageUrls, logger, isFetchingImage, hasUsedRedo, error, experimentType, advanceStep, redoSection, redoStep, setLandscapePlayer } = this.props;
 		const modifiedError = error ? error + ". Please let the facilitators know about this error." : error;
 		const step = getStoryStep(sectionIndex, stepIndex, experimentType);
-		console.log('section image urls');
+		console.log('section image urls:');
 		console.log(sectionImageUrls);
 		// TODO: Ensure that index is still within bounds, maybe?
 		switch (step.type) {

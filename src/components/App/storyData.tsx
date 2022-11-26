@@ -112,6 +112,55 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	},
 
 	{
+		genPrompt: "{represented-slider}",
+		promptTransformers: {
+			'represented-slider': value => value < 50 ? '!redo1' : '!keep1t',
+		},
+		steps: [
+			{
+				type: StoryStepType.CustomForm,
+				triggersGenerate: true,
+				id: 'represented-test',
+				player: 'both',
+				playerAction: 'Discuss the following',
+				cardImage: 1,
+				backgroundImage: 1,
+				blurBG: true,
+				requiredFormElemIds: ['represented-slider'],
+				maxWidthIfNoImageCard: false,
+				makeContent: (logger, hasTimedOut, renderText) => <>
+					<PageHeader>Reflect</PageHeader>
+					<Text>{renderText("TEST: Look around at the world you have created together. *Do you feel personally represented by this space you have co-created? Why or why not?*")}</Text>
+					<Slider id="represented-slider"
+							logger={logger}
+							leftLabel="Not at all"
+							rightLabel="Super accurate"/>
+				</>,
+				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
+			} as CustomFormStep,
+			{
+				type: StoryStepType.Reflect,
+				id: 'represented-test-reflect',
+				player: 'both',
+				playerAction: 'Discuss the following',
+				question: "TODO if relevant",
+				backgroundImage: 1,
+				cardImage: 1,
+				blurBG: true,
+			} as ReflectStep,
+			{
+				type: StoryStepType.Image,
+				id: 'represented-test-display',
+				cardImage: 2,
+				backgroundImage: 2,
+				redoReturnsToStepIndex: 0,
+				blurBG: true,
+				overlayBG: false,
+			} as ImageStep,
+		],
+	},
+
+	{
 		genPrompt: "landscape with {landscape-prompt-blank}, buildings that look like {buildings-prompt-blank}",
 		steps: [
 			{
@@ -236,10 +285,9 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	// TODO: Possible 5th question?
 
 	{
-		genPrompt: "prompt value is {represented-slider}", // TODO,
+		genPrompt: "{represented-slider}",
 		promptTransformers: {
-			'represented-slider': value => value < 50 ? '!redo' : '',
-			// TODO: This won't actually hit, since these steps aren't write prompt steps.
+			'represented-slider': value => value < 50 ? '!redo4' : '!keep4t',
 		},
 		steps: [
 			{
@@ -263,27 +311,46 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				</>,
 				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
 			} as CustomFormStep,
+			// {
+			// 	type: StoryStepType.CustomForm,
+			// 	id: 'life-values',
+			// 	player: 'both',
+			// 	playerAction: "Discuss the following",
+			// 	cardImage: 4,
+			// 	backgroundImage: 4,
+			// 	blurBG: true,
+			// 	requiredFormElemIds: ['life-value-1', 'life-value-2', 'life-value-3'],
+			// 	makeContent: (logger, hasTimedOut, renderText) => <>
+			// 		<PageHeader>Reflect</PageHeader>
+			// 		<Text>{renderText("Based on how you have both answered the questions, what are 3 things you both seem to value most in life?")}</Text>
+			// 		{/* TODO: I've currently left these without placeholder text, because I
+			// 		think it'll be more interesting to see what people write organically. We
+			// 		can change that, though! */}
+			// 		<ShortTextBox id="life-value-1" logger={logger}/>
+			// 		<ShortTextBox id="life-value-2" logger={logger}/>
+			// 		<ShortTextBox id="life-value-3" logger={logger}/>
+			// 	</>,
+			// 	timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
+			// } as CustomFormStep,
 			{
-				type: StoryStepType.CustomForm,
-				id: 'life-values',
+				type: StoryStepType.Reflect,
+				id: 'represented-reflect',
 				player: 'both',
-				playerAction: "Discuss the following",
-				cardImage: 4,
+				playerAction: 'Discuss the following',
+				question: "TODO if relevant",
 				backgroundImage: 4,
+				cardImage: 4,
 				blurBG: true,
-				requiredFormElemIds: ['life-value-1', 'life-value-2', 'life-value-3'],
-				makeContent: (logger, hasTimedOut, renderText) => <>
-					<PageHeader>Reflect</PageHeader>
-					<Text>{renderText("Based on how you have both answered the questions, what are 3 things you both seem to value most in life?")}</Text>
-					{/* TODO: I've currently left these without placeholder text, because I
-					think it'll be more interesting to see what people write organically. We
-					can change that, though! */}
-					<ShortTextBox id="life-value-1" logger={logger}/>
-					<ShortTextBox id="life-value-2" logger={logger}/>
-					<ShortTextBox id="life-value-3" logger={logger}/>
-				</>,
-				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
-			} as CustomFormStep,
+			} as ReflectStep,
+			{
+				type: StoryStepType.Image,
+				id: 'represented-display',
+				cardImage: 5,
+				backgroundImage: 5,
+				redoReturnsToStepIndex: 0,
+				blurBG: true,
+				overlayBG: false,
+			} as ImageStep,
 		],
 	},
 	
@@ -294,8 +361,8 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				id: 'ending',
 				player: 'both',
 				playerAction: 'Read the following',
-				cardImage: 4, // TODO: Change to last step depending on whether a new image is generated.
-				backgroundImage: 4,
+				cardImage: 5,
+				backgroundImage: 5,
 				blurBG: true,
 				instructions: "Suddenly, a teleportation machine appears in front of you. Booming out from a speaker onboard, you hear the voices of the researchers: \"It's time to come back to the Media Lab!\"\n\nBoth of you walk into the machine, take one last look at the world you made, and return home.\n\nThe end.",
 				hideNext: true,

@@ -24,20 +24,68 @@ function setIsFetchingImage(value: FetchStatus): SetIsFetchingImageAction {
 	};
 }
 
+
 export function generateImage(sectionIndex: number, prompt: string, logger: Logger): RootThunkAction {
 	return async (dispatch, getState) => {
+		function makeError(msg: string) {
+			console.error(msg);
+			dispatch(setError(msg));
+			return new Error(msg);
+		}
+
+		const state = getState();
+
+		// Handle special prompts
+		let finalPrompt = prompt;
+		if (prompt[0] == "!") {
+			if (DEBUG_MODE) console.log(`generateImage: Using the following prompt as command: ${prompt}`);
+			if (prompt.substring(0,5) == '!redo') {
+				// Retrieve a prompt from a previous section, and regenerate it.
+				const argSectionIndex = parseInt(prompt[5]);
+				if (isNaN(argSectionIndex)) throw makeError(`generateImage failed to execute command ${prompt}: an invalid section index argument was provided.`);
+				const argSectionImageUrl = state.prompt.sectionImageUrls[argSectionIndex];
+				if (!argSectionImageUrl) throw makeError(`generateImage failed to execute command ${prompt}: no section image could be found for section ${argSectionIndex}.`);
+				finalPrompt = argSectionImageUrl.filledPrompt;
+			} else if (prompt.substring(0,5) == '!keep') {
+				// Retrieve an image from a previous section, and simply keep it without regenerating.
+				const argSectionIndex = parseInt(prompt[5]);
+				if (isNaN(argSectionIndex)) {
+					throw makeError(`generateImage failed to execute command ${prompt}: an invalid section index argument was provided.`);
+				}
+				
+				dispatch(setIsFetchingImage('fetching'));
+
+				const keepPrevImage = () => {
+					const argSectionImageUrl = state.prompt.sectionImageUrls[argSectionIndex];
+					if (!argSectionImageUrl) {
+						throw makeError(`generateImage failed to execute command ${prompt}: no section image could be found for section ${argSectionIndex}.`);
+					}
+					dispatch(saveImage(sectionIndex, argSectionImageUrl.filledPrompt, argSectionImageUrl.path));
+					dispatch(setIsFetchingImage('success'));
+				};
+
+				const argPretendTimeout = prompt[6];
+				if (argPretendTimeout == 't') {
+					setTimeout(keepPrevImage, 5000);
+				} else {
+					keepPrevImage();
+				}
+				return;
+				// Early return since no DALL-E generation is required
+			}
+		}
+
 		if (DEBUG_MODE) {
-			console.log(`generateImage: Currently in debug mode, so no image will be generated. Prompt that would have been used: ${prompt}`);
+			console.log(`generateImage: Currently in debug mode, so no image will be generated. Prompt that would have been used:\n${finalPrompt}`);
 			dispatch(setIsFetchingImage('success'));
 			return;
 		}
 
 		dispatch(setIsFetchingImage('fetching'));
-
-		const state = getState();
+		
 		const body = {
 			sectionIndex,
-			prompt,
+			prompt: finalPrompt,
 
 			id: state.prompt.experimentId,
 			firstPlayerId: state.prompt.firstPlayerId,
@@ -55,13 +103,10 @@ export function generateImage(sectionIndex: number, prompt: string, logger: Logg
 		}).then((response) => response.json())
 		.then((data) => {
 			const returnedImgPath = data.imageURL;
-			dispatch(saveImage(sectionIndex, prompt, returnedImgPath));
+			dispatch(saveImage(sectionIndex, finalPrompt, returnedImgPath));
 			dispatch(setIsFetchingImage('success'));
 		}).catch(reason => {
-			const msg = "API failed to generate image for prompt: " + prompt + "\nReason: " + reason;
-			console.error(msg);
-			dispatch(setError(msg));
-			throw new Error(msg);
+			throw makeError("API failed to generate image for prompt: " + finalPrompt + "\nReason: " + reason);
 		});
 	};
 }

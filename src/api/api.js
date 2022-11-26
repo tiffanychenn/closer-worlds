@@ -36,6 +36,7 @@ app.use('/client/data', express.static(path.join(__dirname, '../../data/')));
 app.post('/image-gen', async (req,res) => {
     try {
         const prompt = req.body.prompt;
+        console.log(`Generating prompt: ${prompt}`);
         const image = await getDALLEImage(prompt);
         const experimentId = req.body.id;
         const sectionIndex = req.body.sectionIndex;
