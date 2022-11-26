@@ -24,6 +24,7 @@ export class ControlQuestionSlide extends React.Component<Props> {
 			player: questionIndex % 2 == 0 ? 1 : 2,
 			playerAction: "It's your turn now",
 			backgroundImage: PLAIN_BG,
+			hideBack: questionIndex === 0,
 		};
 		return <InfoSlide logger={logger}
 						  step={fakeStep}

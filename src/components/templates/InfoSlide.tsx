@@ -80,6 +80,7 @@ export class InfoSlide extends React.Component<Props, State> {
 			id: step.id + '-back-button',
 			text: 'Back',
 			onClick: onBack,
+			useOutlineStyle: true,
 		};
 		const buttons: ButtonData[] = [];
 		if (!step.hideBack) buttons.push(backButton);

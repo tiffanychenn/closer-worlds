@@ -46,7 +46,7 @@ class ConnectedControl extends React.Component<Props> {
 				backgroundImage: PLAIN_BG,
 				hideBack: true,
 				title: "Read the following out loud:",
-				instructions: "This activity is about interpersonal closeness. Your task, which we think will be quite enjoyable, is simply to get close to your partner.\n\nIn alternating order, take turns reading questions that appear on screen. Read it *out loud*, carry out the activity, then move on when you are ready.",
+				instructions: "This activity is about interpersonal closeness. Your task, which we think will be quite enjoyable, is simply to get close to your partner.\n\nIn alternating order, take turns reading questions that appear on screen. Read it *out loud*, carry out the activity, then move on when you are ready.\n\nThis activity as three sets. It will give you a notification when it's time to move onto the next set.",
 			}}/>;
 		}
 
@@ -74,8 +74,8 @@ class ConnectedControl extends React.Component<Props> {
 								  onBack={() => redoControlQuestion(logger)}/>
 			<WarningNextModal logger={logger}
 							  show={shouldStartNextSet}
-							  warningTitle="Time's up!"
-							  body={"Start wrapping up your answer to this question. When you're ready, click \"Next\" to continue."}
+							  warningTitle="Prepare for the next set!"
+							  body={"Start wrapping up your answer to this question. When you're finished with your answer, click \"Next\" to continue."}
 							  buttonId={`ff-s${setIndex}-next-button`}
 							  onNext={() => advanceControlSet(logger)}/>
 		</>;

@@ -11,7 +11,7 @@ export const WAND_IMG = './assets/wand.png';
 export const PLANET_DEPARTURE_IMAGE = './assets/departure.png';
 // FIXME: It seems like when we use low-res images, flexbox throws a hissy fit and decides to keep things small. We might need to use viewport sizing instead.
 
-export const GAME_NAME = "Dreamy";
+export const GAME_NAME = "Collaborative Game Study";
 
 const ONE_SECOND_MS = 1000;
 
@@ -34,7 +34,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				id: 'choose-player-number',
 				backgroundImage: STAR_BG,
 				title: 'Choose your character',
-				instructions: "To play the game, one of you will need to be player 1, and the other will, you guessed it, be player 2.",
+				instructions: "You've each been assigned to be either player 1 or player 2 (written below your participant ID). Follow the instructions to take turns reading the instructions out loud.\n\nConversation is encouraged! Feel free to discuss as feels natural.",
 			} as InfoStep,
 			{
 				type: StoryStepType.Info,
@@ -82,11 +82,11 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				playerAction: 'Take the lead',
 				title: "Describe the landscape:",
 				instructions: "What kind of nature do you enjoy most on Earth? Are there mountains, lakes, or rivers? Think about the plants and colors that bring you joy.\n\nWith this in mind, *paint a picture of the terrain and texture of the landscape.*",
-				hint: "Feel free to discuss your choices as a group.",
+				hint: "Feel free to discuss your choices as a pair.",
 				exampleText: "e.g., big pink puffy trees near lots of rivers",
 				backgroundImage: STAR_BG,
 				cardImage: PLANET_ARRIVAL_IMG,
-				timeLimitMs: 60 * ONE_SECOND_MS,
+				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
 				wordLimit: 15,
 				// TODO: Choose time and word/character limits.
 			} as WritePromptStep,
@@ -125,7 +125,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				cardImage: 1,
 				blurBG: true,
 				overlayBG: true,
-				timeLimitMs: 60 * ONE_SECOND_MS,
+				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
 				wordLimit: 15,
 				// TODO: Choose time and word/character limits.
 			} as WritePromptStep,
@@ -133,7 +133,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				type: StoryStepType.Reflect,
 				id: 'buildings-reflect',
 				player: 'buildings',
-				question: "{Curr}, explain what spaces you were remembering and a memory you have in one of those spaces, and how that made you feel like your truest self.", // TODO
+				question: "{Curr}, in what kind of spaces do you most feel like your authentic self? How might the building you made let you access that?",
 				backgroundImage: 1,
 				cardImage: 1,
 				blurBG: true,
@@ -160,12 +160,12 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				player: 'buildings',
 				playerAction: "It's your turn now",
 				title: "Add some meaning:",
-				instructions: "Wanting to make this a nice place for your partner to live as well, you think about what part of life they think is most precious.\n\nWhat would your partner miss most from back home? Add some object to the world that would make them feel more at home.",
+				instructions: "It's important to you to make this a nice place for your partner to live as well. Think about what parts of life they think are most precious.\n\nWhat would your partner miss most from back home? Add some object to the world that would make them feel more at home.",
 				exampleText: "e.g., science fiction library",
 				backgroundImage: 2,
 				cardImage: 2,
 				blurBG: true,
-				timeLimitMs: 60 * ONE_SECOND_MS,
+				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
 				wordLimit: 15,
 				// TODO: Choose time and word/character limits.
 			} as WritePromptStep,
@@ -173,7 +173,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				type: StoryStepType.Reflect,
 				id: 'miss-reflect',
 				player: 'buildings',
-				question: "{Other}, is this a meaningful gift? What makes this gift meaningful to you?",
+				question: "{Other}, is this a meaningful gift? In general, what is the best way for your friends to show that they care?",
 				backgroundImage: 2,
 				cardImage: 2,
 				blurBG: true,
@@ -204,7 +204,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				backgroundImage: 3,
 				cardImage: 3,
 				blurBG: true,
-				timeLimitMs: 60 * ONE_SECOND_MS,
+				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
 				wordLimit: 15,
 				// TODO: Choose time and word/character limits.
 			} as WritePromptStep,
@@ -212,7 +212,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				type: StoryStepType.Reflect,
 				id: 'gift-reflect',
 				player: 'landscape',
-				question: "{Other}, how would it feel to receive this?", // TODO
+				question: "{Other}, how do you feel being labeled with these positive qualities? Are there other hidden parts of you that you wish others would also see?",
 				backgroundImage: 3,
 				cardImage: 3,
 				blurBG: true,
@@ -256,7 +256,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 							leftLabel="Not at all"
 							rightLabel="Super accurate"/>
 				</>,
-				timeLimitMs: 60 * ONE_SECOND_MS,
+				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
 			} as CustomFormStep,
 			{
 				type: StoryStepType.CustomForm,
@@ -277,7 +277,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 					<ShortTextBox id="life-value-2" logger={logger}/>
 					<ShortTextBox id="life-value-3" logger={logger}/>
 				</>,
-				timeLimitMs: 60 * ONE_SECOND_MS,
+				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
 			} as CustomFormStep,
 		],
 	},
@@ -466,7 +466,7 @@ export const CONTROL_STORY_DATA: Array<StorySection> = [
 
 export const FAST_FRIENDS_DATA: Array<ControlSet> = [
 	{
-		timeoutMs: 0.5 * 60 * ONE_SECOND_MS,
+		timeoutMs: 6 * 60 * ONE_SECOND_MS,
 		questions: [
 			"Given the choice of anyone in the world, whom would you want as a dinner guest?",
 			"Would you like to be famous? In what way?",
@@ -478,13 +478,13 @@ export const FAST_FRIENDS_DATA: Array<ControlSet> = [
 			"Name three things you and your partner appear to have in common.",
 			"For what in your life do you feel most grateful?",
 			"If you could change anything about the way you were raised, what would it be?",
-			"Take 4 minutes and tell your partner your life story in as much detail as possible.",
+			"Take a minute to tell your partner your life story in as much detail as possible.",
 			"If you could wake up tomorrow having gained any one quality or ability, what would it be?",
 		],
 	},
 
 	{
-		timeoutMs: 0.5 * 60 * ONE_SECOND_MS,
+		timeoutMs: 6 * 60 * ONE_SECOND_MS,
 		questions: [
 			"If a crystal ball could tell you the truth about yourself, your life, or anything else, what would you want to know?",
 			"Is there something that you've dreamed of doing for a long time? Why haven't you done it?",
@@ -502,9 +502,9 @@ export const FAST_FRIENDS_DATA: Array<ControlSet> = [
 	},
 
 	{
-		timeoutMs: 0.5 * 60 * ONE_SECOND_MS,
+		timeoutMs: 6 * 60 * ONE_SECOND_MS,
 		questions: [
-			"Make 3 true \"we\" statements each. For instance, \"We are both in this room feeling...\"",
+			"Make 3 true \"we\" statements. For instance, \"We are both in this room feeling...\"",
 			"Complete this sentence: \"I wish I had someone with whom I could share...\"",
 			"If you were going to become a close friend with your partner, please share what would be important for him or her to know.",
 			"Tell your partner what you like about them; be very honest this time saying things that you might not say to someone you've just met.",

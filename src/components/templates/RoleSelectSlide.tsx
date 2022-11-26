@@ -6,7 +6,7 @@ import { STAR_BG } from '../App/storyData';
 import { GAP_BETWEEN_QUESTIONS, QuestionGroup } from '../atoms/containers/QuestionGroup';
 import { RadioGroup } from '../atoms/input/RadioGroup';
 import { TagGroup } from '../atoms/input/TagGroup';
-import { PageHeader, TextSpacer, Error } from '../atoms/text/Text';
+import { PageHeader, TextSpacer, Error, Hint } from '../atoms/text/Text';
 import { CustomFormSlide } from './CustomFormSlide';
 
 interface Props {
@@ -47,7 +47,8 @@ export class RoleSelectSlide extends React.Component<Props, State> {
 			makeContent: (logger, hasTimedOut, renderText) => {
 				return <>
 					<QuestionGroup>
-						<PageHeader>What kind of world do you dream of building? Why?</PageHeader>
+						<PageHeader>Consider the things that you have in common. What is the vibe of a world you would both enjoy?</PageHeader>
+						<Hint>Select all which apply, or write some of your own.</Hint>
 						<TagGroup id="world-tags"
 								logger={logger}
 								tags={step.tags}
