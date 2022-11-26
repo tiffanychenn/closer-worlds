@@ -26,7 +26,11 @@ function setIsFetchingImage(value: FetchStatus): SetIsFetchingImageAction {
 
 export function generateImage(sectionIndex: number, prompt: string, logger: Logger): RootThunkAction {
 	return async (dispatch, getState) => {
-		if (DEBUG_MODE) return;
+		if (DEBUG_MODE) {
+			console.log(`generateImage: Currently in debug mode, so no image will be generated. Prompt that would have been used: ${prompt}`);
+			dispatch(setIsFetchingImage('success'));
+			return;
+		}
 
 		dispatch(setIsFetchingImage('fetching'));
 

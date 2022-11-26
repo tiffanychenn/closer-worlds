@@ -96,9 +96,7 @@ export function advanceStep(logger: Logger, experimentId?: string, firstPlayerId
 
 		let errorDone = false;
 
-		// FIXME: If async things get weird, this might need to go last.
-		// TODO: If we want to regenerate an image at the very end, then we likely need to modify this.
-		// I have some ideas on this (using something like flags), but I want to only change it if we for sure need to.
+		// Experiment initialization
 		if (sectionIndex === 0 && stepIndex === 0){
 			// add title slide stuff here
 			if (experimentId !== null && firstPlayerId !== null && secondPlayerId !== null && experimentType !== null) {
@@ -116,7 +114,7 @@ export function advanceStep(logger: Logger, experimentId?: string, firstPlayerId
 			}
 		}
 
-		if (currStep.type == StoryStepType.WritePrompt && state.prompt.experimentType === "Experimental") {
+		if (currStep.triggersGenerate && state.prompt.experimentType === "Experimental") {
 			// Then first submit a request to generate the filled in prompt.
 			const prompt = currSection.genPrompt;
 			if (!prompt) {
@@ -204,4 +202,4 @@ export function loadExistingGame(sectionIndex: number, stepIndex: number): RootT
 	};
 }
 
-export type GameActions = SetSectionIndexAction | SetStepIndexAction | SetLandscapePlayerAction | SetHasUsedRedoAction | SetErrorAction; // TODO
+export type GameActions = SetSectionIndexAction | SetStepIndexAction | SetLandscapePlayerAction | SetHasUsedRedoAction | SetErrorAction;

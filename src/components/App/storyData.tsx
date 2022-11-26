@@ -77,6 +77,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 		steps: [
 			{
 				type: StoryStepType.WritePrompt,
+				triggersGenerate: true,
 				id: 'landscape-prompt',
 				player: 'landscape',
 				playerAction: 'Take the lead',
@@ -115,6 +116,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 		steps: [
 			{
 				type: StoryStepType.WritePrompt,
+				triggersGenerate: true,
 				id: 'buildings-prompt',
 				player: 'buildings',
 				playerAction: "It's your turn now",
@@ -156,6 +158,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 		steps: [
 			{
 				type: StoryStepType.WritePrompt,
+				triggersGenerate: true,
 				id: 'miss-prompt',
 				player: 'buildings',
 				playerAction: "It's your turn now",
@@ -195,6 +198,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 		steps: [
 			{
 				type: StoryStepType.WritePrompt,
+				triggersGenerate: true,
 				id: 'gift-prompt',
 				player: 'landscape',
 				playerAction: "It's your turn now",
@@ -232,14 +236,15 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	// TODO: Possible 5th question?
 
 	{
-		// genPrompt: "TODO", // TODO,
-		// promptTransformers: {
-		// 	'represented-slider': value => value < 50 ? '!redo' : '',
-		// 	// TODO: This won't actually hit, since these steps aren't write prompt steps.
-		// },
+		genPrompt: "prompt value is {represented-slider}", // TODO,
+		promptTransformers: {
+			'represented-slider': value => value < 50 ? '!redo' : '',
+			// TODO: This won't actually hit, since these steps aren't write prompt steps.
+		},
 		steps: [
 			{
 				type: StoryStepType.CustomForm,
+				triggersGenerate: true,
 				id: 'represented',
 				player: 'both',
 				playerAction: 'Discuss the following',

@@ -60,6 +60,7 @@ export class TitleSlide extends React.Component<Props, State> {
 			margin: "auto",
 			fontWeight: 400,
 			fontSize: '120px',
+			textAlign: 'center',
 		}
 
 		const style: React.CSSProperties = {

@@ -14,6 +14,13 @@ interface Props extends LoggedFormElementProps {
 export class RadioGroup extends LoggedFormElementComponent<Props> {
 	static defaultProps = { orientation: 'vertical' };
 
+	componentDidMount() {
+		const { selected } = this.props;
+		if (selected) {
+			this.onAnyEvent(`!default:${selected}`);
+		}
+	}
+
 	render() {
 		const { ids, labels, orientation, logger, id, onSelect, selected } = this.props;
 
