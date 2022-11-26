@@ -73,6 +73,7 @@ export class WritePrompt extends React.Component<Props, State> {
 			id: step.id + '-back-button',
 			text: 'Back',
 			onClick: onBack,
+			useOutlineStyle: true,
 		};
 
 		const containerStyle: React.CSSProperties = {
