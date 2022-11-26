@@ -67,6 +67,7 @@ export interface WritePromptStep extends StoryStep {
 export interface ReflectStep extends StoryStep {
 	type: typeof StoryStepType.Reflect;
 	player: 'landscape' | 'buildings' | 'both';
+	playerAction?: string;
 	question: string;
 	cardImage: string | number;
 }

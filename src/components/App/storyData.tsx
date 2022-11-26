@@ -313,9 +313,23 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	},
 
 	{
-		genPrompt: "{represented-slider}",
+		genPrompt: "{represented-both-slider}",
 		promptTransformers: {
-			'represented-both-slider': value => value < 50 ? '!redo4' : '!keep4t',
+			'represented-both-slider': value => {
+				const KEEP_PREV = '!keep5t';
+				const REDO_PREV = '!redo5';
+				// Currently silently errors by assuming to keep rather than redo the image.
+				let val = value;
+				if (value[0] == '!') {
+					let parts = value.split(':');
+					if (parts.length < 2) return KEEP_PREV;
+					val = value.split(':')[1];
+				} else if (typeof value != 'number') {
+					val = parseInt(value);
+					if (isNaN(val)) return KEEP_PREV;
+				}
+				return val < 50 ? REDO_PREV : KEEP_PREV;
+			},
 		},
 		steps: [
 			{
@@ -328,7 +342,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				backgroundImage: 5,
 				blurBG: true,
 				overlayBG: true,
-				requiredFormElemIds: ['represented-slider'],
+				requiredFormElemIds: ['represented-p1-slider', 'represented-p2-slider', 'represented-both-slider'],
 				maxWidthIfNoImageCard: false,
 				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
 				makeContent: (logger, hasTimedOut, renderText) => <>
@@ -444,6 +458,172 @@ export const FAST_FRIENDS_DATA: Array<ControlSet> = [
 			"Your house, containing everything you own, catches fire. After saving your loved ones and pets, you have time to safely make a final dash to save any one item. What would it be? Why?",
 			"Of all the people in your family, whose death would you find most disturbing? Why?",
 			"Share a personal problem and ask your partner's advice on how he or she might handle it. Also, ask your partner to reflect back to you how you seem to be feeling about the problem you have chosen.",
+		],
+	},
+];
+
+// DEPRECATED: No need to update this.
+export const CONTROL_STORY_DATA: Array<StorySection> = [
+	{
+		steps: [
+			{
+				type: StoryStepType.Title,
+				id: 'title',
+			} as TitleStep,
+			{
+				type: StoryStepType.Info,
+				id: 'intro',
+				backgroundImage: PLAIN_BG,
+				title: "Welcome to " + GAME_NAME,
+				instructions: "This activity is about interpersonal closeness. Your task, which we think will be quite enjoyable, is simply to get close to your partner, with whom you've been matched.\n\nIn alternating order, take turns reading questions that appear on screen. Read it *out loud*, carry out the activity, then move on when you are ready.",
+			} as InfoStep,
+		],
+	},
+	{
+		steps: [
+			{
+				type: StoryStepType.Info,
+				id: 'fast-friends-set-1-question-1-player-1',
+				player: 1,
+				playerAction: "It's your turn now",
+				title: "Answer this question:",
+				instructions: "Given the choice of anyone in the world, whom would you want as a dinner guest?",
+				backgroundImage: PLAIN_BG,
+			} as InfoStep,
+			{
+				type: StoryStepType.Info,
+				id: 'fast-friends-set-1-question-1-player-2',
+				player: 2,
+				playerAction: "It's your turn now",
+				title: "Answer this question:",
+				instructions: "Given the choice of anyone in the world, whom would you want as a dinner guest?",
+				backgroundImage: PLAIN_BG,
+			} as InfoStep,
+		],
+	},
+	{
+		steps: [
+			{
+				type: StoryStepType.Info,
+				id: 'fast-friends-set-1-question-2-player-2',
+				player: 1,
+				playerAction: "It's your turn now",
+				backgroundImage: PLAIN_BG,
+				title: "Answer this question:",
+				instructions: "If you could wake up tomorrow having gained any one quality or ability, what would it be?",
+			} as InfoStep,
+			{
+				type: StoryStepType.Info,
+				id: 'fast-friends-set-1-question-2-player-1',
+				player: 2,
+				playerAction: "It's your turn now",
+				backgroundImage: PLAIN_BG,
+				title: "Answer this question:",
+				instructions: "If you could wake up tomorrow having gained any one quality or ability, what would it be?",
+			} as InfoStep,
+		],
+	},
+	{
+		steps: [
+			{
+				type: StoryStepType.Info,
+				id: 'fast-friends-set-2-question-3-player-2',
+				player: 1,
+				playerAction: "It's your turn now",
+				backgroundImage: PLAIN_BG,
+				title: "Answer this question:",
+				instructions: "If a crystal ball could tell you the truth about yourself, your life, the future, or anything else, what would you want to know?",
+			} as InfoStep,
+			{
+				type: StoryStepType.Info,
+				id: 'fast-friends-set-2-question-3-player-1',
+				player: 2,
+				playerAction: "It's your turn now",
+				backgroundImage: PLAIN_BG,
+				title: "Answer this question:",
+				instructions: "If a crystal ball could tell you the truth about yourself, your life, the future, or anything else, what would you want to know?",
+			} as InfoStep,
+		],
+	},
+	{
+		steps: [
+			{
+				type: StoryStepType.Info,
+				id: 'fast-friends-set-2-question-4-player-1',
+				player: 1,
+				playerAction: "It's your turn now",
+				backgroundImage: PLAIN_BG,
+				title: "Answer this question:",
+				instructions: "How close and warm is your family? Do you feel your childhood was happier than most other people's?",
+			} as InfoStep,
+			{
+				type: StoryStepType.Info,
+				id: 'fast-friends-set-2-question-4-player-2',
+				player: 2,
+				playerAction: "It's your turn now",
+				backgroundImage: PLAIN_BG,
+				title: "Answer this question:",
+				instructions: "How close and warm is your family? Do you feel your childhood was happier than most other people's?",
+			} as InfoStep,
+		],
+	},
+	{
+		steps: [
+			{
+				type: StoryStepType.Info,
+				id: 'fast-friends-set-3-question-5-player-1',
+				player: 1,
+				playerAction: "It's your turn now",
+				backgroundImage: PLAIN_BG,
+				title: "Answer this question:",
+				instructions: "If you were going to become a close friend with your partner, what would be important for them to know?",
+			} as InfoStep,
+			{
+				type: StoryStepType.Info,
+				id: 'fast-friends-set-3-question-5-player-2',
+				player: 2,
+				playerAction: "It's your turn now",
+				backgroundImage: PLAIN_BG,
+				title: "Answer this question:",
+				instructions: "If you were going to become a close friend with your partner, what would be important for them to know?",
+			} as InfoStep,
+		],
+	},
+	{
+		steps: [
+			{
+				type: StoryStepType.Info,
+				id: 'fast-friends-set-3-question-6-player-2',
+				player: 1,
+				playerAction: "It's your turn now",
+				backgroundImage: PLAIN_BG,
+				title: "Answer this question:",
+				instructions: "If you were to die this evening with no opportunity to communicate with anyone, what would you most regret not having told someone? Why haven't you told them yet?",
+			} as InfoStep,
+			{
+				type: StoryStepType.Info,
+				id: 'fast-friends-set-3-question-6-player-1',
+				player: 2,
+				playerAction: "It's your turn now",
+				backgroundImage: PLAIN_BG,
+				title: "Answer this question:",
+				instructions: "If you were to die this evening with no opportunity to communicate with anyone, what would you most regret not having told someone? Why haven't you told them yet?",
+			} as InfoStep,
+		],
+	},
+	{
+		steps: [
+			{
+				type: StoryStepType.Info,
+				id: 'ending',
+				player: 'both',
+				playerAction: 'Read the following',
+				backgroundImage: STAR_BG,
+				cardImage: PLANET_ARRIVAL_IMG,
+				blurBG: true,
+				instructions: "Thank you for sharing and playing the game!\n\nThe end.",
+				hideNext: true,
+			} as InfoStep,
 		],
 	},
 ];

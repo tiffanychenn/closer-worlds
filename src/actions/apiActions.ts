@@ -1,4 +1,5 @@
 import { DEBUG_MODE } from "../components/App/ParticipantApp";
+import { PLACEHOLDER_IMG_URL } from "../components/App/storyData";
 import { Logger } from "../data/logger";
 import { FetchStatus } from "../reducers/apiReducer";
 import { RootThunkAction } from "../reducers/rootReducer";
@@ -27,6 +28,12 @@ function setIsFetchingImage(value: FetchStatus): SetIsFetchingImageAction {
 
 export function generateImage(sectionIndex: number, prompt: string, logger: Logger): RootThunkAction {
 	return async (dispatch, getState) => {
+		if (DEBUG_MODE) {
+			console.log(`generateImage: Currently in debug mode, so no image will be generated. Prompt (or command) that would have been used:\n${prompt}`);
+			dispatch(setIsFetchingImage('success'));
+			return;
+		}
+
 		function makeError(msg: string) {
 			console.error(msg);
 			dispatch(setError(msg));
@@ -38,7 +45,7 @@ export function generateImage(sectionIndex: number, prompt: string, logger: Logg
 		// Handle special prompts
 		let finalPrompt = prompt;
 		if (prompt[0] == "!") {
-			if (DEBUG_MODE) console.log(`generateImage: Using the following prompt as command: ${prompt}`);
+			console.log(`generateImage: Using the following prompt as command: ${prompt}`);
 			if (prompt.substring(0,5) == '!redo') {
 				// Retrieve a prompt from a previous section, and regenerate it.
 				const argSectionIndex = parseInt(prompt[5]);
@@ -73,12 +80,6 @@ export function generateImage(sectionIndex: number, prompt: string, logger: Logg
 				return;
 				// Early return since no DALL-E generation is required
 			}
-		}
-
-		if (DEBUG_MODE) {
-			console.log(`generateImage: Currently in debug mode, so no image will be generated. Prompt that would have been used:\n${finalPrompt}`);
-			dispatch(setIsFetchingImage('success'));
-			return;
 		}
 
 		dispatch(setIsFetchingImage('fetching'));

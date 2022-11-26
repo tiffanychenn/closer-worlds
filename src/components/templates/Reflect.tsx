@@ -8,6 +8,7 @@ import { STAR_BG } from '../App/storyData';
 import { Panel } from '../atoms/containers/Panel';
 import { BLUE_BG_LIGHT_SHADOW } from '../atoms/image/ImageCard';
 import { DiscussionPrompt, Text, Error } from '../atoms/text/Text';
+import { PlayerTokenHeader } from '../molecules/PlayerTokenHeader';
 import { BlankTwoColumnSlide } from '../organisms/BlankTwoColumnSlide';
 import { LoadingImageCard } from '../organisms/LoadingImageCard';
 
@@ -34,7 +35,10 @@ export class Reflect extends React.Component<Props> {
 		const boxShadow = BLUE_BG_LIGHT_SHADOW;
 
 		const containerStyle: React.CSSProperties = {
-			height: '70vh',
+			height: '80vh',
+			display: 'flex',
+			flexDirection: 'column',
+			gap: '20px',
 			flex: 1,
 		};
 
@@ -46,6 +50,7 @@ export class Reflect extends React.Component<Props> {
 
 		const content = <div style={containerStyle}>
 			<Error>{error}</Error>
+			{step.playerAction && <PlayerTokenHeader player={playerNumber}>{step.playerAction}</PlayerTokenHeader>}
 			<Panel bgOpacity={bgOpacity}>
 				<div style={contentStyle}>
 					<Text>The wand starts swirling and whirling, and begins to frantically paint the landscape.</Text>

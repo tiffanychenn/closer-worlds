@@ -47,6 +47,7 @@ export class CustomFormSlide extends React.Component<Props, State> {
 				this.forceUpdate();
 			}
 		});
+		this.forceUpdate();
 	}
 
 	componentWillUnmount() {

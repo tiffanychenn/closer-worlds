@@ -1,5 +1,5 @@
 import { RootThunkAction } from "../reducers/rootReducer";
-import { CONTROL_STORY_DATA, EXPERIMENTAL_STORY_DATA } from "../components/App/storyData";
+import { EXPERIMENTAL_STORY_DATA, CONTROL_STORY_DATA } from "../components/App/storyData";
 import { IAllowsRedo, StoryStepType } from "../data/story";
 import { Logger } from "../data/logger";
 import { fillPrompt } from "../utils/textUtils";
