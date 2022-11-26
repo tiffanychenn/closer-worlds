@@ -1,7 +1,8 @@
 import { ImageStep, ReflectStep, StorySection, StoryStepType, TitleStep, WritePromptStep, InfoStep, CustomFormStep, RoleSelectStep, ControlSet } from '../../data/story';
 import ShortTextBox from '../atoms/input/ShortTextBox';
 import { Slider } from '../atoms/input/Slider';
-import { PageHeader, Text } from '../atoms/text/Text';
+import { TagGroup } from '../atoms/input/TagGroup';
+import { Hint, PageHeader, Text } from '../atoms/text/Text';
 
 export const PLACEHOLDER_IMG_URL = 'https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg';
 export const STAR_BG = './assets/stars_bg_16.png';
@@ -89,12 +90,12 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				cardImage: PLANET_ARRIVAL_IMG,
 				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
 				wordLimit: 15,
-				// TODO: Choose time and word/character limits.
 			} as WritePromptStep,
 			{
 				type: StoryStepType.Reflect,
 				id: 'landscape-reflect',
 				player: 'landscape',
+				playerAction: "Discuss the following",
 				question: "{Curr}, recall an especially interesting time you've been in nature. What made it so special?",
 				backgroundImage: STAR_BG,
 				cardImage: PLANET_ARRIVAL_IMG,
@@ -104,55 +105,6 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				id: 'landscape-display',
 				cardImage: 1,
 				backgroundImage: 1,
-				redoReturnsToStepIndex: 0,
-				blurBG: true,
-				overlayBG: false,
-			} as ImageStep,
-		],
-	},
-
-	{
-		genPrompt: "{represented-slider}",
-		promptTransformers: {
-			'represented-slider': value => value < 50 ? '!redo1' : '!keep1t',
-		},
-		steps: [
-			{
-				type: StoryStepType.CustomForm,
-				triggersGenerate: true,
-				id: 'represented-test',
-				player: 'both',
-				playerAction: 'Discuss the following',
-				cardImage: 1,
-				backgroundImage: 1,
-				blurBG: true,
-				requiredFormElemIds: ['represented-slider'],
-				maxWidthIfNoImageCard: false,
-				makeContent: (logger, hasTimedOut, renderText) => <>
-					<PageHeader>Reflect</PageHeader>
-					<Text>{renderText("TEST: Look around at the world you have created together. *Do you feel personally represented by this space you have co-created? Why or why not?*")}</Text>
-					<Slider id="represented-slider"
-							logger={logger}
-							leftLabel="Not at all"
-							rightLabel="Super accurate"/>
-				</>,
-				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
-			} as CustomFormStep,
-			{
-				type: StoryStepType.Reflect,
-				id: 'represented-test-reflect',
-				player: 'both',
-				playerAction: 'Discuss the following',
-				question: "TODO if relevant",
-				backgroundImage: 1,
-				cardImage: 1,
-				blurBG: true,
-			} as ReflectStep,
-			{
-				type: StoryStepType.Image,
-				id: 'represented-test-display',
-				cardImage: 2,
-				backgroundImage: 2,
 				redoReturnsToStepIndex: 0,
 				blurBG: true,
 				overlayBG: false,
@@ -178,12 +130,12 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				overlayBG: true,
 				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
 				wordLimit: 15,
-				// TODO: Choose time and word/character limits.
 			} as WritePromptStep,
 			{
 				type: StoryStepType.Reflect,
 				id: 'buildings-reflect',
 				player: 'buildings',
+				playerAction: "Discuss the following",
 				question: "{Curr}, in what kind of spaces do you most feel like your authentic self? How might the building you made let you access that?",
 				backgroundImage: 1,
 				cardImage: 1,
@@ -217,18 +169,20 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				backgroundImage: 2,
 				cardImage: 2,
 				blurBG: true,
+				overlayBG: true,
 				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
 				wordLimit: 15,
-				// TODO: Choose time and word/character limits.
 			} as WritePromptStep,
 			{
 				type: StoryStepType.Reflect,
 				id: 'miss-reflect',
 				player: 'buildings',
+				playerAction: "Discuss the following",
 				question: "{Other}, is this a meaningful gift? In general, what is the best way for your friends to show that they care?",
 				backgroundImage: 2,
 				cardImage: 2,
 				blurBG: true,
+				overlayBG: true,
 			} as ReflectStep,
 			{
 				type: StoryStepType.Image,
@@ -257,18 +211,20 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				backgroundImage: 3,
 				cardImage: 3,
 				blurBG: true,
+				overlayBG: true,
 				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
 				wordLimit: 15,
-				// TODO: Choose time and word/character limits.
 			} as WritePromptStep,
 			{
 				type: StoryStepType.Reflect,
 				id: 'gift-reflect',
 				player: 'landscape',
+				playerAction: "Discuss the following",
 				question: "{Other}, how do you feel being labeled with these positive qualities? Are there other hidden parts of you that you wish others would also see?",
 				backgroundImage: 3,
 				cardImage: 3,
 				blurBG: true,
+				overlayBG: true,
 			} as ReflectStep,
 			{
 				type: StoryStepType.Image,
@@ -282,12 +238,84 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 		],
 	},
 
-	// TODO: Possible 5th question?
+	{
+		genPrompt: "landscape with {landscape-prompt-blank}, buildings that look like {buildings-prompt-blank}, in the background {miss-prompt-blank}, in the foreground {gift-prompt-blank}{style-tags}",
+		promptTransformers: {
+			'style-tags': value => {
+				let result = ". ultra detailed";
+
+				// Imagination
+				if (value.toLowerCase().indexOf("imagination") >= 0) {
+					result += " octane render";
+				}
+
+				// Chaos or calm
+				if (value.toLowerCase().indexOf("chaos") >= 0) {
+					result += " dali style surrealist";
+				} else if (value.toLowerCase().indexOf("calm") >= 0) {
+					result += " studio ghibli";
+				}
+
+				return result;
+			},
+		},
+		steps: [
+			{
+				type: StoryStepType.CustomForm,
+				triggersGenerate: true,
+				id: 'value-styles-prompt',
+				player: 'both',
+				playerAction: "Discuss the following",
+				cardImage: 4,
+				backgroundImage: 4,
+				blurBG: true,
+				overlayBG: true,
+				requiredFormElemIds: ['style-tags'],
+				maxWidthIfNoImageCard: false,
+				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
+				makeContent: (logger, hasTimedOut, renderText) => <>
+					<PageHeader>Reflections</PageHeader>
+					<Text>{renderText("Notice the ways in which things all around you have started to take shape. Which statements do you *both* agree with?")}</Text>
+					<Hint showLabel={false}>{renderText("Select as many as feel meaningful to you.")}</Hint>
+					<TagGroup id='style-tags'
+							  logger={logger}
+							  includeInput={false}
+							  tags={[
+								"We both have vibrant *imaginations*",
+								"We both feel more *in-sync* now",
+								"We are both excited by *chaos*",
+								"We feel more comfortable in *calm* places",
+								"We are both *nervous to share* personal stuff with others",
+							  ]}/>
+				</>,
+			} as CustomFormStep,
+			{
+				type: StoryStepType.Reflect,
+				id: 'value-styles-reflect',
+				player: 'both',
+				playerAction: "Discuss the following",
+				question: "What was your first impression of one another? Has that changed at all now?",
+				backgroundImage: 4,
+				cardImage: 4,
+				blurBG: true,
+				overlayBG: true,
+			} as ReflectStep,
+			{
+				type: StoryStepType.Image,
+				id: 'value-styles-display',
+				cardImage: 5,
+				backgroundImage: 5,
+				redoReturnsToStepIndex: 0,
+				blurBG: true,
+				overlayBG: false,
+			} as ImageStep,
+		],
+	},
 
 	{
 		genPrompt: "{represented-slider}",
 		promptTransformers: {
-			'represented-slider': value => value < 50 ? '!redo4' : '!keep4t',
+			'represented-both-slider': value => value < 50 ? '!redo4' : '!keep4t',
 		},
 		steps: [
 			{
@@ -296,57 +324,49 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				id: 'represented',
 				player: 'both',
 				playerAction: 'Discuss the following',
-				cardImage: 4, // FIXME: Change this to whichever section is last.
-				backgroundImage: 4,
+				cardImage: 5,
+				backgroundImage: 5,
 				blurBG: true,
+				overlayBG: true,
 				requiredFormElemIds: ['represented-slider'],
 				maxWidthIfNoImageCard: false,
+				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
 				makeContent: (logger, hasTimedOut, renderText) => <>
-					<PageHeader>Reflect</PageHeader>
+					<PageHeader>Evaluate</PageHeader>
 					<Text>{renderText("Look around at the world you have created together. *Do you feel personally represented by this space you have co-created? Why or why not?*")}</Text>
-					<Slider id="represented-slider"
+					<PageHeader>Player 1:</PageHeader>
+					<Slider id="represented-p1-slider"
+							logger={logger}
+							leftLabel="Not at all"
+							rightLabel="Super accurate"/>
+					<PageHeader>Player 2:</PageHeader>
+					<Slider id="represented-p2-slider"
+							logger={logger}
+							leftLabel="Not at all"
+							rightLabel="Super accurate"/>
+					<PageHeader>Both of us:</PageHeader>
+					<Slider id="represented-both-slider"
 							logger={logger}
 							leftLabel="Not at all"
 							rightLabel="Super accurate"/>
 				</>,
-				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
 			} as CustomFormStep,
-			// {
-			// 	type: StoryStepType.CustomForm,
-			// 	id: 'life-values',
-			// 	player: 'both',
-			// 	playerAction: "Discuss the following",
-			// 	cardImage: 4,
-			// 	backgroundImage: 4,
-			// 	blurBG: true,
-			// 	requiredFormElemIds: ['life-value-1', 'life-value-2', 'life-value-3'],
-			// 	makeContent: (logger, hasTimedOut, renderText) => <>
-			// 		<PageHeader>Reflect</PageHeader>
-			// 		<Text>{renderText("Based on how you have both answered the questions, what are 3 things you both seem to value most in life?")}</Text>
-			// 		{/* TODO: I've currently left these without placeholder text, because I
-			// 		think it'll be more interesting to see what people write organically. We
-			// 		can change that, though! */}
-			// 		<ShortTextBox id="life-value-1" logger={logger}/>
-			// 		<ShortTextBox id="life-value-2" logger={logger}/>
-			// 		<ShortTextBox id="life-value-3" logger={logger}/>
-			// 	</>,
-			// 	timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
-			// } as CustomFormStep,
 			{
 				type: StoryStepType.Reflect,
 				id: 'represented-reflect',
 				player: 'both',
 				playerAction: 'Discuss the following',
-				question: "TODO if relevant",
-				backgroundImage: 4,
-				cardImage: 4,
+				question: "What is something that is really important to you, that most people don't get to hear, or that you seldom have the chance to share?",
+				backgroundImage: 5,
+				cardImage: 5,
 				blurBG: true,
+				overlayBG: true,
 			} as ReflectStep,
 			{
 				type: StoryStepType.Image,
 				id: 'represented-display',
-				cardImage: 5,
-				backgroundImage: 5,
+				cardImage: 6,
+				backgroundImage: 6,
 				redoReturnsToStepIndex: 0,
 				blurBG: true,
 				overlayBG: false,
@@ -364,172 +384,8 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				cardImage: 5,
 				backgroundImage: 5,
 				blurBG: true,
+				overlayBG: true,
 				instructions: "Suddenly, a teleportation machine appears in front of you. Booming out from a speaker onboard, you hear the voices of the researchers: \"It's time to come back to the Media Lab!\"\n\nBoth of you walk into the machine, take one last look at the world you made, and return home.\n\nThe end.",
-				hideNext: true,
-			} as InfoStep,
-		],
-	},
-];
-
-export const CONTROL_STORY_DATA: Array<StorySection> = [
-	{
-		steps: [
-			{
-				type: StoryStepType.Title,
-				id: 'title',
-			} as TitleStep,
-			{
-				type: StoryStepType.Info,
-				id: 'intro',
-				backgroundImage: PLAIN_BG,
-				title: "Welcome to " + GAME_NAME,
-				instructions: "This activity is about interpersonal closeness. Your task, which we think will be quite enjoyable, is simply to get close to your partner, with whom you've been matched.\n\nIn alternating order, take turns reading questions that appear on screen. Read it *out loud*, carry out the activity, then move on when you are ready.",
-			} as InfoStep,
-		],
-	},
-	{
-		steps: [
-			{
-				type: StoryStepType.Info,
-				id: 'fast-friends-set-1-question-1-player-1',
-				player: 1,
-				playerAction: "It's your turn now",
-				title: "Answer this question:",
-				instructions: "Given the choice of anyone in the world, whom would you want as a dinner guest?",
-				backgroundImage: PLAIN_BG,
-			} as InfoStep,
-			{
-				type: StoryStepType.Info,
-				id: 'fast-friends-set-1-question-1-player-2',
-				player: 2,
-				playerAction: "It's your turn now",
-				title: "Answer this question:",
-				instructions: "Given the choice of anyone in the world, whom would you want as a dinner guest?",
-				backgroundImage: PLAIN_BG,
-			} as InfoStep,
-		],
-	},
-	{
-		steps: [
-			{
-				type: StoryStepType.Info,
-				id: 'fast-friends-set-1-question-2-player-2',
-				player: 1,
-				playerAction: "It's your turn now",
-				backgroundImage: PLAIN_BG,
-				title: "Answer this question:",
-				instructions: "If you could wake up tomorrow having gained any one quality or ability, what would it be?",
-			} as InfoStep,
-			{
-				type: StoryStepType.Info,
-				id: 'fast-friends-set-1-question-2-player-1',
-				player: 2,
-				playerAction: "It's your turn now",
-				backgroundImage: PLAIN_BG,
-				title: "Answer this question:",
-				instructions: "If you could wake up tomorrow having gained any one quality or ability, what would it be?",
-			} as InfoStep,
-		],
-	},
-	{
-		steps: [
-			{
-				type: StoryStepType.Info,
-				id: 'fast-friends-set-2-question-3-player-2',
-				player: 1,
-				playerAction: "It's your turn now",
-				backgroundImage: PLAIN_BG,
-				title: "Answer this question:",
-				instructions: "If a crystal ball could tell you the truth about yourself, your life, the future, or anything else, what would you want to know?",
-			} as InfoStep,
-			{
-				type: StoryStepType.Info,
-				id: 'fast-friends-set-2-question-3-player-1',
-				player: 2,
-				playerAction: "It's your turn now",
-				backgroundImage: PLAIN_BG,
-				title: "Answer this question:",
-				instructions: "If a crystal ball could tell you the truth about yourself, your life, the future, or anything else, what would you want to know?",
-			} as InfoStep,
-		],
-	},
-	{
-		steps: [
-			{
-				type: StoryStepType.Info,
-				id: 'fast-friends-set-2-question-4-player-1',
-				player: 1,
-				playerAction: "It's your turn now",
-				backgroundImage: PLAIN_BG,
-				title: "Answer this question:",
-				instructions: "How close and warm is your family? Do you feel your childhood was happier than most other people's?",
-			} as InfoStep,
-			{
-				type: StoryStepType.Info,
-				id: 'fast-friends-set-2-question-4-player-2',
-				player: 2,
-				playerAction: "It's your turn now",
-				backgroundImage: PLAIN_BG,
-				title: "Answer this question:",
-				instructions: "How close and warm is your family? Do you feel your childhood was happier than most other people's?",
-			} as InfoStep,
-		],
-	},
-	{
-		steps: [
-			{
-				type: StoryStepType.Info,
-				id: 'fast-friends-set-3-question-5-player-1',
-				player: 1,
-				playerAction: "It's your turn now",
-				backgroundImage: PLAIN_BG,
-				title: "Answer this question:",
-				instructions: "If you were going to become a close friend with your partner, what would be important for them to know?",
-			} as InfoStep,
-			{
-				type: StoryStepType.Info,
-				id: 'fast-friends-set-3-question-5-player-2',
-				player: 2,
-				playerAction: "It's your turn now",
-				backgroundImage: PLAIN_BG,
-				title: "Answer this question:",
-				instructions: "If you were going to become a close friend with your partner, what would be important for them to know?",
-			} as InfoStep,
-		],
-	},
-	{
-		steps: [
-			{
-				type: StoryStepType.Info,
-				id: 'fast-friends-set-3-question-6-player-2',
-				player: 1,
-				playerAction: "It's your turn now",
-				backgroundImage: PLAIN_BG,
-				title: "Answer this question:",
-				instructions: "If you were to die this evening with no opportunity to communicate with anyone, what would you most regret not having told someone? Why haven't you told them yet?",
-			} as InfoStep,
-			{
-				type: StoryStepType.Info,
-				id: 'fast-friends-set-3-question-6-player-1',
-				player: 2,
-				playerAction: "It's your turn now",
-				backgroundImage: PLAIN_BG,
-				title: "Answer this question:",
-				instructions: "If you were to die this evening with no opportunity to communicate with anyone, what would you most regret not having told someone? Why haven't you told them yet?",
-			} as InfoStep,
-		],
-	},
-	{
-		steps: [
-			{
-				type: StoryStepType.Info,
-				id: 'ending',
-				player: 'both',
-				playerAction: 'Read the following',
-				backgroundImage: STAR_BG,
-				cardImage: PLANET_ARRIVAL_IMG,
-				blurBG: true,
-				instructions: "Thank you for sharing and playing the game!\n\nThe end.",
 				hideNext: true,
 			} as InfoStep,
 		],

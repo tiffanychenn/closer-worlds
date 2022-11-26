@@ -85,7 +85,7 @@ export class Tag extends LoggedFormElementComponent<Props, State> {
 			{isInput ? <input style={inputStyle} type="text" placeholder={this.props.text ? this.props.text.toLowerCase(): undefined} onInput={e => {
 				this.onInput(e);
 				this.setState({inputValue: e.currentTarget.value});
-			}}></input> : this.props.text.toLowerCase()}
+			}}></input> : renderBold(this.props.text.toLowerCase())}
 			<div style={{width: '10px', display: 'inline-block'}}></div>
 			<FontAwesomeIcon icon={selected ? faMinus : faPlus} onClick={() => {
 				if (isInput && this.state.inputValue.length > 0 && this.props.onAddTag) {
@@ -183,3 +183,7 @@ export class TagInput extends LoggedFormElementComponent<InputProps, InputState>
 		</button>;
 	}
 }
+function renderBold(arg0: string): React.ReactNode {
+	throw new Error("Function not implemented.");
+}
+

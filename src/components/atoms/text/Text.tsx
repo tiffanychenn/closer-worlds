@@ -21,8 +21,14 @@ export class Text extends React.Component<Props> {
 	}
 }
 
+interface HintProps extends Props {
+	showLabel: boolean;
+}
+
 // Tooltip-style thing that we've been talking about.
-export class Hint extends React.Component<Props> {
+export class Hint extends React.Component<HintProps> {
+	static defaultProps = { showLabel: true };
+
 	render() {
 		const style: React.CSSProperties = {
 			color: '#C5C5C5',
@@ -36,7 +42,7 @@ export class Hint extends React.Component<Props> {
 			color: 'white',
 			fontWeight: '700', // bold
 		};
-		return <p style={style}><span style={titleStyle}>Hint</span> {this.props.children}</p>;
+		return <p style={style}>{this.props.showLabel && <span style={titleStyle}>Hint </span>}{this.props.children}</p>;
 	}
 }
 
