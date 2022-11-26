@@ -68,7 +68,7 @@ export class RoleSelectSlide extends React.Component<Props, State> {
 									selected={this.state.landscapePlayer === 1 ? ROLE_SELECT_VALUE_P2 : (this.state.landscapePlayer === 2 ? ROLE_SELECT_VALUE_P1 : undefined) }/>
 					</QuestionGroup>
 					<QuestionGroup>
-						<Text>Based on this, you decide that player {landscapePlayer} will start with the landscape, and player {2 - landscapePlayer} will start with the buildings.</Text>
+						<Text>Based on this, you decide that player {landscapePlayer} will start with the landscape, and player {3 - landscapePlayer} will start with the buildings.</Text>
 					</QuestionGroup>
 				</>;
 			},

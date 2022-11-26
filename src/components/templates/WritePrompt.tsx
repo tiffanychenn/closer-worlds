@@ -11,7 +11,7 @@ import { BlankTwoColumnSlide } from '../organisms/BlankTwoColumnSlide';
 import { BlankSlide } from '../organisms/BlankSlide';
 import { ButtonData, ButtonPanel } from '../molecules/ButtonPanel';
 import { LimitedTextBox } from '../organisms/LimitedTextBox';
-import { STAR_BG } from '../App/storyData';
+import { EXPERIMENTAL_STORY_DATA, STAR_BG } from '../App/storyData';
 
 interface Props {
 	logger: Logger;
@@ -21,21 +21,25 @@ interface Props {
 	onNext?: () => void;
 	onBack?: () => void;
 	error: string;
+	reuseSectionPrompt: boolean;
 }
 
 interface State {
 	isOverLimit: boolean;
 	hasText: boolean;
 	hasTimedOut: boolean;
+	initialValue: string | undefined;
 }
 
 export class WritePrompt extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
+		const initialValue = props.reuseSectionPrompt ? props.logger.getLatestValues([props.step.id + '-blank'])[props.step.id + '-blank'] : undefined;
 		this.state = {
 			isOverLimit: false,
 			hasText: false,
-			hasTimedOut: false
+			hasTimedOut: false,
+			initialValue,
 		};
 	}
 
@@ -52,8 +56,8 @@ export class WritePrompt extends React.Component<Props, State> {
 	}
 
 	render() {
-		const { logger, step, landscapePlayer, sectionImageUrls, onNext, onBack, error } = this.props;
-		const { isOverLimit, hasText, hasTimedOut } = this.state;
+		const { logger, step, landscapePlayer, sectionImageUrls, onNext, onBack, error, reuseSectionPrompt } = this.props;
+		const { isOverLimit, hasText, hasTimedOut, initialValue } = this.state;
 		const playerNumber = playerRoleToNumber(step.player, landscapePlayer);
 
 		const cardImage = getSectionImageOrString(step.cardImage, sectionImageUrls);
@@ -90,6 +94,8 @@ export class WritePrompt extends React.Component<Props, State> {
 			gap: '30px',
 			maxWidth: cardImage ? undefined : 'max(50vw, 600px)',
 		};
+		
+		console.log(`Got initial value: ${initialValue}`); // DEBUG
 
 		const content = <div style={containerStyle}>
 			<Error>{error}</Error>
@@ -106,7 +112,8 @@ export class WritePrompt extends React.Component<Props, State> {
 									wordLimit={step.wordLimit}
 									placeholder={step.exampleText}
 									onLimitEdge={x => this.onLimitEdge(x)}
-									onInput={x => this.onInput(x)}/>
+									onInput={x => this.onInput(x)}
+									initialValue={initialValue}/>
 				</div>
 			</ButtonPanel>
 		</div>;

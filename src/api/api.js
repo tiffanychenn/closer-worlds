@@ -41,7 +41,8 @@ app.post('/image-gen', async (req,res) => {
         const experimentId = req.body.id;
         const sectionIndex = req.body.sectionIndex;
         const buffer = Buffer.from(image, "base64");
-        const filename = experimentId + "-" + sectionIndex + ".png";
+        // Using datetime to ensure that no two images have the same name if you redo an image.
+        const filename = experimentId + "-" + Date.now() + "-" + sectionIndex + ".png";
         const filepath = "../../data/" + experimentId + "/";
         fs.writeFile(filepath + filename, buffer, (err) => {
             // In case of a error throw err.

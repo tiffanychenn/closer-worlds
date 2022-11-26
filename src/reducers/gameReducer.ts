@@ -6,7 +6,7 @@ export interface GameState {
 	storySection: number;
 	storyStep: number;
 	landscapePlayer: 1 | 2;
-	hasUsedRedo: boolean;
+	hasUsedRedo: false | number;
 	error: string;
 }
 

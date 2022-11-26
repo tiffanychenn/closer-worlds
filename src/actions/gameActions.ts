@@ -52,10 +52,15 @@ export function setLandscapePlayer(value: 1 | 2): SetLandscapePlayerAction {
 
 export interface SetHasUsedRedoAction {
 	type: typeof GAME_ACTION_NAMES.SET_HAS_USED_REDO;
-	value: boolean;
+	value: false | number; // Either not used, or the section index in which it was used.
 }
 
-function setHasUsedRedo(value: boolean): SetHasUsedRedoAction {
+/**
+ * 
+ * @param value Either false for not used, or a number for the section index in which the redo was used.
+ * @returns 
+ */
+function setHasUsedRedo(value: false | number): SetHasUsedRedoAction {
 	return {
 		type: GAME_ACTION_NAMES.SET_HAS_USED_REDO,
 		value,
@@ -150,14 +155,14 @@ export function advanceStep(logger: Logger, experimentId?: string, firstPlayerId
 	};
 }
 
-export function redoSection(): RootThunkAction {
+export function redoSection(sectionIndex: number): RootThunkAction {
 	return async (dispatch, getState) => {
 		const state = getState();
 		if (state.game.hasUsedRedo) return; // Don't allow redo more than once!
 		const STORY_DATA = state.prompt.experimentType === "Experimental" ? EXPERIMENTAL_STORY_DATA : CONTROL_STORY_DATA;
 		const currStep = STORY_DATA[state.game.storySection].steps[state.game.storyStep];
 		if ((currStep as any).redoReturnsToStepIndex === undefined) return;
-		dispatch(setHasUsedRedo(true));
+		dispatch(setHasUsedRedo(sectionIndex));
 		dispatch(setStepIndex((currStep as IAllowsRedo).redoReturnsToStepIndex));
 	};
 }

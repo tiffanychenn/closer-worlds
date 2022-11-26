@@ -5,11 +5,12 @@ import { LoggedFormElementComponent, LoggedFormElementProps } from './LoggedForm
 export interface Props extends LoggedFormElementProps {
 	placeholder?: string;
 	onInput?: (e: React.FormEvent<HTMLTextAreaElement>) => void;
+	initialValue?: string;
 }
 
 export default class LongTextBox extends LoggedFormElementComponent<Props> {
 	render() {
-		const { placeholder, onInput, id } = this.props;
+		const { placeholder, onInput, id, initialValue } = this.props;
 
 		const style = css({
 			background: '#0A1547',
@@ -35,7 +36,7 @@ export default class LongTextBox extends LoggedFormElementComponent<Props> {
 			transition: 'all 0.2s',
 		});
 
-		return <textarea css={style} id={id} placeholder={placeholder} onInput={e => {
+		return <textarea css={style} id={id} placeholder={placeholder} defaultValue={initialValue} onInput={e => {
 			this.onTextArea(e);
 			if (onInput) onInput(e);
 		}} onClick={e => this.onAnyEvent('!click')}></textarea>;
