@@ -37,7 +37,7 @@ export class WritePrompt extends React.Component<Props, State> {
 		const initialValue = props.reuseSectionPrompt ? props.logger.getLatestValues([props.step.id + '-blank'])[props.step.id + '-blank'] : undefined;
 		this.state = {
 			isOverLimit: false,
-			hasText: false,
+			hasText: initialValue && typeof initialValue == 'string' && initialValue[0] !== '!',
 			hasTimedOut: false,
 			initialValue,
 		};
@@ -79,6 +79,11 @@ export class WritePrompt extends React.Component<Props, State> {
 			onClick: onBack,
 			useOutlineStyle: true,
 		};
+		const buttons: ButtonData[] = [];
+		if (!reuseSectionPrompt) { // If redoing, don't include a back button
+			buttons.push(backButton);
+		}
+		buttons.push(nextButton);
 
 		const containerStyle: React.CSSProperties = {
 			height: '80vh',
@@ -100,7 +105,7 @@ export class WritePrompt extends React.Component<Props, State> {
 		const content = <div style={containerStyle}>
 			<Error>{error}</Error>
 			<PlayerTokenHeader player={playerNumber}>{replacePlayerText(step.playerAction, playerNumber)}</PlayerTokenHeader>
-			<ButtonPanel logger={logger} bgOpacity={bgOpacity} buttons={[backButton, nextButton]} showTimeout={hasTimedOut}>
+			<ButtonPanel logger={logger} bgOpacity={bgOpacity} buttons={buttons} showTimeout={hasTimedOut}>
 				<div style={contentStyle}>
 					<PageHeader>{replacePlayerText(step.title, playerNumber)}</PageHeader>
 					<Text>{renderBoldText(replacePlayerText(step.instructions, playerNumber))}</Text>
