@@ -75,14 +75,14 @@ export class DisplayGeneratedImage extends React.Component<Props> {
 						<PageHeader>All around you, the world has changed.</PageHeader>
 						<div style={{height: '30px'}}></div>
 						<Button id={step.id + '-next-button'} logger={logger} text="Next" onClick={onNext}/>
-						{allowRedo && <>
+						{/* {allowRedo && <>
 						<div style={{height: '80px'}}></div>
 						<Hint showLabel={false}>Not quite right?</Hint>
 						<Hint showLabel={false}>You can write a new response, or try again with the same response, to generate a different image.</Hint>
 						<Hint showLabel={false}>{"(But choose wisely\u2013you can only do this once!)"}</Hint>
 						<div style={{height: '10px'}}></div>
 						<Button id={step.id + '-redo-button'} logger={logger} text="Try again" onClick={onRedo} useOutlineStyle={true}/>
-						</>}
+						</>} */}
 					</div>
 				</Panel>
 			</div>,
