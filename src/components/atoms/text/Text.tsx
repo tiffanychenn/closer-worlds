@@ -1,3 +1,5 @@
+import { faClock } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
 
 interface Props {
@@ -60,8 +62,6 @@ export class Error extends React.Component<Props> {
 	}
 }
 
-export const TIMEOUT_WARNING_TEXT = "Start wrapping up your conversation, and move onto the next step soon."; // TODO: Rewrite placeholder timeout warning text.
-
 export class Warning extends React.Component<Props> {
 	render() {
 		const style: React.CSSProperties = {
@@ -73,6 +73,26 @@ export class Warning extends React.Component<Props> {
 			margin: 0,
 		};
 		return <p style={style}>{this.props.children}</p>
+	}
+}
+
+export const TIMEOUT_WARNING_TEXT = "Start wrapping up your conversation, and move onto the next step soon."; // TODO: Rewrite placeholder timeout warning text.
+
+export class TimerWarning extends React.Component {
+	render() {
+		const style: React.CSSProperties = {
+			background: 'white',
+			padding: '10px',
+			borderRadius: '12px',
+			flex: 1,
+			display: 'flex',
+			alignItems: 'center',
+			gap: '10px',
+		};
+		return <div style={style}>
+			<FontAwesomeIcon icon={faClock} size="2x" color="#CA3E12"/>
+			<Warning>{TIMEOUT_WARNING_TEXT}</Warning>
+		</div>
 	}
 }
 

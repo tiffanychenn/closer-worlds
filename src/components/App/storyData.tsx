@@ -12,7 +12,8 @@ export const WAND_IMG = './assets/wand.png';
 export const PLANET_DEPARTURE_IMAGE = './assets/departure.png';
 // FIXME: It seems like when we use low-res images, flexbox throws a hissy fit and decides to keep things small. We might need to use viewport sizing instead.
 
-export const GAME_NAME = "Collaborative Game Study";
+export const EXPERIMENTAL_GAME_NAME = "Closer Worlds";
+export const CONTROL_GAME_NAME = "Collaborative Game Study";
 
 const ONE_SECOND_MS = 1000;
 
@@ -27,8 +28,9 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				type: StoryStepType.Info,
 				id: 'intro',
 				backgroundImage: STAR_BG,
-				title: "Welcome to " + GAME_NAME,
+				title: "Welcome to " + EXPERIMENTAL_GAME_NAME,
 				instructions: "Today, you embark on a creative journey together. To play the game, you'll need to answer a few questions about yourself. There are no wrong answers, so try not to overthink it.\n\nThis game uses images to help move your conversation along. They might be weird, but just go with it.",
+				images: ['./assets/examples/1.png', './assets/examples/2.png', './assets/examples/3.png', './assets/examples/4.png'],
 			} as InfoStep,
 			{
 				type: StoryStepType.Info,
@@ -79,6 +81,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 			{
 				type: StoryStepType.RoleSelect,
 				id: 'role-select',
+				timeLimitMs: 0.5 * 60 * ONE_SECOND_MS,
 			} as RoleSelectStep,
 		],
 	},
@@ -484,7 +487,7 @@ export const CONTROL_STORY_DATA: Array<StorySection> = [
 				type: StoryStepType.Info,
 				id: 'intro',
 				backgroundImage: PLAIN_BG,
-				title: "Welcome to " + GAME_NAME,
+				title: "Welcome to " + CONTROL_GAME_NAME,
 				instructions: "This activity is about interpersonal closeness. Your task, which we think will be quite enjoyable, is simply to get close to your partner, with whom you've been matched.\n\nIn alternating order, take turns reading questions that appear on screen. Read it *out loud*, carry out the activity, then move on when you are ready.",
 			} as InfoStep,
 		],

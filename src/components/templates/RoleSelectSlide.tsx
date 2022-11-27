@@ -44,6 +44,7 @@ export class RoleSelectSlide extends React.Component<Props, State> {
 			requiredFormElemIds: ["world-tags", ROLE_SELECT_QUESTION_ID],
 			maxWidthIfNoImageCard: false,
 			itemSpacing: GAP_BETWEEN_QUESTIONS,
+			timeLimitMs: step.timeLimitMs,
 			makeContent: (logger, hasTimedOut, renderText) => {
 				return <>
 					<QuestionGroup>

@@ -98,12 +98,30 @@ export class InfoSlide extends React.Component<Props, State> {
 			</ButtonPanel>
 		</div>;
 
+		let imageContent = undefined;
 		if (cardImage) {
+			imageContent = <ImageCard src={cardImage} size="100%" boxShadow={boxShadow}/>;
+		} else if (step.images && step.images.length > 0) {
+			const imageGridStyle: React.CSSProperties = {
+				display: 'grid',
+				gridTemplateColumns: '1fr 1fr',
+				gridTemplateRows: '1fr 1fr',
+				gap: '30px',
+				position: 'relative',
+			};
+			const imageStyle: React.CSSProperties = {
+				width: '100%',
+				height: '100%',
+			};
+			imageContent = <div style={imageGridStyle}>{step.images.map(src => <img src={src} style={imageStyle}/>)}</div>
+		}
+
+		if (imageContent) {
 			return <BlankTwoColumnSlide step={step}
 										sectionImageUrls={sectionImageUrls}
 										onTimeout={() => this.setState({hasTimedOut: true})}>{{
 				col1: content,
-				col2: <ImageCard src={cardImage} size="100%" boxShadow={boxShadow}/>,
+				col2: imageContent,
 			}}</BlankTwoColumnSlide>
 		}
 

@@ -90,6 +90,7 @@ export interface InfoStep extends StoryStep {
 	hint?: string;
 	hideNext?: boolean;
 	hideBack?: boolean;
+	images?: string[];
 }
 
 export interface CustomFormStep extends StoryStep {

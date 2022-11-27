@@ -15,7 +15,7 @@ import { BlankSlide } from '../organisms/BlankSlide';
 import { v4 as uuidv4 } from 'uuid';
 import { initExperimentData } from '../../actions/apiActions';
 import { connect } from 'react-redux';
-import { GAME_NAME, STAR_BG } from '../App/storyData';
+import { EXPERIMENTAL_GAME_NAME, CONTROL_GAME_NAME, STAR_BG } from '../App/storyData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import ShortTextBox from '../atoms/input/ShortTextBox';
@@ -91,7 +91,7 @@ export class TitleSlide extends React.Component<Props, State> {
 		return <BlankSlide step={step}
 						   sectionImageUrls={[]}>
 			<div style={style}>
-				<h1 style={headingStyle}>{GAME_NAME}</h1>
+				<h1 style={headingStyle}>{experimentType == 'Experimental' ? EXPERIMENTAL_GAME_NAME : CONTROL_GAME_NAME}</h1>
 				<Error>{error}</Error>
 				<div style={{flex: 0}}><Button id="start-button" logger={logger} text="Start" onClick={() => {
 					const { expId, p1Id, p2Id, experimentType } = this.state;
