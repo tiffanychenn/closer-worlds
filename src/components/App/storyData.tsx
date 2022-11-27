@@ -414,6 +414,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				overlayBG: true,
 				instructions: "Suddenly, a teleportation machine appears in front of you. Booming out from a speaker onboard, you hear the voices of the researchers: \"It's time to come back to the Media Lab!\"\n\nBoth of you walk into the machine, take one last look at the world you made, and return home.\n\nThe end.",
 				hideNext: true,
+				hideBack: true,
 			} as InfoStep,
 		],
 	},
