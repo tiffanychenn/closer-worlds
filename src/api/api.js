@@ -74,8 +74,10 @@ app.post('/image-gen', async (req,res) => {
             imageData
         );
     }
-    catch {
-        res.status(200).json(
+    catch (err) {
+        console.log("Error in image-gen:");
+        console.log(err);
+        res.status(400).json(
             {error: "could not get image"}
         );
     }
@@ -118,6 +120,8 @@ app.post('/image-variation', async (req, res) => {
 
         res.status(200).json(imageData);
     } catch (err) {
+        console.log("Error in image-variation:");
+        console.log(err);
         res.status(400).json({error: "could not get variation image"});
     }
 });
