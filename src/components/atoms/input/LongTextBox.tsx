@@ -39,6 +39,7 @@ export default class LongTextBox extends LoggedFormElementComponent<Props> {
 		return <textarea css={style} id={id} placeholder={placeholder} defaultValue={initialValue} onInput={e => {
 			this.onTextArea(e);
 			if (onInput) onInput(e);
-		}} onClick={e => this.onAnyEvent('!click')}></textarea>;
+		}}></textarea>;
+		// TODO: Re-add textarea clicks, but make logger getLatestValue function exclude special commands using parameter.
 	}
 }
