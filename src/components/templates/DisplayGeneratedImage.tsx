@@ -47,13 +47,13 @@ export class DisplayGeneratedImage extends React.Component<Props> {
 			display: 'flex',
 			flexDirection: 'column',
 			alignItems: 'center',
-			gap: '120px',
 			justifyContent: 'center',
 			position: 'absolute',
 			top: 0, left: 0, right: 0, bottom: 0,
 			padding: '40px',
 			boxSizing: 'border-box',
 			textAlign: 'center',
+			gap: '10px',
 		};
 
 		const buttonsStyle: React.CSSProperties = {
@@ -73,13 +73,16 @@ export class DisplayGeneratedImage extends React.Component<Props> {
 				<Panel bgOpacity={bgOpacity} scroll={false}>
 					<div style={contentStyle}>
 						<PageHeader>All around you, the world has changed.</PageHeader>
-						<div style={buttonsStyle}>
-							<Button id={step.id + '-next-button'} logger={logger} text="Next" onClick={onNext}/>
-							{allowRedo && <>
-							<Button id={step.id + '-redo-button'} logger={logger} text="Try again" onClick={onRedo} useOutlineStyle={true}/>
-							<Hint>If you try again with the same text, a different image will come out!</Hint>
-							</>}
-						</div>
+						<div style={{height: '30px'}}></div>
+						<Button id={step.id + '-next-button'} logger={logger} text="Next" onClick={onNext}/>
+						{allowRedo && <>
+						<div style={{height: '80px'}}></div>
+						<Hint showLabel={false}>Not quite right?</Hint>
+						<Hint showLabel={false}>You can write a new response, or try again with the same response, to generate a different image.</Hint>
+						<Hint showLabel={false}>{"(But choose wisely\u2013you can only do this once!)"}</Hint>
+						<div style={{height: '10px'}}></div>
+						<Button id={step.id + '-redo-button'} logger={logger} text="Try again" onClick={onRedo} useOutlineStyle={true}/>
+						</>}
 					</div>
 				</Panel>
 			</div>,

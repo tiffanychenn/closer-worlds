@@ -29,14 +29,14 @@ interface ReduxStateProps {
 	landscapePlayer: 1 | 2;
 	sectionImageUrls: SectionImageUrls;
 	isFetchingImage: FetchStatus;
-	hasUsedRedo: boolean;
+	hasUsedRedo: false | number;
 	error: string;
 	experimentType: string;
 }
 
 interface ReduxDispatchProps {
 	advanceStep: (logger: Logger, experimentId?: string, firstPlayerId?: string, secondPlayerId?: string, experimentType?: string) => void;
-	redoSection: () => void;
+	redoSection: (sectionIndex: number) => void;
 	redoStep: () => void;
 	setLandscapePlayer: (value: 1 | 2) => void;
 }
@@ -53,7 +53,7 @@ class ConnectedStorySlide extends React.Component<Props> {
 		const { sectionIndex, stepIndex, landscapePlayer, sectionImageUrls, logger, isFetchingImage, hasUsedRedo, error, experimentType, advanceStep, redoSection, redoStep, setLandscapePlayer } = this.props;
 		const modifiedError = error ? error + ". Please let the facilitators know about this error." : error;
 		const step = getStoryStep(sectionIndex, stepIndex, experimentType);
-		console.log('section image urls');
+		console.log('section image urls:');
 		console.log(sectionImageUrls);
 		// TODO: Ensure that index is still within bounds, maybe?
 		switch (step.type) {
@@ -65,6 +65,7 @@ class ConnectedStorySlide extends React.Component<Props> {
 					sectionImageUrls={sectionImageUrls}
 					onNext={() => advanceStep(logger)}
 					onBack={() => redoStep()}
+					reuseSectionPrompt={hasUsedRedo === sectionIndex}
 					error={modifiedError}/>;
 			case StoryStepType.Reflect:
 				return <Reflect
@@ -81,8 +82,8 @@ class ConnectedStorySlide extends React.Component<Props> {
 					step={step as ImageStep}
 					sectionImageUrls={sectionImageUrls}
 					onNext={() => advanceStep(logger)}
-					onRedo={redoSection}
-					allowRedo={!hasUsedRedo}
+					onRedo={() => redoSection(sectionIndex)}
+					allowRedo={hasUsedRedo === false}
 					error={modifiedError}/>
 			case StoryStepType.Title:
 				return <TitleSlide 

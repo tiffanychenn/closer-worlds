@@ -6,7 +6,7 @@ import { STAR_BG } from '../App/storyData';
 import { GAP_BETWEEN_QUESTIONS, QuestionGroup } from '../atoms/containers/QuestionGroup';
 import { RadioGroup } from '../atoms/input/RadioGroup';
 import { TagGroup } from '../atoms/input/TagGroup';
-import { PageHeader, TextSpacer, Error, Hint } from '../atoms/text/Text';
+import { PageHeader, TextSpacer, Error, Hint, Text } from '../atoms/text/Text';
 import { CustomFormSlide } from './CustomFormSlide';
 
 interface Props {
@@ -44,16 +44,11 @@ export class RoleSelectSlide extends React.Component<Props, State> {
 			requiredFormElemIds: ["world-tags", ROLE_SELECT_QUESTION_ID],
 			maxWidthIfNoImageCard: false,
 			itemSpacing: GAP_BETWEEN_QUESTIONS,
+			timeLimitMs: step.timeLimitMs,
 			makeContent: (logger, hasTimedOut, renderText) => {
 				return <>
 					<QuestionGroup>
-						<PageHeader>Consider the things that you have in common. What is the vibe of a world you would both enjoy?</PageHeader>
-						<Hint>Select all which apply, or write some of your own.</Hint>
-						<TagGroup id="world-tags"
-								logger={logger}
-								tags={step.tags}
-								includeInput={true}
-								placeholder="other..."/>
+						<Text>To decide who should build what, discuss as a pair.</Text>
 					</QuestionGroup>
 					<QuestionGroup>
 						<PageHeader>Between the two of you... who is closest to nature?</PageHeader>
@@ -64,14 +59,17 @@ export class RoleSelectSlide extends React.Component<Props, State> {
 									orientation="horizontal"
 									onSelect={value => this.setState({ landscapePlayer: value == ROLE_SELECT_VALUE_P1 ? 1 : 2 })}
 									selected={this.state.landscapePlayer === 1 ? ROLE_SELECT_VALUE_P1 : (this.state.landscapePlayer === 2 ? ROLE_SELECT_VALUE_P2 : undefined)}/>
-					<PageHeader>and who most enjoys to build?</PageHeader>
-					<RadioGroup id="role-select-nature"
-								logger={logger}
-								ids={["role-select-landscape-p1", "role-select-landscape-p2"]}
-								labels={["Player 1", "Player 2"]}
-								orientation="horizontal"
-								onSelect={value => this.setState({ landscapePlayer: value == ROLE_SELECT_VALUE_P1 ? 2 : 1 })}
-								selected={this.state.landscapePlayer === 1 ? ROLE_SELECT_VALUE_P2 : (this.state.landscapePlayer === 2 ? ROLE_SELECT_VALUE_P1 : undefined) }/>
+						<PageHeader>and who most enjoys to build?</PageHeader>
+						<RadioGroup id="role-select-nature"
+									logger={logger}
+									ids={["role-select-landscape-p1", "role-select-landscape-p2"]}
+									labels={["Player 1", "Player 2"]}
+									orientation="horizontal"
+									onSelect={value => this.setState({ landscapePlayer: value == ROLE_SELECT_VALUE_P1 ? 2 : 1 })}
+									selected={this.state.landscapePlayer === 1 ? ROLE_SELECT_VALUE_P2 : (this.state.landscapePlayer === 2 ? ROLE_SELECT_VALUE_P1 : undefined) }/>
+					</QuestionGroup>
+					<QuestionGroup>
+						<Text>Based on this, you decide that player {landscapePlayer} will start with the landscape, and player {3 - landscapePlayer} will start with the buildings.</Text>
 					</QuestionGroup>
 				</>;
 			},

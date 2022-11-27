@@ -17,6 +17,11 @@ export class Slider extends LoggedFormElementComponent<Props, State> {
 		this.state = { value: 50 };
 	}
 
+	componentDidMount(): void {
+		const { value } = this.state;
+		this.onAnyEvent(`!default:${value}`);
+	}
+
 	render() {
 		const { leftLabel, rightLabel } = this.props;
 		const { value } = this.state;

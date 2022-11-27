@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Logger } from '../../data/logger';
 import { Panel } from '../atoms/containers/Panel';
 import { Button } from '../atoms/input/Button';
-import { TIMEOUT_WARNING_TEXT, Warning } from '../atoms/text/Text';
+import { TIMEOUT_WARNING_TEXT, TimerWarning, Warning } from '../atoms/text/Text';
 
 export interface ButtonData {
 	id: string;
@@ -47,12 +47,13 @@ export class ButtonPanel extends React.Component<Props> {
 			flex: 'none',
 			display: 'flex',
 			gap: '20px',
-			alignItems: 'center',
+			alignItems: 'end',
 		};
 
 		const warningStyle: React.CSSProperties = {
 			opacity: showTimeout ? 1 : 0,
-			transition: 'opacity 0.5s',
+			transform: showTimeout ? 'scale(1)' : 'scale(0.5)',
+			transition: 'all 0.3s ease-in-out',
 			maxWidth: '400px',
 		};
 
@@ -67,7 +68,7 @@ export class ButtonPanel extends React.Component<Props> {
 								disabled={b.disabled}
 								useOutlineStyle={b.useOutlineStyle}/>
 						),
-						<div style={warningStyle}><Warning>{TIMEOUT_WARNING_TEXT}</Warning></div>
+						<div style={warningStyle}><TimerWarning/></div>
 					]}</div>
 			</div>
 		</Panel>;

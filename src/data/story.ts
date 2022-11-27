@@ -30,6 +30,8 @@ export interface StoryStep {
 	overlayBG?: boolean; // Whether to overlay the background image with a translucent color layer.
 
 	timeLimitMs?: number; // If undefined, no time limit will appear.
+
+	triggersGenerate?: boolean; // If undefined, defaults to false. If true, triggers generation of the section's genPrompt.
 }
 
 // In any info text, {curr} will always be replaced with the current player (e.g., "player 1"),
@@ -58,11 +60,14 @@ export interface WritePromptStep extends StoryStep {
 
 	wordLimit?: number;
 	charLimit?: number;
+
+	triggersGenerate: true;
 }
 
 export interface ReflectStep extends StoryStep {
 	type: typeof StoryStepType.Reflect;
 	player: 'landscape' | 'buildings' | 'both';
+	playerAction?: string;
 	question: string;
 	cardImage: string | number;
 }
@@ -85,6 +90,7 @@ export interface InfoStep extends StoryStep {
 	hint?: string;
 	hideNext?: boolean;
 	hideBack?: boolean;
+	images?: string[];
 }
 
 export interface CustomFormStep extends StoryStep {
@@ -99,7 +105,6 @@ export interface CustomFormStep extends StoryStep {
 
 export interface RoleSelectStep extends StoryStep {
 	type: typeof StoryStepType.RoleSelect;
-	tags: string[]; // Used for the affect words question (i.e., "What kind of world do you dream of building? Why?").
 }
 
 export interface ControlSet {

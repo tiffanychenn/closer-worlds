@@ -36,11 +36,13 @@ app.use('/client/data', express.static(path.join(__dirname, '../../data/')));
 app.post('/image-gen', async (req,res) => {
     try {
         const prompt = req.body.prompt;
+        console.log(`Generating prompt: ${prompt}`);
         const image = await getDALLEImage(prompt);
         const experimentId = req.body.id;
         const sectionIndex = req.body.sectionIndex;
         const buffer = Buffer.from(image, "base64");
-        const filename = experimentId + "-" + sectionIndex + ".png";
+        // Using datetime to ensure that no two images have the same name if you redo an image.
+        const filename = experimentId + "-" + Date.now() + "-" + sectionIndex + ".png";
         const filepath = "../../data/" + experimentId + "/";
         fs.writeFile(filepath + filename, buffer, (err) => {
             // In case of a error throw err.
@@ -76,6 +78,47 @@ app.post('/image-gen', async (req,res) => {
         res.status(200).json(
             {error: "could not get image"}
         );
+    }
+});
+
+app.post('/image-variation', async (req, res) => {
+    try {
+        const path = req.body.pathToVary;
+        console.log(`Generating variation of file: ${path}`);
+        const image = await getDALLEVariation("../../data/" + path);
+
+        const experimentId = req.body.id;
+        const sectionIndex = req.body.sectionIndex;
+        const buffer = Buffer.from(image, "base64");
+        const filename = experimentId + "-" + Date.now() + "-var-" + sectionIndex + ".png";
+        const filepath = "../../data/" + experimentId + "/";
+        fs.writeFile(filepath + filename, buffer, (err) => {
+            if (err) res.status(400).send("unable to save image variation");
+        });
+
+        const imageData = {
+            filledPrompt: '!vary:' + path,
+            imageURL: experimentId + "/" + filename,
+        };
+
+        const newImages = Object.assign({}, req.body.images);
+        newImages[sectionIndex] = imageData;
+
+        const experimentData = {
+            id: experimentId,
+            firstPlayerId: req.body.firstPlayerId,
+            secondPlayerId: req.body.secondPlayerId,
+            loggingData: req.body.loggingData,
+            images: newImages,
+        };
+
+        fs.writeFile(filepath + experimentId + '.json', JSON.stringify(experimentData), (err) => {
+            if (err) res.status(400).send("unable to save experiment data to file");
+        });
+
+        res.status(200).json(imageData);
+    } catch (err) {
+        res.status(400).json({error: "could not get variation image"});
     }
 });
 
@@ -183,6 +226,17 @@ async function getDALLEImage(prompt) {
         size: "1024x1024",
         response_format: "b64_json"
     });
+    const b64_json = response.data.data[0].b64_json;
+    return b64_json;
+}
+
+async function getDALLEVariation(path) {
+    const response = await openai.createImageVariation(
+        fs.createReadStream(path),
+        1,
+        "1024x1024",
+        "b64_json",
+    );
     const b64_json = response.data.data[0].b64_json;
     return b64_json;
 }

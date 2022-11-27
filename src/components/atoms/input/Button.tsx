@@ -30,7 +30,7 @@ export class Button extends LoggedFormElementComponent<Props, State> {
 			fontWeight: 700, // bold
 			fontSize: '18px',
 			borderRadius: '12px',
-			minWidth: '60px',
+			// minWidth: '60px',
 			padding: '0 20px',
 			height: '50px',
 			stroke: 'none',

@@ -1,5 +1,5 @@
 import { RootThunkAction } from "../reducers/rootReducer";
-import { CONTROL_STORY_DATA, EXPERIMENTAL_STORY_DATA } from "../components/App/storyData";
+import { EXPERIMENTAL_STORY_DATA, CONTROL_STORY_DATA } from "../components/App/storyData";
 import { IAllowsRedo, StoryStepType } from "../data/story";
 import { Logger } from "../data/logger";
 import { fillPrompt } from "../utils/textUtils";
@@ -52,10 +52,15 @@ export function setLandscapePlayer(value: 1 | 2): SetLandscapePlayerAction {
 
 export interface SetHasUsedRedoAction {
 	type: typeof GAME_ACTION_NAMES.SET_HAS_USED_REDO;
-	value: boolean;
+	value: false | number; // Either not used, or the section index in which it was used.
 }
 
-function setHasUsedRedo(value: boolean): SetHasUsedRedoAction {
+/**
+ * 
+ * @param value Either false for not used, or a number for the section index in which the redo was used.
+ * @returns 
+ */
+function setHasUsedRedo(value: false | number): SetHasUsedRedoAction {
 	return {
 		type: GAME_ACTION_NAMES.SET_HAS_USED_REDO,
 		value,
@@ -96,9 +101,7 @@ export function advanceStep(logger: Logger, experimentId?: string, firstPlayerId
 
 		let errorDone = false;
 
-		// FIXME: If async things get weird, this might need to go last.
-		// TODO: If we want to regenerate an image at the very end, then we likely need to modify this.
-		// I have some ideas on this (using something like flags), but I want to only change it if we for sure need to.
+		// Experiment initialization
 		if (sectionIndex === 0 && stepIndex === 0){
 			// add title slide stuff here
 			if (experimentId !== null && firstPlayerId !== null && secondPlayerId !== null && experimentType !== null) {
@@ -116,7 +119,7 @@ export function advanceStep(logger: Logger, experimentId?: string, firstPlayerId
 			}
 		}
 
-		if (currStep.type == StoryStepType.WritePrompt && state.prompt.experimentType === "Experimental") {
+		if (currStep.triggersGenerate && state.prompt.experimentType === "Experimental") {
 			// Then first submit a request to generate the filled in prompt.
 			const prompt = currSection.genPrompt;
 			if (!prompt) {
@@ -152,14 +155,14 @@ export function advanceStep(logger: Logger, experimentId?: string, firstPlayerId
 	};
 }
 
-export function redoSection(): RootThunkAction {
+export function redoSection(sectionIndex: number): RootThunkAction {
 	return async (dispatch, getState) => {
 		const state = getState();
 		if (state.game.hasUsedRedo) return; // Don't allow redo more than once!
 		const STORY_DATA = state.prompt.experimentType === "Experimental" ? EXPERIMENTAL_STORY_DATA : CONTROL_STORY_DATA;
 		const currStep = STORY_DATA[state.game.storySection].steps[state.game.storyStep];
 		if ((currStep as any).redoReturnsToStepIndex === undefined) return;
-		dispatch(setHasUsedRedo(true));
+		dispatch(setHasUsedRedo(sectionIndex));
 		dispatch(setStepIndex((currStep as IAllowsRedo).redoReturnsToStepIndex));
 	};
 }
@@ -204,4 +207,4 @@ export function loadExistingGame(sectionIndex: number, stepIndex: number): RootT
 	};
 }
 
-export type GameActions = SetSectionIndexAction | SetStepIndexAction | SetLandscapePlayerAction | SetHasUsedRedoAction | SetErrorAction; // TODO
+export type GameActions = SetSectionIndexAction | SetStepIndexAction | SetLandscapePlayerAction | SetHasUsedRedoAction | SetErrorAction;

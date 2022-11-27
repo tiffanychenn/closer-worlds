@@ -5,6 +5,7 @@ import { Logger } from "../../../data/logger";
 import { LoggedFormElementComponent, LoggedFormElementProps } from "./LoggedFormElement";
 import ShortTextBox from "./ShortTextBox";
 import { css } from '@emotion/react';
+import { renderBoldText } from "../../../utils/textUtils";
 
 export interface Props extends LoggedFormElementProps {
 	text: string;
@@ -85,7 +86,7 @@ export class Tag extends LoggedFormElementComponent<Props, State> {
 			{isInput ? <input style={inputStyle} type="text" placeholder={this.props.text ? this.props.text.toLowerCase(): undefined} onInput={e => {
 				this.onInput(e);
 				this.setState({inputValue: e.currentTarget.value});
-			}}></input> : this.props.text.toLowerCase()}
+			}}></input> : renderBoldText(this.props.text.toLowerCase())}
 			<div style={{width: '10px', display: 'inline-block'}}></div>
 			<FontAwesomeIcon icon={selected ? faMinus : faPlus} onClick={() => {
 				if (isInput && this.state.inputValue.length > 0 && this.props.onAddTag) {
