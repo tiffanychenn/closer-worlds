@@ -25,7 +25,6 @@ function setIsFetchingImage(value: FetchStatus): SetIsFetchingImageAction {
 	};
 }
 
-
 export function generateImage(sectionIndex: number, prompt: string, logger: Logger): RootThunkAction {
 	return async (dispatch, getState) => {
 		if (DEBUG_MODE) {
@@ -44,6 +43,7 @@ export function generateImage(sectionIndex: number, prompt: string, logger: Logg
 
 		// Handle special prompts
 		let finalPrompt = prompt;
+		let pathToVary = undefined;
 		if (prompt[0] == "!") {
 			console.log(`generateImage: Using the following prompt as command: ${prompt}`);
 			if (prompt.substring(0,5) == '!redo') {
@@ -79,6 +79,13 @@ export function generateImage(sectionIndex: number, prompt: string, logger: Logg
 				}
 				return;
 				// Early return since no DALL-E generation is required
+			} else if (prompt.substring(0,5) == '!vary') {
+				// Generate a variation of a previous section.
+				const argSectionIndex = parseInt(prompt[5]);
+				if (isNaN(argSectionIndex)) throw makeError(`generateImage failed to execute command ${prompt}: an invalid section index argument was provided.`);
+				const argSectionImageUrl = state.prompt.sectionImageUrls[argSectionIndex];
+				if (!argSectionImageUrl) throw makeError(`generateImage failed to execute command ${prompt}: no section image could be found for section ${argSectionIndex}.`);
+				pathToVary = argSectionImageUrl.path;
 			}
 		}
 
@@ -93,9 +100,15 @@ export function generateImage(sectionIndex: number, prompt: string, logger: Logg
 			secondPlayerId: state.prompt.secondPlayerId,
 			loggingData: logger.dumpData(),
 			images: state.prompt.sectionImageUrls,
-		};
+		} as any;
 
-		fetch(`${API_BASE_URL}/image-gen`, {
+		if (pathToVary) {
+			body.pathToVary = pathToVary;
+		}
+
+		const endpoint = pathToVary ? 'image-variation' : 'image-gen';
+
+		fetch(`${API_BASE_URL}/${endpoint}`, {
 			method: 'POST',
 			body: JSON.stringify(body),
 			headers: {

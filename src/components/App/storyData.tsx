@@ -329,7 +329,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 		genPrompt: "{represented-both-slider}",
 		promptTransformers: {
 			'represented-both-slider': value => {
-				const KEEP_PREV = '!keep5t';
+				const KEEP_PREV = '!vary5';
 				const REDO_PREV = '!redo5';
 				// Currently silently errors by assuming to keep rather than redo the image.
 				let val = value;
