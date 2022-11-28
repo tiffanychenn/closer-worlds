@@ -11,7 +11,7 @@ import ConnectedStorySlide from "../pages/ConnectedStorySlide";
 import { Reflect } from "../templates/Reflect";
 import { PLANET_ARRIVAL_IMG, STAR_BG } from "./storyData";
 
-export const DEBUG_MODE = true;
+export const DEBUG_MODE = false;
 
 interface ReduxStateProps {
 	experimentType: string;

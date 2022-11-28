@@ -31,6 +31,7 @@ export class BlankTwoColumnSlide extends React.Component<Props> {
 			display: 'flex',
 			flexDirection: 'row',
 			justifyContent: 'space-between',
+			flex: 2,
 			alignItems: 'center',
 			gap: '60px',
 		};
