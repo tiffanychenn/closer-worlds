@@ -16,7 +16,8 @@ export const INSTRUCTIONS_1 = './assets/instructions_1.png';
 export const EXPERIMENTAL_GAME_NAME = "Closer Worlds";
 export const CONTROL_GAME_NAME = "Collaborative Game Study";
 
-const ONE_SECOND_MS = 1000;
+export const ONE_SECOND_MS = 1000;
+export const FAKE_MINIMUM_GENERATE_TIME = 45 * ONE_SECOND_MS;
 
 export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	{

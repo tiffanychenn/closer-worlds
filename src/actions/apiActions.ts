@@ -1,3 +1,4 @@
+import { FAKE_MINIMUM_GENERATE_TIME } from './../components/App/storyData';
 import { DEBUG_MODE } from "../components/App/ParticipantApp";
 import { PLACEHOLDER_IMG_URL } from "../components/App/storyData";
 import { Logger } from "../data/logger";
@@ -25,6 +26,8 @@ function setIsFetchingImage(value: FetchStatus): SetIsFetchingImageAction {
 	};
 }
 
+// TODO: Update generateImage so that the time spent is minimum something
+
 export function generateImage(sectionIndex: number, prompt: string, logger: Logger): RootThunkAction {
 	return async (dispatch, getState) => {
 		if (DEBUG_MODE) {
@@ -40,6 +43,8 @@ export function generateImage(sectionIndex: number, prompt: string, logger: Logg
 		}
 
 		const state = getState();
+
+		const startTimeMs = Date.now();
 
 		// Handle special prompts
 		let finalPrompt = prompt;
@@ -73,7 +78,7 @@ export function generateImage(sectionIndex: number, prompt: string, logger: Logg
 
 				const argPretendTimeout = prompt[6];
 				if (argPretendTimeout == 't') {
-					setTimeout(keepPrevImage, 5000);
+					setTimeout(keepPrevImage, FAKE_MINIMUM_GENERATE_TIME);
 				} else {
 					keepPrevImage();
 				}
@@ -117,8 +122,17 @@ export function generateImage(sectionIndex: number, prompt: string, logger: Logg
 		}).then((response) => response.json())
 		.then((data) => {
 			const returnedImgPath = data.imageURL;
-			dispatch(saveImage(sectionIndex, finalPrompt, returnedImgPath));
-			dispatch(setIsFetchingImage('success'));
+			console.log("generateImage received successful response from API; potentially delaying state propagation.\nResponse: " + returnedImgPath);
+			// Force wait time if not enough time has yet elapsed
+			let finish = () => {
+				dispatch(saveImage(sectionIndex, finalPrompt, returnedImgPath));
+				dispatch(setIsFetchingImage('success'));
+			};
+			if (Date.now() - startTimeMs < FAKE_MINIMUM_GENERATE_TIME) {
+				setTimeout(finish, FAKE_MINIMUM_GENERATE_TIME - (Date.now() - startTimeMs));
+			} else {
+				finish();
+			}
 		}).catch(reason => {
 			throw makeError("API failed to generate image for prompt: " + finalPrompt + "\nReason: " + reason);
 		});
