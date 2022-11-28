@@ -14,6 +14,7 @@ interface Props {
 	zIndex2: number;
 	maxWidth1?: string;
 	maxWidth2?: string;
+	justifyContent: string;
 }
 
 export class BlankTwoColumnSlide extends React.Component<Props> {
@@ -22,15 +23,16 @@ export class BlankTwoColumnSlide extends React.Component<Props> {
 		flexCol2: 1,
 		zIndex1: 1,
 		zIndex2: 0,
+		justifyContent: 'space-between',
 	};
 
 	render() {
-		const { children: { col1, col2 }, step, sectionImageUrls, onTimeout, flexCol1, flexCol2, zIndex1, zIndex2, maxWidth1, maxWidth2 } = this.props;
+		const { children: { col1, col2 }, step, sectionImageUrls, onTimeout, flexCol1, flexCol2, zIndex1, zIndex2, maxWidth1, maxWidth2, justifyContent } = this.props;
 
 		const containerStyle: React.CSSProperties = {
 			display: 'flex',
 			flexDirection: 'row',
-			justifyContent: 'space-between',
+			justifyContent: justifyContent,
 			flex: 2,
 			alignItems: 'center',
 			gap: '60px',

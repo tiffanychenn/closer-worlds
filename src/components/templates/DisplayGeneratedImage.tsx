@@ -66,7 +66,8 @@ export class DisplayGeneratedImage extends React.Component<Props> {
 		// FIXME: The allow redo UX sucks. I went for simple--just hide or show the button--but we can probably do better. It's just not a priority. Thoughts?
 		return <BlankTwoColumnSlide step={step}
 									sectionImageUrls={sectionImageUrls}
-									flexCol1="0" flexCol2="0">{{
+									flexCol1="0" flexCol2="0"
+									justifyContent='center'>{{
 			col1: <ImageCard src={cardImage} size='85vh' maxOtherSize='85vh' sizeSide='width' boxShadow={boxShadow}/>,
 			col2: <div style={containerStyle}>
 				<TextError>{error}</TextError>
