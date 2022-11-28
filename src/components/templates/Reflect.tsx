@@ -65,8 +65,8 @@ export class Reflect extends React.Component<Props> {
 						 buttons={buttons}>
 				<div style={contentStyle}>
 					<Text>The wand starts swirling and whirling, and begins to frantically paint the landscape.</Text>
-					<Text>While you wait...</Text>
 					<DiscussionPrompt>{renderBoldText(replacePlayerText(step.question, playerNumber))}</DiscussionPrompt>
+					<Text>{renderBoldText(replacePlayerText("{Other}, you'll decide when {curr} has said enough.", playerNumber))}</Text>
 				</div>
 			</ButtonPanel>
 		</div>;
