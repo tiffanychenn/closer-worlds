@@ -26,7 +26,8 @@ interface Props {
 const scrollBorder = 20;
 const scrollWidth = 4;
 export const OVERFLOW_SCROLL_STYLE: CSSInterpolation = {
-	overflow: 'auto',
+	overflowY: 'auto',
+	overflowX: 'hidden',
 	'::-webkit-scrollbar': {
 		width: `${scrollBorder + scrollWidth}px`,
 		backgroundColor: 'rgba(0,0,0,0)',

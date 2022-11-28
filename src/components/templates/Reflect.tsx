@@ -9,6 +9,7 @@ import { Panel } from '../atoms/containers/Panel';
 import { BLUE_BG_LIGHT_SHADOW } from '../atoms/image/ImageCard';
 import { DiscussionPrompt, Text, Error } from '../atoms/text/Text';
 import { ButtonData, ButtonPanel } from '../molecules/ButtonPanel';
+import { StatefulDiscussionCard } from '../molecules/DiscussionCard';
 import { PlayerTokenHeader } from '../molecules/PlayerTokenHeader';
 import { BlankTwoColumnSlide } from '../organisms/BlankTwoColumnSlide';
 import { LoadingImageCardNoNext } from '../organisms/LoadingImageCardNoNext';
@@ -23,9 +24,19 @@ interface Props {
 	error: string;
 }
 
-export class Reflect extends React.Component<Props> {
+interface State {
+	hasFlippedCard: boolean;
+}
+
+export class Reflect extends React.Component<Props, State> {
+	constructor(props: Props) {
+		super(props);
+		this.state = {hasFlippedCard: false};
+	}
+
 	render() {
 		const { logger, step, landscapePlayer, sectionImageUrls, onNext, allowNext, error } = this.props;
+		const { hasFlippedCard } = this.state;
 		const playerNumber = playerRoleToNumber(step.player, landscapePlayer);
 		
 		const cardImage = getSectionImageOrString(step.cardImage, sectionImageUrls);
@@ -52,7 +63,7 @@ export class Reflect extends React.Component<Props> {
 		const nextButton: ButtonData = {
 			id: step.id + '-next-button',
 			text: 'Next',
-			disabled: !allowNext,
+			disabled: !allowNext || !hasFlippedCard,
 			onClick: onNext,
 		};
 		const buttons: ButtonData[] = [nextButton];
@@ -65,7 +76,12 @@ export class Reflect extends React.Component<Props> {
 						 buttons={buttons}>
 				<div style={contentStyle}>
 					<Text>The wand starts swirling and whirling, and begins to frantically paint the landscape.</Text>
-					<DiscussionPrompt>{renderBoldText(replacePlayerText(step.question, playerNumber))}</DiscussionPrompt>
+					{/* <DiscussionPrompt>{renderBoldText(replacePlayerText(step.question, playerNumber))}</DiscussionPrompt> */}
+					<StatefulDiscussionCard logger={logger}
+											buttonId={`${step.id}-discussion-card-button`}
+											onFlip={() => this.setState({hasFlippedCard: true})}>
+						{renderBoldText(replacePlayerText(step.question, playerNumber))}
+					</StatefulDiscussionCard>
 					<Text>{renderBoldText(replacePlayerText("{Other}, you'll decide when {curr} has said enough.", playerNumber))}</Text>
 				</div>
 			</ButtonPanel>

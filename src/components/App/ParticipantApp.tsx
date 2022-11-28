@@ -1,12 +1,15 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Logger } from "../../data/logger";
+import { StoryStepType } from "../../data/story";
 import { State } from "../../reducers/rootReducer";
 import { FullscreenModal } from "../atoms/containers/FullscreenModal";
 import { PageHeader } from "../atoms/text/Text";
 import { WarningNextModal } from "../molecules/WarningNextModal";
 import ConnectedControl from "../pages/ConnectedControl";
 import ConnectedStorySlide from "../pages/ConnectedStorySlide";
+import { Reflect } from "../templates/Reflect";
+import { PLANET_ARRIVAL_IMG, STAR_BG } from "./storyData";
 
 export const DEBUG_MODE = true;
 
