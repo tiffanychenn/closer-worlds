@@ -122,7 +122,7 @@ export class CustomFormSlide extends React.Component<Props, State> {
 										sectionImageUrls={sectionImageUrls}
 										onTimeout={() => this.onTimeout()}>{{
 				col1: content,
-				col2: <ImageCard src={cardImage} size="100%" boxShadow={boxShadow}/>,
+				col2: <ImageCard src={cardImage} size="100%" boxShadow={boxShadow} contain={step.cardImageFit}/>,
 			}}</BlankTwoColumnSlide>
 		}
 

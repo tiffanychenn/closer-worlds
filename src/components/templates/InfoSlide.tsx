@@ -100,7 +100,7 @@ export class InfoSlide extends React.Component<Props, State> {
 
 		let imageContent = undefined;
 		if (cardImage) {
-			imageContent = <ImageCard src={cardImage} size="100%" boxShadow={boxShadow}/>;
+			imageContent = <ImageCard src={cardImage} size="100%" boxShadow={boxShadow} contain={step.cardImageFit}/>;
 		} else if (step.images && step.images.length > 0) {
 			const imageGridStyle: React.CSSProperties = {
 				display: 'grid',

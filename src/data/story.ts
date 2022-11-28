@@ -26,6 +26,7 @@ export interface StoryStep {
 	// whose resulting image we want to display.
 	backgroundImage?: string | number; // If undefined, a linear gradient is used instead.
 	cardImage?: string | number; // If undefined, no card is shown.
+	cardImageFit?: boolean;
 	blurBG?: boolean; // Whether to blur the background image.
 	overlayBG?: boolean; // Whether to overlay the background image with a translucent color layer.
 
