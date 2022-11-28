@@ -146,7 +146,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	},
 
 	{
-		genPrompt: "landscape with {landscape-prompt-blank}, buildings that look like {buildings-prompt-blank}",
+		genPrompt: "landscape with {landscape-prompt-blank}, whimsical buildings that look like {buildings-prompt-blank}",
 		steps: [
 			{
 				type: StoryStepType.WritePrompt,
@@ -188,7 +188,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	},
 
 	{ 
-		genPrompt: "landscape with {landscape-prompt-blank}, buildings that look like {buildings-prompt-blank}, in the background {miss-prompt-blank}",
+		genPrompt: "landscape with {landscape-prompt-blank}, whimsical buildings that look like {buildings-prompt-blank}, in the background {miss-prompt-blank}. cinematic lighting",
 		steps: [
 			{
 				type: StoryStepType.WritePrompt,
@@ -230,7 +230,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	},
 
 	{
-		genPrompt: "landscape with {landscape-prompt-blank}, buildings that look like {buildings-prompt-blank}, in the background {miss-prompt-blank}, in the foreground {gift-prompt-blank}",
+		genPrompt: "landscape with {landscape-prompt-blank}, whimsical buildings that look like {buildings-prompt-blank}, in the background {miss-prompt-blank}, in the foreground {gift-prompt-blank}. cinematic lighting",
 		steps: [
 			{
 				type: StoryStepType.WritePrompt,
@@ -272,7 +272,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	},
 
 	{
-		genPrompt: "landscape with {landscape-prompt-blank}, buildings that look like {buildings-prompt-blank}, in the background {miss-prompt-blank}, in the foreground {gift-prompt-blank}{style-tags}",
+		genPrompt: "landscape with {landscape-prompt-blank}, whimsical buildings that look like {buildings-prompt-blank}, in the background {miss-prompt-blank}, in the foreground {gift-prompt-blank}{style-tags}",
 		promptTransformers: {
 			'style-tags': value => {
 				let result = ". ultra detailed";
