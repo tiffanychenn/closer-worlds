@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { css } from '@emotion/react';
+import { CSSInterpolation } from '@emotion/serialize';
+import { OVERFLOW_SCROLL_STYLE } from '../../molecules/ButtonPanel';
 
 interface Props {
 	children: React.ReactNode;
@@ -49,13 +52,22 @@ export class Panel extends React.Component<Props> {
 			pointerEvents: 'none',
 		};
 
-		const innerStyle: React.CSSProperties = {
-			boxSizing: 'border-box',
-			padding: '60px',
-			width: '100%',
-			height: '100%',
-			overflow: scroll ? 'scroll' : 'visible',
-		};
+		const innerStyleParts: CSSInterpolation[] = [
+			{
+				boxSizing: 'border-box',
+				padding: '60px',
+				width: '100%',
+				height: '100%',
+			}
+		];
+		if (scroll) {
+			innerStyleParts.push(OVERFLOW_SCROLL_STYLE);
+		} else {
+			innerStyleParts.push({
+				overflow: 'visible',
+			});
+		}
+		const innerStyle = css(innerStyleParts);
 
 		const absoluteContentStyle: React.CSSProperties = {
 			position: 'relative',
@@ -65,7 +77,7 @@ export class Panel extends React.Component<Props> {
 
 		return <div style={rootStyle}>
 			<div style={containerStyle}>
-				<div style={innerStyle}>
+				<div css={innerStyle}>
 					{scroll ?
 						children :
 						<div style={absoluteContentStyle}>

@@ -1,8 +1,10 @@
 import * as React from 'react';
+import { css } from '@emotion/react';
 import { Logger } from '../../data/logger';
 import { Panel } from '../atoms/containers/Panel';
 import { Button } from '../atoms/input/Button';
 import { TIMEOUT_WARNING_TEXT, TimerWarning, Warning } from '../atoms/text/Text';
+import { CSSInterpolation } from '@emotion/serialize';
 
 export interface ButtonData {
 	id: string;
@@ -21,6 +23,30 @@ interface Props {
 	showTimeout: boolean;
 }
 
+const scrollBorder = 20;
+const scrollWidth = 4;
+export const OVERFLOW_SCROLL_STYLE: CSSInterpolation = {
+	overflow: 'auto',
+	'::-webkit-scrollbar': {
+		width: `${scrollBorder + scrollWidth}px`,
+		backgroundColor: 'rgba(0,0,0,0)',
+	},
+	'::-webkit-scrollbar-track': {
+		borderLeft: `${scrollBorder}px solid rgba(255,255,255,0)`,
+		backgroundClip: 'padding-box',
+		backgroundColor: 'rgba(255,255,255,0.15)',
+	},
+	'::-webkit-scrollbar-thumb': {
+		borderLeft: `${scrollBorder}px solid rgba(255,255,255,0)`,
+		backgroundClip: 'padding-box',
+		backgroundColor: 'rgba(255,255,255,0.5)',
+		transition: 'background-color 0.2s',
+		':hover': {
+			backgroundColor: 'rgba(255,255,255,0.7)',
+		},
+	},
+};
+
 export class ButtonPanel extends React.Component<Props> {
 	static defaultProps = { showTimeout: false };
 
@@ -37,11 +63,13 @@ export class ButtonPanel extends React.Component<Props> {
 			top: 0, left: 0, bottom: 0, right: 0,
 		};
 
-		const childStyle: React.CSSProperties = {
-			flex: 1,
-			width: '100%',
-			overflow: 'scroll',
-		};
+		const childStyle = css(
+			{
+				flex: 1,
+				width: '100%',
+			},
+			OVERFLOW_SCROLL_STYLE,
+		);
 
 		const buttonsStyle: React.CSSProperties = {
 			flex: 'none',
@@ -59,7 +87,7 @@ export class ButtonPanel extends React.Component<Props> {
 
 		return <Panel bgOpacity={bgOpacity} flex={flex} scroll={false}>
 			<div style={containerStyle}>
-				<div style={childStyle}>{children}</div>
+				<div css={childStyle}>{children}</div>
 				<div style={buttonsStyle}>{
 					[
 						...buttons.map(b => 
