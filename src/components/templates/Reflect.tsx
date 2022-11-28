@@ -8,9 +8,10 @@ import { STAR_BG } from '../App/storyData';
 import { Panel } from '../atoms/containers/Panel';
 import { BLUE_BG_LIGHT_SHADOW } from '../atoms/image/ImageCard';
 import { DiscussionPrompt, Text, Error } from '../atoms/text/Text';
+import { ButtonData, ButtonPanel } from '../molecules/ButtonPanel';
 import { PlayerTokenHeader } from '../molecules/PlayerTokenHeader';
 import { BlankTwoColumnSlide } from '../organisms/BlankTwoColumnSlide';
-import { LoadingImageCard } from '../organisms/LoadingImageCard';
+import { LoadingImageCardNoNext } from '../organisms/LoadingImageCardNoNext';
 
 interface Props {
 	logger: Logger;
@@ -48,25 +49,41 @@ export class Reflect extends React.Component<Props> {
 			gap: '30px',
 		};
 
+		const nextButton: ButtonData = {
+			id: step.id + '-next-button',
+			text: 'Next',
+			disabled: !allowNext,
+			onClick: onNext,
+		};
+		const buttons: ButtonData[] = [nextButton];
+
 		const content = <div style={containerStyle}>
 			<Error>{error}</Error>
 			{step.playerAction && <PlayerTokenHeader player={playerNumber}>{step.playerAction}</PlayerTokenHeader>}
-			<Panel bgOpacity={bgOpacity}>
+			<ButtonPanel bgOpacity={bgOpacity}
+						 logger={logger}
+						 buttons={buttons}>
 				<div style={contentStyle}>
 					<Text>The wand starts swirling and whirling, and begins to frantically paint the landscape.</Text>
 					<Text>While you wait...</Text>
 					<DiscussionPrompt>{renderBoldText(replacePlayerText(step.question, playerNumber))}</DiscussionPrompt>
 				</div>
-			</Panel>
+			</ButtonPanel>
 		</div>;
 
 		// Two column layout always
 		return <BlankTwoColumnSlide step={step}
 									sectionImageUrls={sectionImageUrls}>{{
 			col1: content,
-			col2: <LoadingImageCard src={cardImage as string}
-									allowNext={allowNext}
-									onNext={onNext}
+			// col2: <LoadingImageCard src={cardImage as string}
+			// 						allowNext={allowNext}
+			// 						onNext={onNext}
+			// 						buttonId={step.id + '-next-button'}
+			// 						logger={logger}
+			// 						boxShadow={boxShadow}/>
+			col2: <LoadingImageCardNoNext
+									src={cardImage as string}
+									loading={!allowNext}
 									buttonId={step.id + '-next-button'}
 									logger={logger}
 									boxShadow={boxShadow}/>
