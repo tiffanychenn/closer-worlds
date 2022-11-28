@@ -20,6 +20,8 @@ export const CONTROL_GAME_NAME = "Collaborative Game Study";
 export const ONE_SECOND_MS = 1000;
 export const FAKE_MINIMUM_GENERATE_TIME = 45 * ONE_SECOND_MS;
 
+const MAX_WORDS = 20;
+
 export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	{
 		steps: [
@@ -38,6 +40,8 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 			{
 				type: StoryStepType.Info,
 				id: 'how-to-play-1',
+				player: 1,
+				playerAction: 'Read out loud',
 				backgroundImage: STAR_BG,
 				cardImage: INSTRUCTIONS_1,
 				cardImageFit: true,
@@ -47,6 +51,8 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 			{
 				type: StoryStepType.Info,
 				id: 'how-to-play-2',
+				player: 2,
+				playerAction: 'Read out loud',
 				backgroundImage: STAR_BG,
 				cardImage: INSTRUCTIONS_2,
 				cardImageFit: true,
@@ -116,7 +122,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				backgroundImage: STAR_BG,
 				cardImage: PLANET_ARRIVAL_IMG,
 				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
-				wordLimit: 15,
+				wordLimit: MAX_WORDS,
 			} as WritePromptStep,
 			{
 				type: StoryStepType.Reflect,
@@ -156,7 +162,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				blurBG: true,
 				overlayBG: true,
 				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
-				wordLimit: 15,
+				wordLimit: MAX_WORDS,
 			} as WritePromptStep,
 			{
 				type: StoryStepType.Reflect,
@@ -198,7 +204,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				blurBG: true,
 				overlayBG: true,
 				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
-				wordLimit: 15,
+				wordLimit: MAX_WORDS,
 			} as WritePromptStep,
 			{
 				type: StoryStepType.Reflect,
@@ -240,7 +246,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				blurBG: true,
 				overlayBG: true,
 				timeLimitMs: 1.5 * 60 * ONE_SECOND_MS,
-				wordLimit: 15,
+				wordLimit: MAX_WORDS,
 			} as WritePromptStep,
 			{
 				type: StoryStepType.Reflect,
