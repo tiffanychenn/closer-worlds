@@ -8,7 +8,7 @@ import { WarningNextModal } from "../molecules/WarningNextModal";
 import ConnectedControl from "../pages/ConnectedControl";
 import ConnectedStorySlide from "../pages/ConnectedStorySlide";
 
-export const DEBUG_MODE = true;
+export const DEBUG_MODE = false;
 
 interface ReduxStateProps {
 	experimentType: string;
