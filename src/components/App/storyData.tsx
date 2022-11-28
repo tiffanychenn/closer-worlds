@@ -10,6 +10,7 @@ export const PLAIN_BG = '#0B0B25';
 export const PLANET_ARRIVAL_IMG = './assets/arrival.png';
 export const WAND_IMG = './assets/wand.png';
 export const PLANET_DEPARTURE_IMAGE = './assets/departure.png';
+export const INSTRUCTIONS_1 = './assets/instructions_1.png';
 // FIXME: It seems like when we use low-res images, flexbox throws a hissy fit and decides to keep things small. We might need to use viewport sizing instead.
 
 export const EXPERIMENTAL_GAME_NAME = "Closer Worlds";
@@ -35,11 +36,19 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 			} as InfoStep,
 			{
 				type: StoryStepType.Info,
-				id: 'choose-player-number',
+				id: 'how-to-play-1',
 				backgroundImage: STAR_BG,
+				cardImage: INSTRUCTIONS_1,
 				title: 'How to Play',
 				instructions: "This game will guide you through a creative story. Throughout the game you will be asked to take turns reading instructions and entering short lines of text. This will be used to make an image.",
-				images: ['./assets/instructions_1.png'],
+			} as InfoStep,
+			{
+				type: StoryStepType.Info,
+				id: 'how-to-play-2',
+				backgroundImage: STAR_BG,
+				//cardImage: INSTRUCTIONS_1,
+				title: 'How to Play',
+				instructions: "Afterward, you'll be asked to pull a discussion card. Answer the question on the card as much as you feel comfortable. \n\nTake your time to really listen to each others stories. See how your conversation can shape a more meaningful image built from both of your wildest imaginations.",
 			} as InfoStep,
 			{
 				type: StoryStepType.Info,
