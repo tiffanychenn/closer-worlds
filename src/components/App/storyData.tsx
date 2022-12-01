@@ -34,7 +34,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				id: 'intro',
 				backgroundImage: STAR_BG,
 				title: "Welcome to " + EXPERIMENTAL_GAME_NAME,
-				instructions: "Today, you embark on a creative journey together. \n\nThe intention of this game is to *get closer by unlocking your collective imagination.* Through the magic of co-creation, we might discover new things about one another.",
+				instructions: "Today, you embark on a creative journey together. \n\nThe intention of this game is to *get closer by unlocking your collective imagination.* Through the magic of co-creation, try to discover new things about one another.",
 				images: ['./assets/examples/1.png', './assets/examples/2.png', './assets/examples/3.png', './assets/examples/4.png'],
 			} as InfoStep,
 			{
@@ -46,7 +46,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				cardImage: INSTRUCTIONS_1,
 				cardImageFit: true,
 				title: 'How to Play',
-				instructions: "This game will guide you through a creative story. Throughout the game you will be asked to take turns reading instructions and entering short lines of text. This will be used to make an image.",
+				instructions: "This game will guide you through a creative story. Throughout the game you will be asked to take turns reading instructions and entering short lines of text. This will be used to make an image. \n\nThe image might not be exactly what you asked for, but just go with it and see what you can make.",
 			} as InfoStep,
 			{
 				type: StoryStepType.Info,
@@ -107,7 +107,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	},
 
 	{
-		genPrompt: "landscape with {landscape-prompt-blank}",
+		genPrompt: "landscape with {landscape-prompt-blank}, ghibli, octane render",
 		steps: [
 			{
 				type: StoryStepType.WritePrompt,
@@ -116,8 +116,9 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				player: 'landscape',
 				playerAction: 'Take the lead',
 				title: "Describe the landscape:",
-				instructions: "What kind of nature do you enjoy most on Earth? Are there mountains, lakes, or rivers? Think about the plants and colors that bring you joy.\n\nWith this in mind, *paint a picture of the terrain and texture of the landscape.*",
-				hint: "Feel free to discuss your choices as a pair.",
+				// instructions: "What kind of nature do you enjoy most on Earth? Are there mountains, lakes, or rivers? Think about the plants and colors that bring you joy.\n\nWith this in mind, *paint a picture of the terrain and texture of the landscape.*",
+				instructions: "First, let's add some nature to this place. Are you into hiking or more of a sit-back and star-gaze kind of person. Think about what kind of landscape features might be fun to have here. Try adding plants, water features, colors, or whatever you feel like.",
+				hint: "Remember, you can make the landscape as fictional as you want, it is a magic wand after all.",
 				exampleText: "e.g., big pink puffy trees near lots of rivers",
 				backgroundImage: STAR_BG,
 				cardImage: PLANET_ARRIVAL_IMG,
@@ -129,7 +130,8 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				id: 'landscape-reflect',
 				player: 'landscape',
 				playerAction: "Read out loud",
-				question: "{Curr}, recall an especially interesting time you've been in nature. What made it so special?",
+				//question: "{Curr}, recall an especially interesting time you've been in nature. What made it so special?",
+				question: "{Curr}, Describe a place you've always wanted to go to, but haven't. What makes it so interesting to you?",
 				backgroundImage: STAR_BG,
 				cardImage: PLANET_ARRIVAL_IMG,
 			} as ReflectStep,
@@ -146,7 +148,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	},
 
 	{
-		genPrompt: "landscape with {landscape-prompt-blank}, whimsical buildings that look like {buildings-prompt-blank}",
+		genPrompt: "landscape with {landscape-prompt-blank}, ghibli, octane render, whimsical buildings that look like {buildings-prompt-blank}",
 		steps: [
 			{
 				type: StoryStepType.WritePrompt,
@@ -155,7 +157,8 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				player: 'buildings',
 				playerAction: "It's your turn now",
 				title: "Design some buildings:",
-				instructions: "What kinds of spaces make you feel most at home? Is it big city buildings, or cozy rustic cabins? Consider the kinds of things that you like to do.\n\nWith this in mind, briefly *describe a building or set of buildings.*",
+				// instructions: "What kinds of spaces make you feel most at home? Is it big city buildings, or cozy rustic cabins? Consider the kinds of things that you like to do.\n\nWith this in mind, briefly *describe a building or set of buildings.*",
+				instructions: "Picture a building that you both might like to hang out in. Is it a big city or more of a rustic log cabin? Consider the kinds of things would you like to do inside, and describe it with careful detail.",
 				exampleText: "e.g., treehouses with lush gardens",
 				backgroundImage: 1,
 				cardImage: 1,
@@ -169,7 +172,8 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				id: 'buildings-reflect',
 				player: 'buildings',
 				playerAction: "Read out loud",
-				question: "{Curr}, in what kind of spaces do you most feel like your authentic self? How might the buildings you made let you access that?",
+				//question: "{Curr}, in what kind of spaces do you most feel like your authentic self? How might the buildings you made let you access that?",
+				question: "{Curr}, where is one of your favorite places on Earth. What makes it so special?",
 				backgroundImage: 1,
 				cardImage: 1,
 				blurBG: true,
@@ -188,17 +192,19 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	},
 
 	{ 
-		genPrompt: "landscape with {landscape-prompt-blank}, whimsical buildings that look like {buildings-prompt-blank}, in the background {miss-prompt-blank}. cinematic lighting",
+		genPrompt: "landscape with {landscape-prompt-blank}, ghibli, octane render, whimsical buildings that look like {buildings-prompt-blank}, in the background {miss-prompt-blank}. cinematic lighting",
 		steps: [
 			{
 				type: StoryStepType.WritePrompt,
 				triggersGenerate: true,
 				id: 'miss-prompt',
 				player: 'buildings',
-				playerAction: "It's your turn now",
+				playerAction: "It's your turn now. Read and answer the following.",
 				title: "Add some meaning:",
-				instructions: "It's important to you to make this a nice place for your partner to live as well. Think about what parts of life they think are most precious.\n\nWhat would your partner miss most from back home? *Add some object to the world that would help them feel more at home.*",
+				// instructions: "It's important to you to make this a nice place for your partner to live as well. Think about what parts of life they think are most precious.\n\nWhat would your partner miss most from back home? *Add some object to the world that would help them feel more at home.*", 
+				instructions: "Since you might be here a while, you figure you might as well make the most of it. Think about something that your partner likes to do, that you like to do as well. Add something into this world that you both could enjoy together.",
 				exampleText: "e.g., science fiction library",
+				hint: "If you're not sure, ask your partner what kinds of things they like to do for fun",
 				backgroundImage: 2,
 				cardImage: 2,
 				blurBG: true,
@@ -211,7 +217,8 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				id: 'miss-reflect',
 				player: 'buildings',
 				playerAction: "Read out loud",
-				question: "{Other}, is this a meaningful gift? In general, what is the best way for your friends to show that they care?",
+				//question: "{Other}, is this a meaningful gift? In general, what is the best way for your friends to show that they care?",
+				question: "{Other}, what's something new that you've tried and didn't expect to like but did? What new activities are you curious to try in the future?",
 				backgroundImage: 2,
 				cardImage: 2,
 				blurBG: true,
@@ -230,7 +237,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	},
 
 	{
-		genPrompt: "landscape with {landscape-prompt-blank}, whimsical buildings that look like {buildings-prompt-blank}, in the background {miss-prompt-blank}, in the foreground {gift-prompt-blank}. cinematic lighting",
+		genPrompt: "landscape with {landscape-prompt-blank}, ghibli, octane render, whimsical buildings that look like {buildings-prompt-blank}, in the background {miss-prompt-blank}, in the foreground {gift-prompt-blank}. cinematic lighting",
 		steps: [
 			{
 				type: StoryStepType.WritePrompt,
@@ -239,7 +246,8 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				player: 'landscape',
 				playerAction: "It's your turn now",
 				title: "Give a gift:",
-				instructions: "You're touched by your partner's gesture, and want to give them something in return.\n\nWhat is something positive about your partner? How could you build something here that honors them? *Describe some object which represents this positive aspect of your partner.*",
+				// instructions: "You're touched by your partner's gesture, and want to give them something in return.\n\nWhat is something positive about your partner? How could you build something here that honors them? *Describe some object which represents this positive aspect of your partner.*",
+				instructions: "You're touched by your partner's gesture, and want to make them something in return.\n\nThink about what parts of life your partner thinks are most precious.\n\n*Add something to the world which would let them be their best self.*",
 				exampleText: "e.g., creative workshop",
 				backgroundImage: 3,
 				cardImage: 3,
@@ -253,7 +261,8 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				id: 'gift-reflect',
 				player: 'landscape',
 				playerAction: "Read out loud",
-				question: "{Other}, how do you feel being labeled with these positive qualities? Are there other hidden parts of you that you wish others would also see?",
+				// question: "{Other}, how do you feel being labeled with these positive qualities? Are there other hidden parts of you that you wish others would also see?",
+				question: "{Other}, is this a meaningful gift?  Are there other hidden parts of you that you wish others would also see?",
 				backgroundImage: 3,
 				cardImage: 3,
 				blurBG: true,
@@ -272,7 +281,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	},
 
 	{
-		genPrompt: "landscape with {landscape-prompt-blank}, whimsical buildings that look like {buildings-prompt-blank}, in the background {miss-prompt-blank}, in the foreground {gift-prompt-blank}{style-tags}",
+		genPrompt: "landscape with {landscape-prompt-blank}, ghibli, octane render, whimsical buildings that look like {buildings-prompt-blank}, in the background {miss-prompt-blank}, in the foreground {gift-prompt-blank}{style-tags}",
 		promptTransformers: {
 			'style-tags': value => {
 				let result = ". ultra detailed";
