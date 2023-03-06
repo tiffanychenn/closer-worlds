@@ -6,8 +6,6 @@ interface Props {
 	children: React.ReactNode;
 }
 
-// TODO: Styles, of course.
-
 // Main body text.
 export class Text extends React.Component<Props> {
 	render() {

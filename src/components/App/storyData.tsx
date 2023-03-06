@@ -1,5 +1,4 @@
 import { ImageStep, ReflectStep, StorySection, StoryStepType, TitleStep, WritePromptStep, InfoStep, CustomFormStep, RoleSelectStep, ControlSet } from '../../data/story';
-import ShortTextBox from '../atoms/input/ShortTextBox';
 import { Slider } from '../atoms/input/Slider';
 import { TagGroup } from '../atoms/input/TagGroup';
 import { Hint, PageHeader, Text } from '../atoms/text/Text';
@@ -12,7 +11,6 @@ export const WAND_IMG = './assets/wand.png';
 export const PLANET_DEPARTURE_IMAGE = './assets/departure.png';
 export const INSTRUCTIONS_1 = './assets/instructions_1.png';
 export const INSTRUCTIONS_2 = './assets/instructions_2.png';
-// FIXME: It seems like when we use low-res images, flexbox throws a hissy fit and decides to keep things small. We might need to use viewport sizing instead.
 
 export const EXPERIMENTAL_GAME_NAME = "Closer Worlds";
 export const CONTROL_GAME_NAME = "Collaborative Game Study";

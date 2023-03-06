@@ -1,4 +1,3 @@
-import * as React from "react";
 import { css, CSSObject } from "@emotion/react";
 import { LoggedFormElementComponent, LoggedFormElementProps } from "./LoggedFormElement";
 

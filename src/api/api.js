@@ -13,7 +13,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
  
-// Take a port 5000 for running server.
+// Take a port for running server.
 const PORT = 4000;
 
 /* loggingData: {
@@ -181,9 +181,6 @@ app.post('/startExperiment', (req, res, next) => {
             experimentData: experimentData
         });
     }
-    // If it does, make sure the players are correct; otherwise, throw
-    // If it does, and the players are correct, then send back the previous state and make sure it gets loaded in in the client -> make it possible to initialize state with API response in client
-    // Otherwise, send back a happy handshake
 });
 
 // Update experiment data

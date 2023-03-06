@@ -1,9 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import * as React from "react";
-import { Logger } from "../../../data/logger";
 import { LoggedFormElementComponent, LoggedFormElementProps } from "./LoggedFormElement";
-import ShortTextBox from "./ShortTextBox";
 import { css } from '@emotion/react';
 import { renderBoldText } from "../../../utils/textUtils";
 

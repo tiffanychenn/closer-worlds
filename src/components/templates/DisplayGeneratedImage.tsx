@@ -2,13 +2,12 @@ import * as React from 'react';
 import { Logger } from '../../data/logger';
 import { ImageStep } from '../../data/story';
 import { SectionImageUrls } from '../../reducers/promptReducer';
-import { getSectionImageOrString, imagePathToUrl } from '../../utils/utils';
+import { getSectionImageOrString } from '../../utils/utils';
 import { STAR_BG } from '../App/storyData';
 import { Panel } from '../atoms/containers/Panel';
 import { BLUE_BG_LIGHT_SHADOW, ImageCard, IMG_BG_DARK_SHADOW } from '../atoms/image/ImageCard';
 import { Button } from '../atoms/input/Button';
-import { PageHeader, Text, Error as TextError, Hint } from '../atoms/text/Text';
-import { BlankSlide } from '../organisms/BlankSlide';
+import { PageHeader, Error as TextError } from '../atoms/text/Text';
 import { BlankTwoColumnSlide } from '../organisms/BlankTwoColumnSlide';
 
 interface Props {
@@ -29,9 +28,6 @@ export class DisplayGeneratedImage extends React.Component<Props> {
 
 		let cardImage = getSectionImageOrString(step.cardImage, sectionImageUrls);
 		if (!cardImage) {
-			// TODO: What would be a good error handling case for this?
-			// Should we tell them that we're going to come into the room
-			// to fix it? Idk...
 			throw new Error(`DisplayGeneratedImage received no image to display for card image: ${step.cardImage}`);
 		}
 
@@ -63,7 +59,6 @@ export class DisplayGeneratedImage extends React.Component<Props> {
 			gap: '20px',
 		};
 
-		// FIXME: The allow redo UX sucks. I went for simple--just hide or show the button--but we can probably do better. It's just not a priority. Thoughts?
 		return <BlankTwoColumnSlide step={step}
 									sectionImageUrls={sectionImageUrls}
 									flexCol1="0" flexCol2="0"
@@ -76,14 +71,6 @@ export class DisplayGeneratedImage extends React.Component<Props> {
 						<PageHeader>All around you, the world has changed.</PageHeader>
 						<div style={{height: '30px'}}></div>
 						<Button id={step.id + '-next-button'} logger={logger} text="Next" onClick={onNext}/>
-						{/* {allowRedo && <>
-						<div style={{height: '80px'}}></div>
-						<Hint showLabel={false}>Not quite right?</Hint>
-						<Hint showLabel={false}>You can write a new response, or try again with the same response, to generate a different image.</Hint>
-						<Hint showLabel={false}>{"(But choose wisely\u2013you can only do this once!)"}</Hint>
-						<div style={{height: '10px'}}></div>
-						<Button id={step.id + '-redo-button'} logger={logger} text="Try again" onClick={onRedo} useOutlineStyle={true}/>
-						</>} */}
 					</div>
 				</Panel>
 			</div>,

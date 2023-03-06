@@ -9,6 +9,13 @@ export interface Props extends LoggedFormElementProps {
 }
 
 export default class ShortTextBox extends LoggedFormElementComponent<Props> {
+	constructor(props: Props) {
+		super(props);
+		this.state = {
+		  poem: ""
+		};
+	}
+
 	render() {
 		const { placeholder, onInput, initialValue } = this.props;
 
@@ -40,6 +47,5 @@ export default class ShortTextBox extends LoggedFormElementComponent<Props> {
 			this.onInput(e);
 			if (onInput) onInput(e);
 		}} defaultValue={initialValue}></input>;
-		// TODO: Make it purty, and also figure out sizing (flex? fixed? configurable from parent? etc.).
 	}
 }

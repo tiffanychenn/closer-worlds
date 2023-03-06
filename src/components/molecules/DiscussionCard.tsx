@@ -4,7 +4,6 @@ import { CSSInterpolation } from '@emotion/serialize';
 import { DiscussionPrompt } from '../atoms/text/Text';
 import { Button } from '../atoms/input/Button';
 import { Logger } from '../../data/logger';
-import { BLUE_BG_LIGHT_SHADOW } from '../atoms/image/ImageCard';
 
 interface Props {
 	children: React.ReactNode;

@@ -10,10 +10,6 @@ interface Props {
 	onTimeout?: () => void;
 }
 
-// NOTE: This class does not include a "next" button or a timer tooltip! This is because
-// it should be unopinionated about the location of those items. I could alternatively
-// make all children component factories that take the timer and next button as
-// options, but I don't think that makes much sense.
 export class BlankSlide extends React.Component<Props> {
 	componentDidMount() {
 		if (this.props.step.timeLimitMs && this.props.step.timeLimitMs > 0) {
@@ -43,7 +39,7 @@ export class BlankSlide extends React.Component<Props> {
 			display: 'flex',
 			alignItems: 'center',
 			justifyContent: 'center',
-			maxWidth: '1800px', // FIXME: Do we want this? I think it helps with ridiculously large images, but there might be another, better fix for that.
+			maxWidth: '1800px', 
 		};
 
 		return <div style={pageStyle}>

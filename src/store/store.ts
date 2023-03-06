@@ -1,7 +1,7 @@
-import { rootReducer, initialState, State, Actions } from '../reducers/rootReducer';
+import { rootReducer, initialState } from '../reducers/rootReducer';
 
 import { applyMiddleware, createStore } from 'redux';
-import thunk, { ThunkDispatch } from 'redux-thunk';
+import thunk from 'redux-thunk';
 
 const middleware = [thunk];
 

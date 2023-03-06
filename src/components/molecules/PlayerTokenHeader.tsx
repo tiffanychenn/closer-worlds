@@ -3,7 +3,7 @@ import { PageHeader } from '../atoms/text/Text';
 
 interface Props {
 	children: React.ReactNode;
-	player: 1 | 2 | 'both'; // TODO: Use this
+	player: 1 | 2 | 'both';
 }
 
 export class PlayerTokenHeader extends React.Component<Props> {

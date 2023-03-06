@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SectionImageUrls } from '../../reducers/promptReducer';
-import { getSectionImageOrString, imagePathToUrl } from '../../utils/utils';
+import { getSectionImageOrString } from '../../utils/utils';
 import { BackgroundImage } from '../atoms/image/BackgroundImage';
 
 interface Props {

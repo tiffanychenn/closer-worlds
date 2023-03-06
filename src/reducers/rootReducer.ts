@@ -32,12 +32,3 @@ export const initialState: State = {
 	api: apiInitialState,
 	control: controlInitialState,
 };
-
-/* Brainstorming list of all actions:
- * - We need a way to move between story steps. This sometimes depends on first
- *   inputting something.
- * - Restart the experience. Restore everything to its initial state.
- * - Await response from the WOZ client. How do we do that? Polling? Ew.
- * - The WOZ client also has to await responses from the participant client.
- * - 
- */

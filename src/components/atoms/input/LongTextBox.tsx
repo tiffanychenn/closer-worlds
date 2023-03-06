@@ -40,6 +40,5 @@ export default class LongTextBox extends LoggedFormElementComponent<Props> {
 			this.onTextArea(e);
 			if (onInput) onInput(e);
 		}}></textarea>;
-		// TODO: Re-add textarea clicks, but make logger getLatestValue function exclude special commands using parameter.
 	}
 }

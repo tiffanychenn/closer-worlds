@@ -55,7 +55,6 @@ class ConnectedStorySlide extends React.Component<Props> {
 		const step = getStoryStep(sectionIndex, stepIndex, experimentType);
 		console.log('section image urls:');
 		console.log(sectionImageUrls);
-		// TODO: Ensure that index is still within bounds, maybe?
 		switch (step.type) {
 			case StoryStepType.WritePrompt:
 				return <WritePrompt

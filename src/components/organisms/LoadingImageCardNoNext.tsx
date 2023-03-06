@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Logger } from '../../data/logger';
 import { BLUE_BG_LIGHT_SHADOW, ImageCard } from '../atoms/image/ImageCard';
-import { Button } from '../atoms/input/Button';
 
 interface Props {
 	src: string;

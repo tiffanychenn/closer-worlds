@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { Logger } from '../../data/logger';
 import { Panel } from '../atoms/containers/Panel';
 import { Button } from '../atoms/input/Button';
-import { TIMEOUT_WARNING_TEXT, TimerWarning, Warning } from '../atoms/text/Text';
+import { TimerWarning } from '../atoms/text/Text';
 import { CSSInterpolation } from '@emotion/serialize';
 
 export interface ButtonData {

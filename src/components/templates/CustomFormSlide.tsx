@@ -68,9 +68,7 @@ export class CustomFormSlide extends React.Component<Props, State> {
 		let allowNext = true;
 		for (let key in latestValues) {
 			let val = latestValues[key];
-			// TODO: Possibly extract this to an isEmpty function that covers all possible logger values.
 			if (!val || val == "" || val == "[]") {
-				// TODO: We might also want to check that the value isn't special--i.e., it doesn't start with !, as in !click.
 				allowNext = false;
 				break;
 			}

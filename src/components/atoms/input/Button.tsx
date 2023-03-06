@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Logger } from "../../../data/logger";
 import { LoggedFormElementComponent, LoggedFormElementProps } from "./LoggedFormElement";
 
 export interface Props extends LoggedFormElementProps {

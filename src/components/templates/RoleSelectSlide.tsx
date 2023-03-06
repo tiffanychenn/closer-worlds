@@ -1,12 +1,10 @@
 import * as React from 'react';
 import { Logger } from '../../data/logger';
 import { CustomFormStep, RoleSelectStep, StoryStepType } from '../../data/story';
-import { SectionImageUrls } from '../../reducers/promptReducer';
 import { STAR_BG } from '../App/storyData';
 import { GAP_BETWEEN_QUESTIONS, QuestionGroup } from '../atoms/containers/QuestionGroup';
 import { RadioGroup } from '../atoms/input/RadioGroup';
-import { TagGroup } from '../atoms/input/TagGroup';
-import { PageHeader, TextSpacer, Error, Hint, Text } from '../atoms/text/Text';
+import { PageHeader, Text } from '../atoms/text/Text';
 import { CustomFormSlide } from './CustomFormSlide';
 
 interface Props {

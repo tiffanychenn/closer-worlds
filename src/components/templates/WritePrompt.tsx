@@ -3,7 +3,7 @@ import { Logger } from '../../data/logger';
 import { WritePromptStep } from '../../data/story';
 import { playerRoleToNumber, renderBoldText, replacePlayerText } from '../../utils/textUtils';
 import { BLUE_BG_LIGHT_SHADOW, ImageCard, IMG_BG_DARK_SHADOW } from '../atoms/image/ImageCard';
-import { DiscussionPrompt, Hint, PageHeader, Text, Error, TIMEOUT_WARNING_TEXT, Warning } from '../atoms/text/Text';
+import { Hint, PageHeader, Text, Error } from '../atoms/text/Text';
 import { PlayerTokenHeader } from '../molecules/PlayerTokenHeader';
 import { SectionImageUrls } from '../../reducers/promptReducer';
 import { getSectionImageOrString } from '../../utils/utils';
@@ -11,7 +11,7 @@ import { BlankTwoColumnSlide } from '../organisms/BlankTwoColumnSlide';
 import { BlankSlide } from '../organisms/BlankSlide';
 import { ButtonData, ButtonPanel } from '../molecules/ButtonPanel';
 import { LimitedTextBox } from '../organisms/LimitedTextBox';
-import { EXPERIMENTAL_STORY_DATA, STAR_BG } from '../App/storyData';
+import { STAR_BG } from '../App/storyData';
 
 interface Props {
 	logger: Logger;
@@ -100,7 +100,7 @@ export class WritePrompt extends React.Component<Props, State> {
 			maxWidth: cardImage ? undefined : 'max(50vw, 600px)',
 		};
 		
-		console.log(`Got initial value: ${initialValue}`); // DEBUG
+		console.log(`Got initial value: ${initialValue}`); 
 
 		const content = <div style={containerStyle}>
 			<Error>{error}</Error>

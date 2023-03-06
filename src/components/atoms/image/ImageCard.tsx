@@ -16,10 +16,6 @@ export const IMG_BG_DARK_SHADOW = "0 4px 20px 0 rgba(0, 0, 0, 0.5)";
 export class ImageCard extends React.Component<Props> {
 	static defaultProps = { size: '100%', sizeSide: 'width', blur: "0px", contain: false, };
 
-	// FIXME: This component is extremely broken. It does aspect ratios completely incorrectly.
-	// Not worth fixing for this project because it doesn't really need to be responsive, but...
-	// it's not pretty.
-
 	render() {
 		const { src, size, sizeSide, boxShadow, blur, maxOtherSize, contain } = this.props;
 
