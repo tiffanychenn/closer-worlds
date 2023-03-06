@@ -5,9 +5,8 @@ import { SectionImageUrls } from '../../reducers/promptReducer';
 import { playerRoleToNumber, renderBoldText, replacePlayerText } from '../../utils/textUtils';
 import { getSectionImageOrString } from '../../utils/utils';
 import { STAR_BG } from '../App/storyData';
-import { Panel } from '../atoms/containers/Panel';
 import { BLUE_BG_LIGHT_SHADOW } from '../atoms/image/ImageCard';
-import { DiscussionPrompt, Text, Error } from '../atoms/text/Text';
+import { Text, Error } from '../atoms/text/Text';
 import { ButtonData, ButtonPanel } from '../molecules/ButtonPanel';
 import { StatefulDiscussionCard } from '../molecules/DiscussionCard';
 import { PlayerTokenHeader } from '../molecules/PlayerTokenHeader';
@@ -40,10 +39,7 @@ export class Reflect extends React.Component<Props, State> {
 		const playerNumber = playerRoleToNumber(step.player, landscapePlayer);
 		
 		const cardImage = getSectionImageOrString(step.cardImage, sectionImageUrls);
-		// const boxShadow = typeof step.backgroundImage == 'number' ? IMG_BG_DARK_SHADOW : BLUE_BG_LIGHT_SHADOW;
-		// const bgOpacity = typeof step.backgroundImage == 'number' ? 0.8 : 0.4;
 		const bgOpacity = step.backgroundImage == STAR_BG ? 0.4 : 0.8;
-		// const boxShadow = step.backgroundImage == STAR_BG ? BLUE_BG_LIGHT_SHADOW : IMG_BG_DARK_SHADOW;
 		const boxShadow = BLUE_BG_LIGHT_SHADOW;
 
 		const containerStyle: React.CSSProperties = {
@@ -76,7 +72,6 @@ export class Reflect extends React.Component<Props, State> {
 						 buttons={buttons}>
 				<div style={contentStyle}>
 					<Text>The wand starts swirling and whirling, and begins to frantically paint the landscape.</Text>
-					{/* <DiscussionPrompt>{renderBoldText(replacePlayerText(step.question, playerNumber))}</DiscussionPrompt> */}
 					<StatefulDiscussionCard logger={logger}
 											buttonId={`${step.id}-discussion-card-button`}
 											onFlip={() => this.setState({hasFlippedCard: true})}>
@@ -91,12 +86,6 @@ export class Reflect extends React.Component<Props, State> {
 		return <BlankTwoColumnSlide step={step}
 									sectionImageUrls={sectionImageUrls}>{{
 			col1: content,
-			// col2: <LoadingImageCard src={cardImage as string}
-			// 						allowNext={allowNext}
-			// 						onNext={onNext}
-			// 						buttonId={step.id + '-next-button'}
-			// 						logger={logger}
-			// 						boxShadow={boxShadow}/>
 			col2: <LoadingImageCardNoNext
 									src={cardImage as string}
 									loading={!allowNext}
