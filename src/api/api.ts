@@ -23,17 +23,18 @@ const PORT = 4000;
  */
 // images: { [sectionIndex: number]: { filledPrompt: string, path: string } }
 
-app.get('/',(req,res) => {
+app.get('/',(req: any, res: any) => {
     res.status(200).json({
         'message': 'Running Node with Express and Typescript'
     });
 });
 
+// Relative to being in dist/api
 app.use('/client', express.static(path.join(__dirname, '../../dist/')));
 app.use('/client/assets', express.static(path.join(__dirname, '../../assets/')));
 app.use('/client/data', express.static(path.join(__dirname, '../../data/')));
 
-app.post('/image-gen', async (req,res) => {
+app.post('/image-gen', async (req: any, res: any) => {
     try {
         const prompt = req.body.prompt;
         console.log(`Generating prompt: ${prompt}`);
@@ -44,7 +45,7 @@ app.post('/image-gen', async (req,res) => {
         // Using datetime to ensure that no two images have the same name if you redo an image.
         const filename = experimentId + "-" + Date.now() + "-" + sectionIndex + ".png";
         const filepath = "../../data/" + experimentId + "/";
-        fs.writeFile(filepath + filename, buffer, (err) => {
+        fs.writeFile(filepath + filename, buffer, (err: any) => {
             // In case of a error throw err.
             if (err) res.status(400).send("unable to save image");
         });
@@ -65,7 +66,7 @@ app.post('/image-gen', async (req,res) => {
             images: newImages,
         }
     
-        fs.writeFile(filepath + experimentId + '.json', JSON.stringify(experimentData), (err) => {
+        fs.writeFile(filepath + experimentId + '.json', JSON.stringify(experimentData), (err: any) => {
             // In case of a error throw err.
             if (err) res.status(400).send("unable to save to file");
         })
@@ -83,7 +84,7 @@ app.post('/image-gen', async (req,res) => {
     }
 });
 
-app.post('/image-variation', async (req, res) => {
+app.post('/image-variation', async (req: any, res: any) => {
     try {
         const path = req.body.pathToVary;
         console.log(`Generating variation of file: ${path}`);
@@ -94,7 +95,7 @@ app.post('/image-variation', async (req, res) => {
         const buffer = Buffer.from(image, "base64");
         const filename = experimentId + "-" + Date.now() + "-var-" + sectionIndex + ".png";
         const filepath = "../../data/" + experimentId + "/";
-        fs.writeFile(filepath + filename, buffer, (err) => {
+        fs.writeFile(filepath + filename, buffer, (err: any) => {
             if (err) res.status(400).send("unable to save image variation");
         });
 
@@ -114,7 +115,7 @@ app.post('/image-variation', async (req, res) => {
             images: newImages,
         };
 
-        fs.writeFile(filepath + experimentId + '.json', JSON.stringify(experimentData), (err) => {
+        fs.writeFile(filepath + experimentId + '.json', JSON.stringify(experimentData), (err: any) => {
             if (err) res.status(400).send("unable to save experiment data to file");
         });
 
@@ -126,7 +127,7 @@ app.post('/image-variation', async (req, res) => {
     }
 });
 
-function getExperimentData(body) {
+function getExperimentData(body: any) {
     const experimentData = {
         id: body.id,
         firstPlayerId: body.firstPlayerId,
@@ -140,7 +141,7 @@ function getExperimentData(body) {
     return experimentData;
 }
 
-app.post('/startExperiment', (req, res, next) => {
+app.post('/startExperiment', (req: any, res: any, next: any) => {
     // See if the current experiment ID already exists
     const experimentData = getExperimentData(req.body);
     const filepath = "../../data/" + experimentData.id;
@@ -169,7 +170,7 @@ app.post('/startExperiment', (req, res, next) => {
     }
     else {
         fs.mkdirSync(filepath);
-        fs.writeFile(jsonFile, JSON.stringify(experimentData), (err) => {
+        fs.writeFile(jsonFile, JSON.stringify(experimentData), (err: any) => {
             // In case of a error throw err.
             if (err) {
                 res.status(400).send("unable to save to file");
@@ -184,7 +185,7 @@ app.post('/startExperiment', (req, res, next) => {
 });
 
 // Update experiment data
-app.post('/experiment', (req, res, next) => {
+app.post('/experiment', (req: any, res: any, next: any) => {
     const experimentData = getExperimentData(req.body);
     const hasDataFolder = fs.existsSync("../../data");
     if (!hasDataFolder) {
@@ -196,7 +197,7 @@ app.post('/experiment', (req, res, next) => {
         return;
     }
 
-    fs.writeFile("../../data/" + req.body.id + "/" + req.body.id + '.json', JSON.stringify(experimentData), (err) => {
+    fs.writeFile("../../data/" + req.body.id + "/" + req.body.id + '.json', JSON.stringify(experimentData), (err: any) => {
         // In case of a error throw err.
         if (err) {
             res.status(400).send("unable to save to file");
@@ -220,7 +221,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-async function getDALLEImage(prompt) {
+async function getDALLEImage(prompt: any) {
 	const response = await openai.createImage({
         prompt: textSoaper(prompt),
         n: 1,
@@ -231,7 +232,7 @@ async function getDALLEImage(prompt) {
     return b64_json;
 }
 
-async function getDALLEVariation(path) {
+async function getDALLEVariation(path: any) {
     const response = await openai.createImageVariation(
         fs.createReadStream(path),
         1,
@@ -245,7 +246,7 @@ async function getDALLEVariation(path) {
 // text soaper
 const CONJUNCTIONS = ["and", "plus"];
 
-function textSoaper(text) {
+function textSoaper(text: any) {
     let new_text = text;
     for (let i = 0; i < CONJUNCTIONS.length; i ++) {
         new_text = new_text.replace(CONJUNCTIONS[i], "");

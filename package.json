@@ -6,6 +6,11 @@
   "repository": "https://github.com/tiffanychenn/affective-computing-generative-ai.git",
   "author": "Jessie Mindel <jessie.mindel@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "build": "cd src/api && npx tsc && cd ../.. && npx webpack build",
+    "start-dev": "npx webpack serve",
+    "start-prod": "cd dist/api && node api.js"
+  },
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
