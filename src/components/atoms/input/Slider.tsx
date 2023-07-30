@@ -4,6 +4,7 @@ import { LoggedFormElementComponent, LoggedFormElementProps } from "./LoggedForm
 export interface Props extends LoggedFormElementProps {
 	leftLabel: string;
 	rightLabel: string;
+	onChange?: (value: number) => void;
 }
 
 interface State {
@@ -22,7 +23,7 @@ export class Slider extends LoggedFormElementComponent<Props, State> {
 	}
 
 	render() {
-		const { leftLabel, rightLabel } = this.props;
+		const { leftLabel, rightLabel, onChange } = this.props;
 		const { value } = this.state;
 
 		const thumb: CSSObject = {
@@ -85,6 +86,7 @@ export class Slider extends LoggedFormElementComponent<Props, State> {
 				this.setState({
 					value: parseInt(e.currentTarget.value),
 				});
+				if (onChange) onChange(parseInt(e.currentTarget.value)); 
 			}}></input>
 			<div css={labelsStyle}>
 				<span>{leftLabel}</span>

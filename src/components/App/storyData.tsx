@@ -2,6 +2,7 @@ import { ImageStep, ReflectStep, StorySection, StoryStepType, TitleStep, WritePr
 import { Slider } from '../atoms/input/Slider';
 import { TagGroup } from '../atoms/input/TagGroup';
 import { Hint, PageHeader, Text } from '../atoms/text/Text';
+import { ClosenessSlider } from '../molecules/ClosenessSlider';
 
 export const PLACEHOLDER_IMG_URL = 'https://cdnb.artstation.com/p/assets/images/images/051/898/687/large/luke-wells-luke-wells-landscape-midjourney.jpg';
 export const STAR_BG = './assets/stars_bg_16.png';
@@ -76,6 +77,26 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				playerAction: "Read out loud",
 				instructions: "While wandering the strange planet, you're delighted to discover a magic wand that can create anything in your imagination.\n\nAfter taking care of basic necessities, you're struck with inspiration: you can use this wand to create the world of your dreams!\n\nTogether, you decide to stay a while, and create a dream place for you both to live.",
 			} as InfoStep,
+			{
+				type: StoryStepType.CustomForm,
+				id: 'intro-world-intentions',
+				backgroundImage: STAR_BG,
+				player: 'both',
+				playerAction: "Set the vibe",
+				maxWidthIfNoImageCard: false,
+				timeLimitMs: 1 * 60 * ONE_SECOND_MS,
+				requiredFormElemIds: ['world-tags'],
+				makeContent: (logger, hasTimedOut, renderText) => <>
+					<PageHeader>What's your vibe?</PageHeader>
+					<ClosenessSlider logger={logger} />
+					<div style={{width: '1000px', margin: 'auto'}}>
+						<Slider id="type-of-people-slider"
+							logger={logger}
+							leftLabel="Living in the real world"
+							rightLabel="Whimsical fantasy people"/>
+					</div>
+				</>,
+			} as CustomFormStep,
 			{
 				type: StoryStepType.CustomForm,
 				id: 'intro-world-tags',
