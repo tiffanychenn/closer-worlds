@@ -9,6 +9,7 @@ import { generateImage, initExperimentData, pushExperimentData } from "./apiActi
 export const GAME_ACTION_NAMES = {
 	SET_SECTION_INDEX: 'SET_SECTION_INDEX',
 	SET_STEP_INDEX: 'SET_STEP_INDEX',
+	SET_INTIMACY_SCORE: 'SET_INTIMACY_SCORE',
 	SET_LANDSCAPE_PLAYER: 'SET_LANDSCAPE_PLAYER',
 	SET_HAS_USED_REDO: 'SET_HAS_USED_REDO',
 	SET_ERROR: 'SET_ERROR',
@@ -35,6 +36,18 @@ function setStepIndex(stepIndex: number): SetStepIndexAction {
 	return {
 		type: GAME_ACTION_NAMES.SET_STEP_INDEX,
 		value: stepIndex,
+	};
+}
+
+export interface SetIntimacyScoreAction {
+	type: typeof GAME_ACTION_NAMES.SET_INTIMACY_SCORE;
+	value: number;
+}
+
+function setIntimacyScore(intimacyScore: number): SetIntimacyScoreAction {
+	return {
+		type: GAME_ACTION_NAMES.SET_STEP_INDEX,
+		value: intimacyScore,
 	};
 }
 
@@ -207,4 +220,4 @@ export function loadExistingGame(sectionIndex: number, stepIndex: number): RootT
 	};
 }
 
-export type GameActions = SetSectionIndexAction | SetStepIndexAction | SetLandscapePlayerAction | SetHasUsedRedoAction | SetErrorAction;
+export type GameActions = SetSectionIndexAction | SetStepIndexAction | SetIntimacyScoreAction | SetLandscapePlayerAction | SetHasUsedRedoAction | SetErrorAction;
