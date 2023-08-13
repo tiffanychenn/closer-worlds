@@ -19,7 +19,7 @@ export const CONTROL_GAME_NAME = "Collaborative Game Study";
 export const ONE_SECOND_MS = 1000;
 export const FAKE_MINIMUM_GENERATE_TIME = 45 * ONE_SECOND_MS;
 
-const MAX_WORDS = 20;
+export const MAX_WORDS = 20;
 
 export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	{

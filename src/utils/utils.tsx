@@ -42,3 +42,17 @@ export function getSectionImageOrString(stepImgValue: string | number | undefine
 	}
 	return stepImgValue; // Otherwise, it's already a URL
 }
+
+// TODO: Add type annotations. I did this somewhat lazily--wasn't sure how to specify
+// that the first param will have keys that are a subset of the second param's keys,
+// but the types corresponding to each key will be the same.
+/**
+ * Applies default values to an object with a subset of the default object's keys. Helpful for managing options/configurations.
+ * @param objWithOptionalValues The object to which to transfer any missing values. Should contain a subset of defaultValues's members.
+ * @param defaultValues The default values.
+ * @returns An object with the same keys as defaultValues with all undefined values copied over.
+ */
+export function applyMissingDefaults(objWithOptionalValues: any, defaultValues: any) {
+	let result = Object.keys(defaultValues).map(key => objWithOptionalValues[key] === undefined ? defaultValues[key] : objWithOptionalValues[key]);
+	return result;
+}

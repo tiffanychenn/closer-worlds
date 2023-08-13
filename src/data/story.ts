@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Logger } from "./logger";
 
+export type PlayerType = 1 | 2 | 'landscape' | 'buildings' | 'both';
+
 export interface StorySection {
 	steps: Array<StoryStep>;
 	genPrompt?: string; // Formatted like "this is some text with {0} and refers to the result from prompt {1} and so on"
