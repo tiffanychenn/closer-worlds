@@ -20,6 +20,7 @@ module.exports = {
 	new CopyPlugin({
 		patterns: [
 			{ from: '**/*.html', to: './', context: 'src/' },
+      { from: '**/*.py', to: './', context: 'src/' },
 		],
 	}),
   ],

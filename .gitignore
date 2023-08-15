@@ -5,3 +5,4 @@ yarn-error.log
 src/api/.env
 /data/
 .DS_Store
+__pycache__/

@@ -9,7 +9,8 @@
   "scripts": {
     "build": "cd src/api && npx tsc && cd ../.. && npx webpack build",
     "start-dev": "npx webpack serve",
-    "start-prod": "cd dist/api && node api.js"
+    "start-prod": "cd dist/api && node api.js",
+    "start-prod-v2": "cd dist/api && python apiV2.py"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
