@@ -1,3 +1,4 @@
+import { Region, makeActivityRecommender } from '../../data/gameV2';
 import { ImageStep, ReflectStep, StorySection, StoryStepType, TitleStep, WritePromptStep, InfoStep, CustomFormStep, RoleSelectStep, ControlSet } from '../../data/story';
 import { Slider } from '../atoms/input/Slider';
 import { TagGroup } from '../atoms/input/TagGroup';
@@ -20,6 +21,16 @@ export const ONE_SECOND_MS = 1000;
 export const FAKE_MINIMUM_GENERATE_TIME = 45 * ONE_SECOND_MS;
 
 export const MAX_WORDS = 20;
+
+export const V2_REGION_DATA: Array<Region> = [
+	{
+		id: "intentions",
+		recommendNextActivity: makeActivityRecommender([]),
+		avgIntimacyLevel: 0,
+		nextRegionCannotBe: ["intentions"],
+	},
+];
+export const V2_REGION_IDXS = Object.fromEntries(V2_REGION_DATA.map((value, idx) => [value.id, idx]));
 
 export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 	{

@@ -60,7 +60,9 @@ export function renderBoldText(text: string): React.ReactNode {
 	return <>{...nodes}</>;
 }
 
-export function fillPrompt(prompt: string, blankTranformers: { [formElemId: string]: (value: any) => string }, logger: Logger): string {
+export type BlankTransformers = { [formElemId: string]: (value: any) => string };
+
+export function fillPrompt(prompt: string, blankTranformers: BlankTransformers, logger: Logger): string {
 	// Find all of the form element ID names
 	const formElemIds = [];
 	const matches = prompt.matchAll(/\{([A-z0-9_\-]+)\}/g);
