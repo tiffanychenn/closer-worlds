@@ -96,7 +96,7 @@ export const EXPERIMENTAL_STORY_DATA: Array<StorySection> = [
 				playerAction: "Set the vibe",
 				maxWidthIfNoImageCard: false,
 				timeLimitMs: 1 * 60 * ONE_SECOND_MS,
-				requiredFormElemIds: ['world-tags'],
+				requiredFormElemIds: [],
 				makeContent: (logger, hasTimedOut, renderText) => <>
 					<PageHeader>What's your vibe?</PageHeader>
 					<ClosenessSlider logger={logger} />
